@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>延锋大会 AI 互动调研</title>
+  <title>AI 互动调研与实时画像系统</title>
   <style>
     :root {
       --ink: #172033;
@@ -427,11 +427,11 @@
 </head>
 <body>
   <main class="app">
-    <section class="shell" aria-label="延锋大会 AI 互动调研">
+    <section class="shell" aria-label="AI 互动调研与实时画像系统">
       <header class="head">
         <div class="mark">AI</div>
         <div>
-          <strong id="eventName">延锋大会 AI 互动调研</strong>
+          <strong id="eventName">AI 互动调研与实时画像系统</strong>
           <span>扫码调研 · 个人 AI 工作力画像</span>
         </div>
       </header>
@@ -450,6 +450,7 @@
         <p class="note">本调研仅用于现场汇总展示，不采集敏感个人信息。你可以用自然语言回答，也可以选择快捷选项。</p>
         <button class="btn primary full" id="startBtn">开始 AI 调研</button>
         <button class="btn primary full" id="viewResultBtn" hidden>查看我的结果</button>
+        <button class="btn full" id="resetDemoBtn" hidden>复原调研</button>
       </section>
 
       <section class="chat" id="chatScreen" hidden>
@@ -465,7 +466,10 @@
           <textarea class="textarea" id="answerInput" rows="2" placeholder="用自然语言回答，也可以点下方快捷选项"></textarea>
           <div class="quick-options" id="quickOptions"></div>
           <div class="between">
-            <button class="btn" id="skipBtn">跳过</button>
+            <div class="row">
+              <button class="btn" id="skipBtn">跳过</button>
+              <button class="btn" id="voiceBtn">语音</button>
+            </div>
             <button class="btn primary" id="sendBtn">发送</button>
           </div>
         </div>
@@ -475,7 +479,7 @@
   <div class="toast" id="toast">已保存</div>
 
   <script>
-    const STORE_KEY = "yanfeng-audience-h5-v1";
+    const STORE_KEY = "yanfeng-audience-h5-v2";
     const API_BASE = (() => {
       const params = new URLSearchParams(location.search);
       const explicit = params.get("api") || window.YANFENG_API_BASE || localStorage.getItem("yanfeng-api-base") || "";
@@ -490,7 +494,7 @@
     })();
 
     const defaults = {
-      eventName: "延锋大会 Demo｜AI 互动调研与实时画像系统",
+      eventName: "AI 互动调研与实时画像系统",
       activityState: "进行中",
       prompt: "根据用户回答，输出画像类型、四项评分、100-150 字解读和 3 条行动建议。模型失败时使用模板兜底。",
       questions: [
@@ -509,8 +513,10 @@
     const $ = id => document.getElementById(id);
     const clone = value => JSON.parse(JSON.stringify(value));
     let state = loadState();
+    if (state.eventName && state.eventName.indexOf("延锋大会") >= 0) state.eventName = defaults.eventName;
     let submittedThisSession = false;
     let resultAnchor = null;
+    let recognition = null;
 
     function loadState() {
       try {
@@ -587,6 +593,7 @@
       const submitted = ownSubmission();
       $("startBtn").hidden = !!submitted;
       $("viewResultBtn").hidden = !submitted;
+      $("resetDemoBtn").hidden = !submitted;
       if (submitted) return;
       $("startBtn").disabled = state.activityState !== "进行中";
       $("startBtn").textContent = {
@@ -608,6 +615,20 @@
     function resetMessages() {
       resultAnchor = null;
       $("messages").innerHTML = "";
+    }
+
+    function resetDemo() {
+      state.currentSession = null;
+      state.lastSubmission = null;
+      submittedThisSession = false;
+      resultAnchor = null;
+      $("chatScreen").hidden = true;
+      $("welcomeScreen").hidden = false;
+      $("composer").hidden = false;
+      resetMessages();
+      renderEntry();
+      saveState();
+      showToast("已复原，可重新演示答题流程");
     }
 
     function updateProgress() {
@@ -708,6 +729,24 @@
       state.currentSession.currentQuestion += 1;
       askNext();
       saveState();
+    }
+
+    function startVoice() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        showToast("当前浏览器未开放语音转文字，可使用手机键盘语音输入");
+        return;
+      }
+      recognition = recognition || new SpeechRecognition();
+      recognition.lang = "zh-CN";
+      recognition.interimResults = false;
+      recognition.onresult = event => {
+        $("answerInput").value = event.results[0][0].transcript;
+        showToast("语音已转成文字，可继续编辑或发送");
+      };
+      recognition.onerror = () => showToast("语音识别失败，请改用文字输入");
+      recognition.start();
+      showToast("正在聆听，请说出你的回答");
     }
 
     function textOfAnswers() {
@@ -921,6 +960,10 @@
       }
 
       const card = renderResultCard(submission);
+      const resetBtn = document.createElement("button");
+      resetBtn.className = "btn full reset-demo-inline";
+      resetBtn.textContent = "复原调研，重新演示";
+      resetBtn.addEventListener("click", resetDemo);
       if (mountNode && mountNode.parentNode) {
         mountNode.parentNode.replaceChild(card, mountNode);
       } else {
@@ -928,6 +971,7 @@
         if (anchor && anchor.nextSibling) $("messages").insertBefore(card, anchor.nextSibling);
         else $("messages").appendChild(card);
       }
+      $("messages").appendChild(resetBtn);
       setTimeout(() => {
         $("messages").scrollTop = Math.max(card.offsetTop - 18, 0);
       }, 60);
@@ -935,8 +979,10 @@
 
     $("startBtn").addEventListener("click", startChat);
     $("viewResultBtn").addEventListener("click", () => renderProfileResult(ownSubmission(), false));
+    $("resetDemoBtn").addEventListener("click", resetDemo);
     $("sendBtn").addEventListener("click", () => sendAnswer(false));
     $("skipBtn").addEventListener("click", () => sendAnswer(true));
+    $("voiceBtn").addEventListener("click", startVoice);
     $("answerInput").addEventListener("keydown", event => {
       if (event.key === "Enter" && !event.shiftKey) {
         event.preventDefault();
