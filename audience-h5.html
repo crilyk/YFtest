@@ -1,0 +1,1035 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>AI 互动调研与实时画像系统</title>
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #667085;
+      --line: #dbe3ec;
+      --brand: #0f766e;
+      --brand-2: #2563eb;
+      --soft: #f5f8fb;
+      --danger: #b42318;
+      --radius: 8px;
+      --shadow: 0 22px 60px rgba(15, 23, 42, .14);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(15, 118, 110, .08), transparent 36%),
+        #eef3f8;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, textarea { font: inherit; }
+    button { cursor: pointer; }
+    button:disabled { cursor: not-allowed; opacity: .55; }
+
+    .app {
+      min-height: 100%;
+      display: grid;
+      place-items: center;
+      padding: env(safe-area-inset-top) 12px env(safe-area-inset-bottom);
+    }
+
+    .shell {
+      width: min(100%, 430px);
+      height: min(100vh, 860px);
+      min-height: 620px;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      overflow: hidden;
+      border: 1px solid rgba(219, 227, 236, .9);
+      border-radius: 22px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 15px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, .94);
+      backdrop-filter: blur(12px);
+    }
+
+    .head > div:last-child { min-width: 0; }
+
+    .mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 10px;
+      color: #fff;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+    }
+
+    .head strong {
+      display: block;
+      font-size: 17px;
+      line-height: 1.18;
+      overflow-wrap: anywhere;
+    }
+
+    .head span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .screen {
+      min-height: 0;
+      overflow: auto;
+      background: var(--soft);
+    }
+
+    .welcome {
+      min-height: 100%;
+      display: grid;
+      align-content: start;
+      gap: 14px;
+      padding: 18px 15px 24px;
+    }
+
+    .hero {
+      color: #fff;
+      padding: 22px 18px;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, rgba(15, 118, 110, .98), rgba(37, 99, 235, .94));
+      box-shadow: 0 18px 42px rgba(15, 118, 110, .22);
+    }
+
+    .eyebrow {
+      color: rgba(255, 255, 255, .78);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin: 12px 0 8px;
+      font-size: 34px;
+      line-height: 1.06;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      margin: 0;
+      color: rgba(255, 255, 255, .84);
+      line-height: 1.55;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .tile {
+      min-height: 76px;
+      padding: 11px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .tile span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .tile strong {
+      display: block;
+      margin-top: 5px;
+      font-size: 17px;
+      line-height: 1.15;
+    }
+
+    .note {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.62;
+      font-size: 14px;
+    }
+
+    .btn {
+      min-height: 44px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      color: var(--ink);
+      background: #fff;
+      font-weight: 800;
+    }
+
+    .btn.primary {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+    }
+
+    .btn.full { width: 100%; }
+
+    .chat {
+      height: 100%;
+      min-height: 0;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      overflow: hidden;
+      background: var(--soft);
+    }
+
+    .progress-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 3;
+      padding: 12px 15px 9px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, .94);
+      backdrop-filter: blur(12px);
+    }
+
+    .between {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .small { font-size: 12px; }
+    .muted { color: var(--muted); }
+
+    .progress {
+      height: 7px;
+      margin-top: 7px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #dbe3ec;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--brand), var(--brand-2));
+      transition: width .25s;
+    }
+
+    .messages {
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: 12px 15px 18px;
+    }
+
+    .messages > * { flex-shrink: 0; }
+
+    .bubble {
+      max-width: 86%;
+      padding: 11px 13px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, .04);
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
+    .bubble.ai { align-self: flex-start; }
+    .bubble.user {
+      align-self: flex-end;
+      color: #fff;
+      border-color: var(--brand);
+      background: var(--brand);
+    }
+
+    .bubble.system {
+      align-self: center;
+      max-width: 94%;
+      color: var(--muted);
+      border-color: #cbe1df;
+      background: #eef7f5;
+      font-size: 12px;
+    }
+
+    .composer {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border-top: 1px solid var(--line);
+      background: rgba(255, 255, 255, .94);
+      backdrop-filter: blur(12px);
+    }
+
+    .textarea {
+      width: 100%;
+      min-height: 48px;
+      resize: none;
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      color: var(--ink);
+      background: #fff;
+      outline: 0;
+      line-height: 1.45;
+    }
+
+    .textarea:focus {
+      border-color: rgba(37, 99, 235, .55);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, .1);
+    }
+
+    .quick-options {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      min-height: 32px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink);
+      background: #fff;
+      font-size: 13px;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .result-card {
+      width: 100%;
+      align-self: stretch;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .08);
+    }
+
+    .result-head {
+      color: #fff;
+      padding: 16px;
+      background: linear-gradient(135deg, rgba(15, 118, 110, .98), rgba(37, 99, 235, .92));
+    }
+
+    .result-head h2 {
+      margin: 7px 0 5px;
+      font-size: 26px;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .result-body {
+      display: grid;
+      gap: 14px;
+      padding: 16px;
+    }
+
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .score {
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #f8fafc;
+    }
+
+    .meter {
+      height: 6px;
+      margin-top: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #dbe3ec;
+    }
+
+    .meter span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--brand), var(--brand-2));
+    }
+
+    .actions {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: calc(18px + env(safe-area-inset-bottom));
+      z-index: 20;
+      max-width: calc(100vw - 32px);
+      padding: 10px 14px;
+      border-radius: var(--radius);
+      color: #fff;
+      background: #172033;
+      box-shadow: var(--shadow);
+      transform: translateX(-50%) translateY(calc(100% + 32px));
+      opacity: 0;
+      pointer-events: none;
+      transition: transform .24s, opacity .24s;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    [hidden] { display: none !important; }
+
+    @media (max-width: 520px) {
+      .app { padding: 0; place-items: stretch; }
+      .shell {
+        width: 100%;
+        height: 100dvh;
+        min-height: 0;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      .hero h1 { font-size: 32px; }
+      .score-grid, .info-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="shell" aria-label="AI 互动调研与实时画像系统">
+      <header class="head">
+        <div class="mark">AI</div>
+        <div>
+          <strong id="eventName">AI 互动调研与实时画像系统</strong>
+          <span>扫码调研 · 个人 AI 工作力画像</span>
+        </div>
+      </header>
+
+      <section class="screen welcome" id="welcomeScreen">
+        <div class="hero">
+          <div class="eyebrow">Yanfeng Conference</div>
+          <h1>生成你的 AI 工作力画像</h1>
+          <p>用一段轻松对话了解你的 AI 使用现状、主要顾虑和下一步学习方向。</p>
+        </div>
+        <div class="info-grid">
+          <div class="tile"><span>预计用时</span><strong>3-5 分钟</strong></div>
+          <div class="tile"><span>参与方式</span><strong>匿名调研</strong></div>
+          <div class="tile"><span>完成后</span><strong>即时画像</strong></div>
+        </div>
+        <p class="note">本调研仅用于现场汇总展示，不采集敏感个人信息。你可以用自然语言回答，也可以选择快捷选项。</p>
+        <button class="btn primary full" id="startBtn">开始 AI 调研</button>
+        <button class="btn primary full" id="viewResultBtn" hidden>查看我的结果</button>
+        <button class="btn full" id="resetDemoBtn" hidden>复原调研</button>
+      </section>
+
+      <section class="chat" id="chatScreen" hidden>
+        <div class="progress-wrap">
+          <div class="between small muted">
+            <span id="progressText">还剩 7 个问题</span>
+            <span id="sessionId">匿名会话</span>
+          </div>
+          <div class="progress"><span id="progressBar"></span></div>
+        </div>
+        <div class="messages" id="messages"></div>
+        <div class="composer" id="composer">
+          <textarea class="textarea" id="answerInput" rows="2" placeholder="用自然语言回答，也可以点下方快捷选项"></textarea>
+          <div class="quick-options" id="quickOptions"></div>
+          <div class="between">
+            <div class="row">
+              <button class="btn" id="skipBtn">跳过</button>
+              <button class="btn" id="voiceBtn">语音</button>
+            </div>
+            <button class="btn primary" id="sendBtn">发送</button>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+  <div class="toast" id="toast">已保存</div>
+
+  <script>
+    const STORE_KEY = "yanfeng-audience-h5-v2";
+    const API_BASE = (() => {
+      const params = new URLSearchParams(location.search);
+      const explicit = params.get("api") || window.YANFENG_API_BASE || localStorage.getItem("yanfeng-api-base") || "";
+      if (explicit) {
+        const normalized = explicit.replace(/\/$/, "");
+        localStorage.setItem("yanfeng-api-base", normalized);
+        return normalized;
+      }
+      if (location.protocol === "file:") return "http://127.0.0.1:8787/api";
+      if (location.hostname.endsWith("github.io")) return "";
+      return "/api";
+    })();
+
+    const defaults = {
+      eventName: "AI 互动调研与实时画像系统",
+      activityState: "进行中",
+      prompt: "根据用户回答，输出画像类型、四项评分、100-150 字解读和 3 条行动建议。模型失败时使用模板兜底。",
+      promptTemplates: {
+        answerExtract: { version: "answer-extract-v1", content: "请基于单个问题和回答，提取用于大屏聚合的结构化标签。" },
+        profileGenerate: { version: "profile-generate-v1", content: "根据用户回答和单题结构化总结，输出画像类型、四项评分、100-150 字解读和 3 条行动建议。" },
+        groupInsight: { version: "group-insight-v1", content: "请基于现场聚合数据生成一段适合大屏展示的全场洞察。" }
+      },
+      questions: [
+        { text: "你觉得 AI 目前对你的工作影响大吗？", quick: ["影响很大", "有一些影响", "暂时不明显"] },
+        { text: "你是否用过 ChatGPT、通义、Kimi、豆包等 AI 工具？", quick: ["经常用", "偶尔试过", "基本没用过"] },
+        { text: "你大概多久用一次 AI？", quick: ["每天", "每周", "偶尔", "几乎不用"] },
+        { text: "你最希望 AI 帮你解决哪类工作问题？", quick: ["文档/报告", "会议纪要", "数据分析", "知识检索"] },
+        { text: "你不常使用 AI 的主要原因是什么？", quick: ["准确性", "数据安全", "不会提问", "缺少案例"] },
+        { text: "你对 AI 进入企业工作流是期待、观望还是担心？", quick: ["期待", "观望", "担心"] },
+        { text: "你最想学习哪类 AI 能力？", quick: ["提示词", "场景案例", "结果校验", "流程嵌入"] }
+      ],
+      currentSession: null,
+      lastSubmission: null
+    };
+
+    const $ = id => document.getElementById(id);
+    const clone = value => JSON.parse(JSON.stringify(value));
+    let state = loadState();
+    if (state.eventName && state.eventName.indexOf("延锋大会") >= 0) state.eventName = defaults.eventName;
+    let submittedThisSession = false;
+    let resultAnchor = null;
+    let recognition = null;
+
+    function loadState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORE_KEY) || "null");
+        if (!saved) return clone(defaults);
+        return {
+          ...clone(defaults),
+          ...saved,
+          promptTemplates: {
+            ...clone(defaults.promptTemplates),
+            ...(saved.promptTemplates || {})
+          },
+          questions: Array.isArray(saved.questions) && saved.questions.length ? saved.questions : defaults.questions
+        };
+      } catch (error) {
+        return clone(defaults);
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(STORE_KEY, JSON.stringify(state));
+    }
+
+    async function apiRequest(path, options = {}) {
+      if (!API_BASE) throw new Error("API backend is not configured");
+      const response = await fetch(`${API_BASE}${path}`, {
+        method: options.method || "GET",
+        headers: { "Content-Type": "application/json" },
+        body: options.body ? JSON.stringify(options.body) : undefined
+      });
+      if (!response.ok) throw new Error(await response.text().catch(() => "API error"));
+      return response.json();
+    }
+
+    async function pullConfig() {
+      try {
+        const remote = await apiRequest("/state");
+        if (remote && typeof remote === "object") {
+          state.eventName = remote.eventName || state.eventName;
+          state.activityState = remote.activityState || state.activityState;
+          state.prompt = remote.prompt || state.prompt;
+          state.promptTemplates = remote.promptTemplates || state.promptTemplates || defaults.promptTemplates;
+          state.questions = Array.isArray(remote.questions) && remote.questions.length ? remote.questions : state.questions;
+          saveState();
+          renderEntry();
+        }
+      } catch (error) {
+        renderEntry();
+      }
+    }
+
+    async function recordSessionStart(session) {
+      try {
+        await apiRequest("/sessions/start", { method: "POST", body: { sessionId: session.sessionId, enterTime: session.enterTime } });
+      } catch (error) {}
+    }
+
+    async function submitToBackend(submission) {
+      try {
+        await apiRequest("/submissions", { method: "POST", body: { submission } });
+      } catch (error) {
+        showToast("结果已生成，后端暂未同步");
+      }
+    }
+
+    function showToast(text) {
+      const toast = $("toast");
+      toast.textContent = text;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 1800);
+    }
+
+    function ownSubmission() {
+      return state.lastSubmission && state.lastSubmission.status === "已完成" ? state.lastSubmission : null;
+    }
+
+    function renderEntry() {
+      $("eventName").textContent = state.eventName;
+      const submitted = ownSubmission();
+      $("startBtn").hidden = !!submitted;
+      $("viewResultBtn").hidden = !submitted;
+      $("resetDemoBtn").hidden = !submitted;
+      if (submitted) return;
+      $("startBtn").disabled = state.activityState !== "进行中";
+      $("startBtn").textContent = {
+        "未开始": "调研未开始",
+        "进行中": "开始 AI 调研",
+        "已结束": "调研已结束"
+      }[state.activityState] || "开始 AI 调研";
+    }
+
+    function addMessage(role, text) {
+      const bubble = document.createElement("div");
+      bubble.className = `bubble ${role}`;
+      bubble.textContent = text;
+      $("messages").appendChild(bubble);
+      $("messages").scrollTop = $("messages").scrollHeight;
+      return bubble;
+    }
+
+    function resetMessages() {
+      resultAnchor = null;
+      $("messages").innerHTML = "";
+    }
+
+    function resetDemo() {
+      state.currentSession = null;
+      state.lastSubmission = null;
+      submittedThisSession = false;
+      resultAnchor = null;
+      $("chatScreen").hidden = true;
+      $("welcomeScreen").hidden = false;
+      $("composer").hidden = false;
+      resetMessages();
+      renderEntry();
+      saveState();
+      showToast("已复原，可重新演示答题流程");
+    }
+
+    function updateProgress() {
+      const total = state.questions.length;
+      const current = state.currentSession ? state.currentSession.currentQuestion : 0;
+      const left = Math.max(total - current, 0);
+      $("progressText").textContent = left > 0 ? `还剩 ${left} 个问题` : "调研完成";
+      $("progressBar").style.width = `${Math.min((current / Math.max(total, 1)) * 100, 100)}%`;
+    }
+
+    function renderQuickOptions() {
+      const current = state.currentSession ? state.currentSession.currentQuestion : 0;
+      const options = state.questions[current] ? state.questions[current].quick || [] : [];
+      $("quickOptions").innerHTML = options.map(option => `<button class="chip" type="button" data-answer="${option}">${option}</button>`).join("");
+      $("quickOptions").querySelectorAll("[data-answer]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          $("answerInput").value = btn.dataset.answer;
+          sendAnswer(false);
+        });
+      });
+    }
+
+    function askNext() {
+      updateProgress();
+      renderQuickOptions();
+      const current = state.currentSession.currentQuestion;
+      if (current >= state.questions.length) {
+        setTimeout(() => {
+          if (submittedThisSession) return;
+          resultAnchor = addMessage("ai", "感谢你的回答。我已经整理好关键线索，现在可以生成你的 AI 画像。");
+        }, 240);
+        setTimeout(() => {
+          if (submittedThisSession) return;
+          const btn = document.createElement("button");
+          btn.className = "btn primary full generate-profile-btn";
+          btn.textContent = "生成我的 AI 画像";
+          btn.addEventListener("click", event => generateProfile(event));
+          $("messages").appendChild(btn);
+          $("messages").scrollTop = $("messages").scrollHeight;
+        }, 560);
+        return;
+      }
+      setTimeout(() => {
+        if (submittedThisSession) return;
+        addMessage("ai", state.questions[current].text);
+      }, 240);
+    }
+
+    function startChat() {
+      if (ownSubmission()) {
+        renderProfileResult(ownSubmission(), false);
+        return;
+      }
+      if (state.activityState !== "进行中") {
+        showToast(state.activityState === "未开始" ? "本场调研尚未开始" : "本场调研已结束，感谢参与");
+        return;
+      }
+      state.currentSession = {
+        sessionId: `S-${Math.floor(1000 + Math.random() * 9000)}`,
+        enterTime: new Date().toISOString(),
+        currentQuestion: 0,
+        answers: [],
+        answerInsights: [],
+        status: "进行中"
+      };
+      submittedThisSession = false;
+      $("welcomeScreen").hidden = true;
+      $("chatScreen").hidden = false;
+      $("composer").hidden = false;
+      resetMessages();
+      $("sessionId").textContent = state.currentSession.sessionId;
+      addMessage("ai", "你好，我是本场 AI 调研助手。接下来我会用几个简短问题了解你的 AI 使用现状，答案不会采集实名信息。");
+      askNext();
+      saveState();
+      recordSessionStart(state.currentSession);
+    }
+
+    async function sendAnswer(skip = false) {
+      if (!state.currentSession || submittedThisSession) return;
+      const input = $("answerInput");
+      const text = skip ? "跳过这个问题" : input.value.trim();
+      if (!text) {
+        showToast("先写一句回答，或点击跳过");
+        return;
+      }
+      const questionIndex = state.currentSession.currentQuestion;
+      const question = state.questions[questionIndex] ? state.questions[questionIndex].text || "" : "";
+      addMessage("user", text);
+      state.currentSession.answers.push({
+        questionIndex,
+        question,
+        answer: text,
+        skipped: skip
+      });
+      input.value = "";
+      if (!skip && text.length <= 5 && state.currentSession.currentQuestion < state.questions.length - 1) {
+        setTimeout(() => {
+          if (submittedThisSession) return;
+          addMessage("ai", "收到。我会记录这条回答，后面会结合其它问题一起生成画像。");
+        }, 160);
+      }
+      try {
+        const result = await apiRequest("/answers", {
+          method: "POST",
+          body: {
+            sessionId: state.currentSession.sessionId,
+            questionIndex,
+            question,
+            answer: text,
+            skipped: skip
+          }
+        });
+        if (result && result.answerInsight) {
+          if (!Array.isArray(state.currentSession.answerInsights)) state.currentSession.answerInsights = [];
+          state.currentSession.answerInsights = state.currentSession.answerInsights.filter(item => Number(item.questionIndex) !== Number(questionIndex));
+          state.currentSession.answerInsights.push({ questionIndex, question, answer: text, ...result.answerInsight });
+        }
+      } catch (error) {}
+      state.currentSession.currentQuestion += 1;
+      askNext();
+      saveState();
+    }
+
+    function startVoice() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        showToast("当前浏览器未开放语音转文字，可使用手机键盘语音输入");
+        return;
+      }
+      recognition = recognition || new SpeechRecognition();
+      recognition.lang = "zh-CN";
+      recognition.interimResults = false;
+      recognition.onresult = event => {
+        $("answerInput").value = event.results[0][0].transcript;
+        showToast("语音已转成文字，可继续编辑或发送");
+      };
+      recognition.onerror = () => showToast("语音识别失败，请改用文字输入");
+      recognition.start();
+      showToast("正在聆听，请说出你的回答");
+    }
+
+    function textOfAnswers() {
+      return (state.currentSession && state.currentSession.answers ? state.currentSession.answers : []).map(item => item.answer).join(" ");
+    }
+
+    function includesAny(text, words) {
+      const source = String(text || "");
+      for (let i = 0; i < words.length; i += 1) {
+        if (source.indexOf(words[i]) >= 0) return true;
+      }
+      return false;
+    }
+
+    function inferProfile() {
+      const text = textOfAnswers();
+      if (includesAny(text, ["推动", "培训", "分享", "团队", "推广"])) return "AI 推动者";
+      if (includesAny(text, ["每天", "经常", "流程", "自动", "知识库", "研发", "数据分析"])) return "AI 场景实践者";
+      if (includesAny(text, ["用过", "报告", "会议", "总结", "文档", "效率", "每周"])) return "AI 效率提升者";
+      if (includesAny(text, ["偶尔", "试过", "豆包", "Kimi", "通义", "ChatGPT"])) return "AI 尝鲜者";
+      return "AI 旁观者";
+    }
+
+    function inferScenario(text) {
+      const candidates = [
+        ["会议纪要", ["会议", "纪要"]],
+        ["文档/报告", ["文档", "报告", "邮件", "初稿"]],
+        ["数据分析", ["数据", "分析", "报表"]],
+        ["知识检索", ["检索", "搜索", "资料", "知识库"]],
+        ["研发/营销", ["研发", "营销", "客服", "代码"]]
+      ];
+      for (let i = 0; i < candidates.length; i += 1) {
+        if (includesAny(text, candidates[i][1])) return candidates[i][0];
+      }
+      return "培训入门";
+    }
+
+    function inferConcern(text) {
+      const candidates = [
+        ["准确性", ["准确", "可靠", "错误", "幻觉"]],
+        ["数据安全", ["安全", "隐私", "敏感", "保密"]],
+        ["不会提问", ["不会", "提示词", "提问", "怎么问"]],
+        ["工具限制", ["限制", "权限", "打不开", "账号"]],
+        ["缺少案例", ["案例", "不知道", "不清楚"]]
+      ];
+      for (let i = 0; i < candidates.length; i += 1) {
+        if (includesAny(text, candidates[i][1])) return candidates[i][0];
+      }
+      return "缺少案例";
+    }
+
+    function profileContent(type) {
+      const map = {
+        "AI 推动者": {
+          text: "你已经具备把 AI 经验扩散给他人的潜力，关注点从个人效率延伸到团队协作和方法沉淀。接下来适合学习场景评估、最佳实践包装和企业内部推广节奏，让 AI 能力在团队中稳定复制。",
+          scores: [92, 88, 90, 94],
+          actions: ["沉淀一套可分享的高频场景案例。", "建立团队提示词模板与输出校验标准。", "用小范围试点验证 AI 工作流的真实收益。"]
+        },
+        "AI 场景实践者": {
+          text: "你已经能把 AI 与具体业务问题联系起来，关注的不只是工具本身，而是如何把它嵌入稳定流程。接下来适合学习任务拆解、知识库和结果校验，让 AI 从个人效率工具升级为协作能力。",
+          scores: [86, 82, 88, 84],
+          actions: ["把重复任务拆成可交给 AI 协作的步骤。", "尝试建立私有知识素材与提示词组合。", "为关键输出设置人工复核和事实校验点。"]
+        },
+        "AI 效率提升者": {
+          text: "你已经意识到 AI 可以帮助提升工作效率，并可能在资料整理、内容生成、信息检索等场景中有所尝试。你目前最需要的是把零散使用沉淀为固定场景、提示词模板和可靠的输出校验方法。",
+          scores: [76, 68, 72, 78],
+          actions: ["把 AI 用于会议纪要、报告初稿、资料总结等高频任务。", "学习如何写出清晰提示词，并沉淀可复用模板。", "建立输出校验习惯，区分可直接使用和需要复核的结果。"]
+        },
+        "AI 尝鲜者": {
+          text: "你对 AI 有兴趣，也可能已经试用过一些工具，但还没有形成稳定习惯。建议从低风险、高频率的日常任务开始，例如会议纪要、资料摘要和邮件初稿，先建立可感知的小胜利。",
+          scores: [62, 48, 55, 66],
+          actions: ["选择一个不涉及敏感信息的日常任务开始。", "用课程中的模板完成一次完整提示词练习。", "每周固定复盘一次 AI 输出是否真的节省时间。"]
+        },
+        "AI 旁观者": {
+          text: "你对 AI 的价值仍在观察，可能担心准确性、数据安全或不知道如何开始。建议先从课程中的基础案例入手，用不涉及敏感信息的任务体验 AI，再逐步理解提示词和校验方法。",
+          scores: [42, 28, 36, 48],
+          actions: ["先理解 AI 能做什么和不能做什么。", "从资料摘要、改写润色等低风险任务体验。", "重点学习数据安全边界和结果校验方法。"]
+        }
+      };
+      return map[type] || map["AI 旁观者"];
+    }
+
+    function contentForSubmission(submission) {
+      const base = profileContent(submission.profileType);
+      return {
+        text: submission.profileText || base.text,
+        scores: Array.isArray(submission.scores) && submission.scores.length === 4 ? submission.scores : base.scores,
+        actions: Array.isArray(submission.actions) && submission.actions.length ? submission.actions : base.actions
+      };
+    }
+
+    function extractKeywords(text) {
+      const dict = ["会议纪要", "提示词", "数据安全", "报告初稿", "准确性", "知识库", "效率提升", "流程嵌入", "不会提问", "数据分析", "培训入门", "结果校验"];
+      const found = dict.filter(word => text.includes(word.replace("/", "")) || text.includes(word));
+      return found.length ? found : ["会议纪要", "提示词", "准确性"];
+    }
+
+    function removeGeneratedButton(trigger) {
+      document.querySelectorAll(".generate-profile-btn").forEach(btn => {
+        if (btn !== trigger && btn.parentNode) btn.parentNode.removeChild(btn);
+      });
+    }
+
+    async function generateProfile(event = null) {
+      if (!state.currentSession || submittedThisSession) {
+        showToast("本次会话已提交，已防止重复提交");
+        return;
+      }
+      const trigger = event && event.currentTarget ? event.currentTarget : document.querySelector(".generate-profile-btn");
+      submittedThisSession = true;
+      removeGeneratedButton(trigger);
+      if (trigger) {
+        trigger.disabled = true;
+        trigger.textContent = "正在生成你的 AI 工作力画像...";
+      }
+
+      try {
+        const result = await apiRequest("/sessions/complete", {
+          method: "POST",
+          body: {
+            sessionId: state.currentSession.sessionId,
+            enterTime: state.currentSession.enterTime,
+            answers: state.currentSession.answers,
+            answerInsights: state.currentSession.answerInsights || []
+          }
+        });
+        const submission = result && result.submission ? result.submission : null;
+        if (!submission) throw new Error("No submission returned");
+        state.currentSession.status = "已完成";
+        state.lastSubmission = submission;
+        renderProfileResult(submission, true, trigger);
+        saveState();
+        renderEntry();
+        return;
+      } catch (error) {
+        if (API_BASE) showToast("AI 生成失败，已使用本地规则兜底");
+      }
+
+      const text = textOfAnswers();
+      let aiProfile = null;
+      const profileType = aiProfile && aiProfile.profileType ? aiProfile.profileType : inferProfile();
+      const base = profileContent(profileType);
+      const submission = {
+        sessionId: state.currentSession.sessionId,
+        eventId: "yanfeng-demo-2026",
+        enterTime: state.currentSession.enterTime,
+        submitTime: new Date().toISOString(),
+        answers: state.currentSession.answers,
+        derivedTags: aiProfile && Array.isArray(aiProfile.derivedTags) ? aiProfile.derivedTags : extractKeywords(text),
+        profileType,
+        profileText: aiProfile && aiProfile.profileText ? aiProfile.profileText : base.text,
+        scores: aiProfile && Array.isArray(aiProfile.scores) ? aiProfile.scores : base.scores,
+        actions: aiProfile && Array.isArray(aiProfile.actions) ? aiProfile.actions : base.actions,
+        scenario: aiProfile && aiProfile.scenario ? aiProfile.scenario : inferScenario(text),
+        concern: aiProfile && aiProfile.concern ? aiProfile.concern : inferConcern(text),
+        aiGenerated: !!(aiProfile && aiProfile.aiGenerated),
+        aiModel: aiProfile && aiProfile.model ? aiProfile.model : "local-fallback",
+        status: "已完成"
+      };
+
+      state.currentSession.status = "已完成";
+      state.lastSubmission = submission;
+      renderProfileResult(submission, true, trigger);
+      saveState();
+      renderEntry();
+      submitToBackend(submission);
+    }
+
+    function renderResultCard(submission) {
+      const content = contentForSubmission(submission);
+      const labels = ["AI 认知度", "使用成熟度", "场景清晰度", "行动意愿"];
+      const card = document.createElement("div");
+      card.className = "result-card";
+      card.innerHTML = `
+        <div class="result-head">
+          <div class="eyebrow">AI Generated Profile</div>
+          <h2>${submission.profileType}</h2>
+          <div>${submission.scenario || "场景待识别"} · ${submission.concern || "顾虑待识别"}</div>
+        </div>
+        <div class="result-body">
+          <p class="muted" style="margin:0;">${content.text}</p>
+          <div class="score-grid">
+            ${labels.map((label, index) => `
+              <div class="score">
+                <div class="between small"><span class="muted">${label}</span><strong>${content.scores[index]}</strong></div>
+                <div class="meter"><span style="width:${content.scores[index]}%"></span></div>
+              </div>
+            `).join("")}
+          </div>
+          <div>
+            <strong>建议优先学习</strong>
+            <ol class="actions">${content.actions.map(item => `<li>${item}</li>`).join("")}</ol>
+          </div>
+        </div>
+      `;
+      return card;
+    }
+
+    function renderProfileResult(submission, preserveMessages = false, mountNode = null) {
+      $("welcomeScreen").hidden = true;
+      $("chatScreen").hidden = false;
+      $("composer").hidden = true;
+      $("sessionId").textContent = submission.sessionId || "匿名会话";
+      $("progressText").textContent = "已生成 AI 画像";
+      $("progressBar").style.width = "100%";
+
+      if (!preserveMessages) {
+        resetMessages();
+        addMessage("system", "以下是你本次调研的问答记录和 AI 画像结果。");
+        (submission.answers || []).forEach(item => {
+          if (typeof item === "string") {
+            addMessage("user", item);
+          } else {
+            if (item.question) addMessage("ai", item.question);
+            addMessage("user", item.answer || "");
+          }
+        });
+      }
+
+      const card = renderResultCard(submission);
+      const resetBtn = document.createElement("button");
+      resetBtn.className = "btn full reset-demo-inline";
+      resetBtn.textContent = "复原调研，重新演示";
+      resetBtn.addEventListener("click", resetDemo);
+      if (mountNode && mountNode.parentNode) {
+        mountNode.parentNode.replaceChild(card, mountNode);
+      } else {
+        const anchor = resultAnchor && resultAnchor.parentNode === $("messages") ? resultAnchor : null;
+        if (anchor && anchor.nextSibling) $("messages").insertBefore(card, anchor.nextSibling);
+        else $("messages").appendChild(card);
+      }
+      $("messages").appendChild(resetBtn);
+      setTimeout(() => {
+        $("messages").scrollTop = Math.max(card.offsetTop - 18, 0);
+      }, 60);
+    }
+
+    $("startBtn").addEventListener("click", startChat);
+    $("viewResultBtn").addEventListener("click", () => renderProfileResult(ownSubmission(), false));
+    $("resetDemoBtn").addEventListener("click", resetDemo);
+    $("sendBtn").addEventListener("click", () => sendAnswer(false));
+    $("skipBtn").addEventListener("click", () => sendAnswer(true));
+    $("voiceBtn").addEventListener("click", startVoice);
+    $("answerInput").addEventListener("keydown", event => {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        sendAnswer(false);
+      }
+    });
+
+    renderEntry();
+    pullConfig();
+  </script>
+</body>
+</html>

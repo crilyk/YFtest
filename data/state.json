@@ -1,0 +1,3070 @@
+{
+  "eventName": "AI 互动调研与实时画像系统",
+  "eventUrl": "https://crilyk.github.io/YFtest/audience-h5.html",
+  "publicApiBase": "",
+  "activityState": "进行中",
+  "durationMinutes": 10,
+  "targetCapacity": 300,
+  "secondsLeft": 35,
+  "visits": 255,
+  "started": 233,
+  "done": 201,
+  "questions": [
+    {
+      "text": "你觉得 AI 目前对你的工作影响大吗？",
+      "quick": [
+        "影响很大",
+        "有一些影响",
+        "暂时不明显"
+      ]
+    },
+    {
+      "text": "你是否用过 ChatGPT、通义、Kimi、豆包等 AI 工具？",
+      "quick": [
+        "经常用",
+        "偶尔试过",
+        "基本没用过"
+      ]
+    },
+    {
+      "text": "你大概多久用一次 AI？",
+      "quick": [
+        "每天",
+        "每周",
+        "偶尔",
+        "几乎不用"
+      ]
+    },
+    {
+      "text": "你最希望 AI 帮你解决哪类工作问题？",
+      "quick": [
+        "文档/报告",
+        "会议纪要",
+        "数据分析",
+        "知识检索"
+      ]
+    },
+    {
+      "text": "你不常使用 AI 的主要原因是什么？",
+      "quick": [
+        "准确性",
+        "数据安全",
+        "不会提问",
+        "缺少案例"
+      ]
+    },
+    {
+      "text": "你对 AI 进入企业工作流是期待、观望还是担心？",
+      "quick": [
+        "期待",
+        "观望",
+        "担心"
+      ]
+    },
+    {
+      "text": "你最想学习哪类 AI 能力？",
+      "quick": [
+        "提示词",
+        "场景案例",
+        "结果校验",
+        "流程嵌入"
+      ]
+    }
+  ],
+  "prompt": "根据用户回答，输出画像类型、四项评分、100-150 字解读和 3 条行动建议。模型失败时使用模板兜底。",
+  "promptTemplates": {
+    "answerExtract": {
+      "version": "answer-extract-v1",
+      "content": "你是企业大会现场的 AI 调研结构化助手。\n请基于单个问题和回答，提取用于大屏聚合的结构化标签。\n只返回 JSON，不要 Markdown，不要解释。\n字段必须为：summary, usageFrequency, willingness, capabilityTags, wishTags, concernTags, confidence。\nusageFrequency 从 从未使用、偶尔使用、每周使用、每天使用、未提及 中选择。\nwillingness 从 期待、观望、担心、未提及 中选择。\ncapabilityTags 表示用户认为 AI 已经能做什么；wishTags 表示用户希望 AI 做到什么；concernTags 表示顾虑。\n每个 tags 数组最多 4 个短词。confidence 为 0-1 数字。"
+    },
+    "profileGenerate": {
+      "version": "profile-generate-v1",
+      "content": "根据用户回答，输出画像类型、四项评分、100-150 字解读和 3 条行动建议。模型失败时使用模板兜底。"
+    },
+    "groupInsight": {
+      "version": "group-insight-v1",
+      "content": "你是企业大会讲师大屏的洞察撰写助手。\n请基于现场参会用户聚合数据生成一段适合大屏展示的全场洞察。\n语气专业、积极、面向讲师可直接口播，内容丰富完整，特别注意不要对讲师的建议，只要对全场洞察的总结。\n只返回 JSON，不要 Markdown，不要解释。字段必须为：insight。\ninsight 控制在 200-350 个中文字符。"
+    }
+  },
+  "dashboardFields": [
+    "counts",
+    "profile",
+    "usage",
+    "scenario",
+    "concern",
+    "keyword",
+    "insight"
+  ],
+  "submissions": [
+    {
+      "sessionId": "S-1236",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-16T06:04:01.647Z",
+      "submitTime": "2026-06-16T06:05:19.215Z",
+      "answers": [
+        {
+          "questionIndex": 0,
+          "question": "你觉得 AI 目前对你的工作影响大吗？",
+          "answer": "很大很大",
+          "skipped": false
+        },
+        {
+          "questionIndex": 1,
+          "question": "你是否用过 ChatGPT、通义、Kimi、豆包等 AI 工具？",
+          "answer": "用过Kimi",
+          "skipped": false
+        },
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "每隔一个小时就在用",
+          "skipped": false
+        },
+        {
+          "questionIndex": 3,
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "方案的撰写",
+          "skipped": false
+        },
+        {
+          "questionIndex": 4,
+          "question": "你不常使用 AI 的主要原因是什么？",
+          "answer": "我天天用啊",
+          "skipped": false
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "有一点点担忧，主要还是期待",
+          "skipped": false
+        },
+        {
+          "questionIndex": 6,
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "图片生成",
+          "skipped": false
+        }
+      ],
+      "derivedTags": [
+        "方案撰写",
+        "图片生成",
+        "提示词"
+      ],
+      "profileType": "AI 场景实践者",
+      "profileText": "你已深度融入AI工作流，高频使用Kimi辅助方案撰写，对AI持积极期待态度。具备较强AI认知与行动意愿，正探索图片生成等新能力，关注实用性与落地效果，是团队中可带动他人实践的实干型AI使用者。",
+      "scores": [
+        95,
+        90,
+        85,
+        92
+      ],
+      "actions": [
+        "精炼方案类提示词模板",
+        "尝试用AI生成方案配图",
+        "分享高频使用场景经验"
+      ],
+      "scenario": "文档/报告",
+      "concern": "准确性",
+      "aiGenerated": true,
+      "aiModel": "qwen-plus",
+      "status": "已完成",
+      "answerInsights": [
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "每隔一个小时就在用",
+          "summary": "用户高频使用AI，几乎持续使用。",
+          "usageFrequency": "每天使用",
+          "willingness": "未提及",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 0.95,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 3,
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "方案的撰写",
+          "summary": "用户希望 AI 协助撰写方案。",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "方案撰写"
+          ],
+          "concernTags": [],
+          "confidence": 0.95,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "有一点点担忧，主要还是期待",
+          "summary": "用户对AI进入企业工作流持期待为主、略有担忧的态度。",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [
+            "担忧"
+          ],
+          "confidence": 0.8,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 6,
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "图片生成",
+          "summary": "用户最想学习图片生成类 AI 能力。",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "图片生成"
+          ],
+          "concernTags": [],
+          "confidence": 0.95,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        }
+      ],
+      "usageFrequency": "每天使用",
+      "willingness": "期待",
+      "capabilityTags": [
+        "会议纪要"
+      ],
+      "wishTags": [
+        "提示词",
+        "方案撰写",
+        "图片生成"
+      ],
+      "concernTags": [
+        "担忧"
+      ]
+    },
+    {
+      "sessionId": "S-1557",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-16T05:59:39.660Z",
+      "submitTime": "2026-06-16T06:00:49.680Z",
+      "answers": [
+        {
+          "questionIndex": 0,
+          "question": "你觉得 AI 目前对你的工作影响大吗？",
+          "answer": "一点点",
+          "skipped": false
+        },
+        {
+          "questionIndex": 1,
+          "question": "你是否用过 ChatGPT、通义、Kimi、豆包等 AI 工具？",
+          "answer": "没有",
+          "skipped": false
+        },
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "几个小时",
+          "skipped": false
+        },
+        {
+          "questionIndex": 3,
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "写报告、",
+          "skipped": false
+        },
+        {
+          "questionIndex": 4,
+          "question": "你不常使用 AI 的主要原因是什么？",
+          "answer": "不太习惯",
+          "skipped": false
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "有一点期待，也有一点观望",
+          "skipped": false
+        },
+        {
+          "questionIndex": 6,
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "生成报告",
+          "skipped": false
+        }
+      ],
+      "derivedTags": [
+        "报告撰写",
+        "提示词",
+        "入门引导"
+      ],
+      "profileType": "AI 旁观者",
+      "profileText": "你对AI有初步认知和基础期待，尚未实际使用但明确希望用AI辅助报告撰写。态度理性谨慎，处于从观望迈向尝试的关键过渡期，具备良好学习意愿和清晰需求方向。",
+      "scores": [
+        65,
+        20,
+        70,
+        60
+      ],
+      "actions": [
+        "从通义千问或文心一言开始，每天试写1份简报",
+        "收藏3个优质提示词模板，重点练‘生成报告’指令",
+        "参加企业AI入门培训，聚焦文档场景实战"
+      ],
+      "scenario": "文档/报告",
+      "concern": "不会提问",
+      "aiGenerated": true,
+      "aiModel": "qwen-plus",
+      "status": "已完成",
+      "answerInsights": [
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "几个小时",
+          "summary": "用户表示每几个小时使用一次AI。",
+          "usageFrequency": "每天使用",
+          "willingness": "未提及",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 0.95,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 3,
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "写报告、",
+          "summary": "用户希望 AI 帮助撰写报告。",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "报告撰写"
+          ],
+          "concernTags": [],
+          "confidence": 0.95,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "有一点期待，也有一点观望",
+          "summary": "用户对AI进入企业工作流持混合态度，既期待又观望。",
+          "usageFrequency": "未提及",
+          "willingness": "观望",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 0.7,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 6,
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "生成报告",
+          "summary": "用户最想学习生成报告类 AI 能力。",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "报告生成"
+          ],
+          "concernTags": [],
+          "confidence": 0.95,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        }
+      ],
+      "usageFrequency": "每天使用",
+      "willingness": "期待",
+      "capabilityTags": [
+        "会议纪要"
+      ],
+      "wishTags": [
+        "提示词",
+        "报告撰写",
+        "报告生成"
+      ],
+      "concernTags": []
+    },
+    {
+      "sessionId": "S-4161",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-16T05:19:32.161Z",
+      "submitTime": "2026-06-16T05:20:43.449Z",
+      "answers": [
+        {
+          "questionIndex": 0,
+          "question": "你觉得 AI 目前对你的工作影响大吗？",
+          "answer": "不太大",
+          "skipped": false
+        },
+        {
+          "questionIndex": 1,
+          "question": "你是否用过 ChatGPT、通义、Kimi、豆包等 AI 工具？",
+          "answer": "没有",
+          "skipped": false
+        },
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "一会会",
+          "skipped": false
+        },
+        {
+          "questionIndex": 3,
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "会议纪要",
+          "skipped": false
+        },
+        {
+          "questionIndex": 4,
+          "question": "你不常使用 AI 的主要原因是什么？",
+          "answer": "不喜欢问",
+          "skipped": false
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "skipped": false
+        },
+        {
+          "questionIndex": 6,
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "提示词",
+          "skipped": false
+        }
+      ],
+      "derivedTags": [
+        "提示词工程",
+        "会议记录",
+        "AI入门"
+      ],
+      "profileType": "AI 旁观者",
+      "profileText": "你对AI持积极期待态度，但尚未实际使用AI工具，认知尚在起步阶段。虽明确希望用AI处理会议纪要，也想学习提示词技巧，但因‘不喜欢问’而未迈出第一步。当前处于从观望到尝试的关键过渡期，具备良好意愿基础。",
+      "scores": [
+        45,
+        10,
+        30,
+        75
+      ],
+      "actions": [
+        "试用通义千问生成一次会议纪要",
+        "学习3个万能提示词模板",
+        "参加1场AI入门工作坊"
+      ],
+      "scenario": "会议纪要",
+      "concern": "不会提问",
+      "aiGenerated": true,
+      "aiModel": "qwen-plus",
+      "status": "已完成",
+      "answerInsights": [
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "一会会",
+          "summary": "用户使用频率模糊，'一会会'可能指高频但非固定周期。",
+          "usageFrequency": "每天使用",
+          "willingness": "未提及",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 0.7,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 3,
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "会议纪要",
+          "summary": "用户希望 AI 帮助生成会议纪要。",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议记录"
+          ],
+          "wishTags": [
+            "会议纪要"
+          ],
+          "concernTags": [],
+          "confidence": 0.95,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "summary": "用户对AI进入企业工作流持积极态度，明确表示期待。",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 0.95,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 6,
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "提示词",
+          "summary": "用户最想学习提示词相关 AI 能力。",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [],
+          "wishTags": [
+            "提示词工程",
+            "AI交互技巧"
+          ],
+          "concernTags": [],
+          "confidence": 0.95,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        }
+      ],
+      "usageFrequency": "每天使用",
+      "willingness": "期待",
+      "capabilityTags": [
+        "会议纪要",
+        "会议记录"
+      ],
+      "wishTags": [
+        "提示词",
+        "会议纪要",
+        "提示词工程",
+        "AI交互技巧"
+      ],
+      "concernTags": []
+    },
+    {
+      "sessionId": "S-8758",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-16T05:18:17.083Z",
+      "submitTime": "2026-06-16T05:18:17.083Z",
+      "profileType": "AI 场景实践者",
+      "scenario": "数据分析",
+      "concern": "数据安全",
+      "status": "已完成",
+      "derivedTags": [
+        "数据分析",
+        "数据安全",
+        "提示词"
+      ],
+      "usageFrequency": "偶尔使用",
+      "willingness": "期待",
+      "capabilityTags": [
+        "数据分析",
+        "效率提升"
+      ],
+      "wishTags": [
+        "提示词模板",
+        "结果校验"
+      ],
+      "concernTags": [
+        "数据安全"
+      ],
+      "answerInsights": [
+        {
+          "summary": "希望 AI 帮助数据分析",
+          "usageFrequency": "每周使用",
+          "willingness": "期待",
+          "capabilityTags": [
+            "数据分析"
+          ],
+          "wishTags": [
+            "提示词模板",
+            "结果校验"
+          ],
+          "concernTags": [
+            "数据安全"
+          ],
+          "confidence": 0.75,
+          "aiGenerated": false,
+          "model": "mock"
+        }
+      ],
+      "answers": [
+        "希望 AI 帮助数据分析",
+        "主要顾虑是数据安全"
+      ]
+    },
+    {
+      "sessionId": "S-3408",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-16T05:18:17.083Z",
+      "submitTime": "2026-06-16T05:18:17.083Z",
+      "profileType": "AI 旁观者",
+      "scenario": "研发/营销",
+      "concern": "数据安全",
+      "status": "已完成",
+      "derivedTags": [
+        "研发/营销",
+        "数据安全",
+        "会议纪要"
+      ],
+      "usageFrequency": "每周使用",
+      "willingness": "担心",
+      "capabilityTags": [
+        "研发/营销",
+        "效率提升"
+      ],
+      "wishTags": [
+        "提示词模板",
+        "结果校验"
+      ],
+      "concernTags": [
+        "数据安全"
+      ],
+      "answerInsights": [
+        {
+          "summary": "希望 AI 帮助研发/营销",
+          "usageFrequency": "每周使用",
+          "willingness": "期待",
+          "capabilityTags": [
+            "研发/营销"
+          ],
+          "wishTags": [
+            "提示词模板",
+            "结果校验"
+          ],
+          "concernTags": [
+            "数据安全"
+          ],
+          "confidence": 0.75,
+          "aiGenerated": false,
+          "model": "mock"
+        }
+      ],
+      "answers": [
+        "希望 AI 帮助研发/营销",
+        "主要顾虑是数据安全"
+      ]
+    },
+    {
+      "sessionId": "S-5905",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-16T05:18:17.083Z",
+      "submitTime": "2026-06-16T05:18:17.083Z",
+      "profileType": "AI 推动者",
+      "scenario": "知识检索",
+      "concern": "缺少案例",
+      "status": "已完成",
+      "derivedTags": [
+        "知识检索",
+        "缺少案例",
+        "效率提升"
+      ],
+      "usageFrequency": "偶尔使用",
+      "willingness": "担心",
+      "capabilityTags": [
+        "知识检索",
+        "效率提升"
+      ],
+      "wishTags": [
+        "提示词模板",
+        "结果校验",
+        "流程自动化"
+      ],
+      "concernTags": [
+        "缺少案例"
+      ],
+      "answerInsights": [
+        {
+          "summary": "希望 AI 帮助知识检索",
+          "usageFrequency": "每周使用",
+          "willingness": "期待",
+          "capabilityTags": [
+            "知识检索"
+          ],
+          "wishTags": [
+            "提示词模板",
+            "结果校验"
+          ],
+          "concernTags": [
+            "缺少案例"
+          ],
+          "confidence": 0.75,
+          "aiGenerated": false,
+          "model": "mock"
+        }
+      ],
+      "answers": [
+        "希望 AI 帮助知识检索",
+        "主要顾虑是缺少案例"
+      ]
+    },
+    {
+      "sessionId": "S-6055",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-16T05:18:17.083Z",
+      "submitTime": "2026-06-16T05:18:17.083Z",
+      "profileType": "AI 效率提升者",
+      "scenario": "数据分析",
+      "concern": "缺少案例",
+      "status": "已完成",
+      "derivedTags": [
+        "数据分析",
+        "缺少案例",
+        "不会提问"
+      ],
+      "usageFrequency": "每天使用",
+      "willingness": "观望",
+      "capabilityTags": [
+        "数据分析",
+        "效率提升"
+      ],
+      "wishTags": [
+        "提示词模板",
+        "结果校验",
+        "流程自动化"
+      ],
+      "concernTags": [
+        "缺少案例"
+      ],
+      "answerInsights": [
+        {
+          "summary": "希望 AI 帮助数据分析",
+          "usageFrequency": "每周使用",
+          "willingness": "期待",
+          "capabilityTags": [
+            "数据分析"
+          ],
+          "wishTags": [
+            "提示词模板",
+            "结果校验"
+          ],
+          "concernTags": [
+            "缺少案例"
+          ],
+          "confidence": 0.75,
+          "aiGenerated": false,
+          "model": "mock"
+        }
+      ],
+      "answers": [
+        "希望 AI 帮助数据分析",
+        "主要顾虑是缺少案例"
+      ]
+    },
+    {
+      "sessionId": "S-9241",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-16T05:18:17.083Z",
+      "submitTime": "2026-06-16T05:18:17.083Z",
+      "profileType": "AI 旁观者",
+      "scenario": "文档/报告",
+      "concern": "数据安全",
+      "status": "已完成",
+      "derivedTags": [
+        "文档/报告",
+        "数据安全",
+        "流程嵌入"
+      ],
+      "usageFrequency": "每天使用",
+      "willingness": "担心",
+      "capabilityTags": [
+        "文档/报告",
+        "效率提升"
+      ],
+      "wishTags": [
+        "提示词模板",
+        "结果校验"
+      ],
+      "concernTags": [
+        "数据安全"
+      ],
+      "answerInsights": [
+        {
+          "summary": "希望 AI 帮助文档/报告",
+          "usageFrequency": "每周使用",
+          "willingness": "期待",
+          "capabilityTags": [
+            "文档/报告"
+          ],
+          "wishTags": [
+            "提示词模板",
+            "结果校验"
+          ],
+          "concernTags": [
+            "数据安全"
+          ],
+          "confidence": 0.75,
+          "aiGenerated": false,
+          "model": "mock"
+        }
+      ],
+      "answers": [
+        "希望 AI 帮助文档/报告",
+        "主要顾虑是数据安全"
+      ]
+    },
+    {
+      "sessionId": "S-3809",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-16T05:18:17.083Z",
+      "submitTime": "2026-06-16T05:18:17.083Z",
+      "profileType": "AI 旁观者",
+      "scenario": "知识检索",
+      "concern": "工具限制",
+      "status": "已完成",
+      "derivedTags": [
+        "知识检索",
+        "工具限制",
+        "流程嵌入"
+      ],
+      "usageFrequency": "每天使用",
+      "willingness": "观望",
+      "capabilityTags": [
+        "知识检索",
+        "效率提升"
+      ],
+      "wishTags": [
+        "提示词模板",
+        "结果校验"
+      ],
+      "concernTags": [
+        "工具限制"
+      ],
+      "answerInsights": [
+        {
+          "summary": "希望 AI 帮助知识检索",
+          "usageFrequency": "每周使用",
+          "willingness": "期待",
+          "capabilityTags": [
+            "知识检索"
+          ],
+          "wishTags": [
+            "提示词模板",
+            "结果校验"
+          ],
+          "concernTags": [
+            "工具限制"
+          ],
+          "confidence": 0.75,
+          "aiGenerated": false,
+          "model": "mock"
+        }
+      ],
+      "answers": [
+        "希望 AI 帮助知识检索",
+        "主要顾虑是工具限制"
+      ]
+    },
+    {
+      "sessionId": "S-7407",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-16T05:18:17.083Z",
+      "submitTime": "2026-06-16T05:18:17.083Z",
+      "profileType": "AI 旁观者",
+      "scenario": "知识检索",
+      "concern": "数据安全",
+      "status": "已完成",
+      "derivedTags": [
+        "知识检索",
+        "数据安全",
+        "不会提问"
+      ],
+      "usageFrequency": "每周使用",
+      "willingness": "期待",
+      "capabilityTags": [
+        "知识检索",
+        "效率提升"
+      ],
+      "wishTags": [
+        "提示词模板",
+        "结果校验"
+      ],
+      "concernTags": [
+        "数据安全"
+      ],
+      "answerInsights": [
+        {
+          "summary": "希望 AI 帮助知识检索",
+          "usageFrequency": "每周使用",
+          "willingness": "期待",
+          "capabilityTags": [
+            "知识检索"
+          ],
+          "wishTags": [
+            "提示词模板",
+            "结果校验"
+          ],
+          "concernTags": [
+            "数据安全"
+          ],
+          "confidence": 0.75,
+          "aiGenerated": false,
+          "model": "mock"
+        }
+      ],
+      "answers": [
+        "希望 AI 帮助知识检索",
+        "主要顾虑是数据安全"
+      ]
+    },
+    {
+      "sessionId": "S-8500",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-16T05:18:17.083Z",
+      "submitTime": "2026-06-16T05:18:17.083Z",
+      "profileType": "AI 效率提升者",
+      "scenario": "研发/营销",
+      "concern": "缺少案例",
+      "status": "已完成",
+      "derivedTags": [
+        "研发/营销",
+        "缺少案例",
+        "不会提问"
+      ],
+      "usageFrequency": "偶尔使用",
+      "willingness": "期待",
+      "capabilityTags": [
+        "研发/营销",
+        "效率提升"
+      ],
+      "wishTags": [
+        "提示词模板",
+        "结果校验",
+        "流程自动化"
+      ],
+      "concernTags": [
+        "缺少案例"
+      ],
+      "answerInsights": [
+        {
+          "summary": "希望 AI 帮助研发/营销",
+          "usageFrequency": "每周使用",
+          "willingness": "期待",
+          "capabilityTags": [
+            "研发/营销"
+          ],
+          "wishTags": [
+            "提示词模板",
+            "结果校验"
+          ],
+          "concernTags": [
+            "缺少案例"
+          ],
+          "confidence": 0.75,
+          "aiGenerated": false,
+          "model": "mock"
+        }
+      ],
+      "answers": [
+        "希望 AI 帮助研发/营销",
+        "主要顾虑是缺少案例"
+      ]
+    },
+    {
+      "sessionId": "S-5600",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-16T05:18:17.083Z",
+      "submitTime": "2026-06-16T05:18:17.083Z",
+      "profileType": "AI 场景实践者",
+      "scenario": "数据分析",
+      "concern": "准确性",
+      "status": "已完成",
+      "derivedTags": [
+        "数据分析",
+        "准确性",
+        "提示词"
+      ],
+      "usageFrequency": "每周使用",
+      "willingness": "期待",
+      "capabilityTags": [
+        "数据分析",
+        "效率提升"
+      ],
+      "wishTags": [
+        "提示词模板",
+        "结果校验"
+      ],
+      "concernTags": [
+        "准确性"
+      ],
+      "answerInsights": [
+        {
+          "summary": "希望 AI 帮助数据分析",
+          "usageFrequency": "每周使用",
+          "willingness": "期待",
+          "capabilityTags": [
+            "数据分析"
+          ],
+          "wishTags": [
+            "提示词模板",
+            "结果校验"
+          ],
+          "concernTags": [
+            "准确性"
+          ],
+          "confidence": 0.75,
+          "aiGenerated": false,
+          "model": "mock"
+        }
+      ],
+      "answers": [
+        "希望 AI 帮助数据分析",
+        "主要顾虑是准确性"
+      ]
+    },
+    {
+      "sessionId": "S-2486",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-16T05:18:17.083Z",
+      "submitTime": "2026-06-16T05:18:17.083Z",
+      "profileType": "AI 场景实践者",
+      "scenario": "会议纪要",
+      "concern": "工具限制",
+      "status": "已完成",
+      "derivedTags": [
+        "会议纪要",
+        "工具限制",
+        "数据安全"
+      ],
+      "usageFrequency": "每天使用",
+      "willingness": "期待",
+      "capabilityTags": [
+        "会议纪要",
+        "效率提升"
+      ],
+      "wishTags": [
+        "提示词模板",
+        "结果校验"
+      ],
+      "concernTags": [
+        "工具限制"
+      ],
+      "answerInsights": [
+        {
+          "summary": "希望 AI 帮助会议纪要",
+          "usageFrequency": "每周使用",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词模板",
+            "结果校验"
+          ],
+          "concernTags": [
+            "工具限制"
+          ],
+          "confidence": 0.75,
+          "aiGenerated": false,
+          "model": "mock"
+        }
+      ],
+      "answers": [
+        "希望 AI 帮助会议纪要",
+        "主要顾虑是工具限制"
+      ]
+    },
+    {
+      "sessionId": "S-9371",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-16T05:17:35.061Z",
+      "submitTime": "2026-06-16T05:17:51.857Z",
+      "answers": [
+        {
+          "questionIndex": 0,
+          "question": "你觉得 AI 目前对你的工作影响大吗？",
+          "answer": "影响很大",
+          "skipped": false
+        },
+        {
+          "questionIndex": 1,
+          "question": "你是否用过 ChatGPT、通义、Kimi、豆包等 AI 工具？",
+          "answer": "经常用",
+          "skipped": false
+        },
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "每天",
+          "skipped": false
+        },
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "每天",
+          "skipped": false
+        },
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "每天",
+          "skipped": false
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "skipped": false
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "skipped": false
+        },
+        {
+          "questionIndex": 6,
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "提示词",
+          "skipped": false
+        }
+      ],
+      "derivedTags": [
+        "提示词工程",
+        "会议纪要",
+        "高频使用者",
+        "AI期待者"
+      ],
+      "profileType": "AI 场景实践者",
+      "profileText": "你已深度融入AI工作流，每日高频使用，对AI影响感知强烈且持高度期待。当前聚焦会议纪要等具体场景，核心诉求是提升提示词能力，具备扎实的实践基础与明确的进阶方向。",
+      "scores": [
+        95,
+        90,
+        85,
+        92
+      ],
+      "actions": [
+        "每天练习1个高质量提示词并复盘效果",
+        "用AI优化本周3份会议纪要模板",
+        "加入内部AI提示词共享小组"
+      ],
+      "scenario": "会议纪要",
+      "concern": "不会提问",
+      "aiGenerated": true,
+      "aiModel": "qwen-plus",
+      "status": "已完成",
+      "answerInsights": [
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "每天",
+          "summary": "用户每天使用AI。",
+          "usageFrequency": "每天使用",
+          "willingness": "未提及",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 1,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "summary": "用户对AI进入企业工作流持积极态度，明确表达期待。",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 0.95,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 6,
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "提示词",
+          "summary": "用户最想学习提示词相关AI能力。",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [],
+          "wishTags": [
+            "提示词工程",
+            "指令优化",
+            "上下文构建",
+            "多轮对话设计"
+          ],
+          "concernTags": [],
+          "confidence": 0.95,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        }
+      ],
+      "usageFrequency": "每天使用",
+      "willingness": "期待",
+      "capabilityTags": [
+        "会议纪要"
+      ],
+      "wishTags": [
+        "提示词",
+        "提示词工程",
+        "指令优化",
+        "上下文构建",
+        "多轮对话设计"
+      ],
+      "concernTags": []
+    },
+    {
+      "sessionId": "S-9156",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-16T05:16:52.775Z",
+      "submitTime": "2026-06-16T05:17:08.195Z",
+      "answers": [
+        {
+          "questionIndex": 0,
+          "question": "你觉得 AI 目前对你的工作影响大吗？",
+          "answer": "影响很大",
+          "skipped": false
+        },
+        {
+          "questionIndex": 1,
+          "question": "你是否用过 ChatGPT、通义、Kimi、豆包等 AI 工具？",
+          "answer": "经常用",
+          "skipped": false
+        },
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "每天",
+          "skipped": false
+        },
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "每天",
+          "skipped": false
+        },
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "每天",
+          "skipped": false
+        },
+        {
+          "questionIndex": 3,
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "文档/报告",
+          "skipped": false
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "skipped": false
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "skipped": false
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "skipped": false
+        }
+      ],
+      "derivedTags": [
+        "文档生成",
+        "报告撰写",
+        "提示词"
+      ],
+      "profileType": "AI 场景实践者",
+      "profileText": "你已深度融入AI工作流，每日高频使用，聚焦文档/报告等核心场景，对AI价值高度认同且主动期待。认知扎实、行动稳定，正从工具使用者向场景优化者进阶。",
+      "scores": [
+        95,
+        90,
+        85,
+        92
+      ],
+      "actions": [
+        "精炼提示词模板，提升文档生成质量",
+        "建立常用报告结构库，与AI协同迭代",
+        "分享文档提效案例，带动团队实践"
+      ],
+      "scenario": "文档/报告",
+      "concern": "不会提问",
+      "aiGenerated": true,
+      "aiModel": "qwen-plus",
+      "status": "已完成",
+      "answerInsights": [
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "每天",
+          "summary": "用户每天使用 AI。",
+          "usageFrequency": "每天使用",
+          "willingness": "未提及",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 1,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 3,
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "文档/报告",
+          "summary": "用户希望 AI 帮助处理文档/报告类工作问题。",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "文档生成",
+            "报告撰写",
+            "内容整理",
+            "格式优化"
+          ],
+          "concernTags": [],
+          "confidence": 0.95,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "summary": "用户对 AI 进入企业工作流持积极态度，明确表示期待。",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 1,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        }
+      ],
+      "usageFrequency": "每天使用",
+      "willingness": "期待",
+      "capabilityTags": [
+        "会议纪要"
+      ],
+      "wishTags": [
+        "提示词",
+        "文档生成",
+        "报告撰写",
+        "内容整理",
+        "格式优化"
+      ],
+      "concernTags": []
+    },
+    {
+      "sessionId": "S-7599",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-16T01:37:22.229Z",
+      "submitTime": "2026-06-16T01:37:30.315Z",
+      "answers": [
+        {
+          "questionIndex": 0,
+          "question": "你觉得 AI 目前对你的工作影响大吗？",
+          "answer": "影响很大",
+          "skipped": false
+        },
+        {
+          "questionIndex": 1,
+          "question": "你是否用过 ChatGPT、通义、Kimi、豆包等 AI 工具？",
+          "answer": "经常用",
+          "skipped": false
+        },
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "每天",
+          "skipped": false
+        },
+        {
+          "questionIndex": 3,
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "文档/报告",
+          "skipped": false
+        },
+        {
+          "questionIndex": 4,
+          "question": "你不常使用 AI 的主要原因是什么？",
+          "answer": "准确性",
+          "skipped": false
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "skipped": false
+        },
+        {
+          "questionIndex": 6,
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "提示词",
+          "skipped": false
+        }
+      ],
+      "derivedTags": [
+        "提示词",
+        "准确性"
+      ],
+      "profileType": "AI 场景实践者",
+      "profileText": "你已经能把 AI 与具体业务问题联系起来，关注的不只是工具本身，而是如何把它嵌入稳定流程。接下来适合学习任务拆解、知识库和结果校验，让 AI 从个人效率工具升级为协作能力。",
+      "scores": [
+        86,
+        82,
+        88,
+        84
+      ],
+      "actions": [
+        "把重复任务拆成可交给 AI 协作的步骤。",
+        "尝试建立私有知识素材与提示词组合。",
+        "为关键输出设置人工复核和事实校验点。"
+      ],
+      "scenario": "文档/报告",
+      "concern": "准确性",
+      "aiGenerated": false,
+      "aiModel": "local-fallback",
+      "status": "已完成",
+      "answerInsights": [
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "每天",
+          "summary": "每天",
+          "usageFrequency": "每天使用",
+          "willingness": "未提及",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 0.68,
+          "aiGenerated": false,
+          "model": "local-fallback"
+        },
+        {
+          "questionIndex": 3,
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "文档/报告",
+          "summary": "文档/报告",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 0.68,
+          "aiGenerated": false,
+          "model": "local-fallback"
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "summary": "期待",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 0.68,
+          "aiGenerated": false,
+          "model": "local-fallback"
+        },
+        {
+          "questionIndex": 6,
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "提示词",
+          "summary": "提示词",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 0.68,
+          "aiGenerated": false,
+          "model": "local-fallback"
+        }
+      ],
+      "usageFrequency": "每天使用",
+      "willingness": "期待",
+      "capabilityTags": [
+        "会议纪要"
+      ],
+      "wishTags": [
+        "提示词"
+      ],
+      "concernTags": []
+    },
+    {
+      "sessionId": "S-4749",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-11T11:31:53.631Z",
+      "submitTime": "2026-06-11T11:32:08.852Z",
+      "answers": [
+        {
+          "question": "你觉得 AI 目前对你的工作影响大吗？",
+          "answer": "影响很大",
+          "skipped": false
+        },
+        {
+          "question": "你是否用过 ChatGPT、通义、Kimi、豆包等 AI 工具？",
+          "answer": "经常用",
+          "skipped": false
+        },
+        {
+          "question": "你大概多久用一次 AI？",
+          "answer": "每天",
+          "skipped": false
+        },
+        {
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "文档/报告",
+          "skipped": false
+        },
+        {
+          "question": "你不常使用 AI 的主要原因是什么？",
+          "answer": "准确性",
+          "skipped": false
+        },
+        {
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "skipped": false
+        },
+        {
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "提示词",
+          "skipped": false
+        },
+        {
+          "question": "你是谁？",
+          "answer": "很期待",
+          "skipped": false
+        }
+      ],
+      "derivedTags": [
+        "提示词",
+        "准确性"
+      ],
+      "profileType": "AI 场景实践者",
+      "profileText": "你已经能把 AI 与具体业务问题联系起来，关注的不只是工具本身，而是如何把它嵌入稳定流程。接下来适合学习任务拆解、知识库和结果校验，让 AI 从个人效率工具升级为协作能力。",
+      "scores": [
+        86,
+        82,
+        88,
+        84
+      ],
+      "actions": [
+        "把重复任务拆成可交给 AI 协作的步骤。",
+        "尝试建立私有知识素材与提示词组合。",
+        "为关键输出设置人工复核和事实校验点。"
+      ],
+      "scenario": "文档/报告",
+      "concern": "准确性",
+      "aiGenerated": false,
+      "aiModel": "local-fallback",
+      "status": "已完成"
+    },
+    {
+      "sessionId": "S-8411",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-11T11:11:00.326Z",
+      "submitTime": "2026-06-11T11:11:07.740Z",
+      "answers": [
+        {
+          "question": "你觉得 AI 目前对你的工作影响大吗？",
+          "answer": "1",
+          "skipped": false
+        },
+        {
+          "question": "你是否用过 ChatGPT、通义、Kimi、豆包等 AI 工具？",
+          "answer": "2",
+          "skipped": false
+        },
+        {
+          "question": "你大概多久用一次 AI？",
+          "answer": "每天",
+          "skipped": false
+        },
+        {
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "文档/报告",
+          "skipped": false
+        },
+        {
+          "question": "你不常使用 AI 的主要原因是什么？",
+          "answer": "准确性",
+          "skipped": false
+        },
+        {
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "skipped": false
+        },
+        {
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "提示词",
+          "skipped": false
+        }
+      ],
+      "derivedTags": [
+        "提示词",
+        "准确性"
+      ],
+      "profileType": "AI 场景实践者",
+      "profileText": "你已经能把 AI 与具体业务问题联系起来，关注的不只是工具本身，而是如何把它嵌入稳定流程。接下来适合学习任务拆解、知识库和结果校验，让 AI 从个人效率工具升级为协作能力。",
+      "scores": [
+        86,
+        82,
+        88,
+        84
+      ],
+      "actions": [
+        "把重复任务拆成可交给 AI 协作的步骤。",
+        "尝试建立私有知识素材与提示词组合。",
+        "为关键输出设置人工复核和事实校验点。"
+      ],
+      "scenario": "文档/报告",
+      "concern": "准确性",
+      "aiGenerated": false,
+      "aiModel": "local-fallback",
+      "status": "已完成"
+    },
+    {
+      "sessionId": "S-2787",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-11T11:10:40.045Z",
+      "submitTime": "2026-06-11T11:10:43.274Z",
+      "answers": [
+        {
+          "question": "你觉得 AI 目前对你的工作影响大吗？",
+          "answer": "影响很大",
+          "skipped": false
+        },
+        {
+          "question": "你是否用过 ChatGPT、通义、Kimi、豆包等 AI 工具？",
+          "answer": "经常用",
+          "skipped": false
+        },
+        {
+          "question": "你大概多久用一次 AI？",
+          "answer": "每天",
+          "skipped": false
+        },
+        {
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "文档/报告",
+          "skipped": false
+        },
+        {
+          "question": "你不常使用 AI 的主要原因是什么？",
+          "answer": "准确性",
+          "skipped": false
+        },
+        {
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "skipped": false
+        },
+        {
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "提示词",
+          "skipped": false
+        }
+      ],
+      "derivedTags": [
+        "提示词",
+        "准确性"
+      ],
+      "profileType": "AI 场景实践者",
+      "profileText": "你已经能把 AI 与具体业务问题联系起来，关注的不只是工具本身，而是如何把它嵌入稳定流程。接下来适合学习任务拆解、知识库和结果校验，让 AI 从个人效率工具升级为协作能力。",
+      "scores": [
+        86,
+        82,
+        88,
+        84
+      ],
+      "actions": [
+        "把重复任务拆成可交给 AI 协作的步骤。",
+        "尝试建立私有知识素材与提示词组合。",
+        "为关键输出设置人工复核和事实校验点。"
+      ],
+      "scenario": "文档/报告",
+      "concern": "准确性",
+      "aiGenerated": false,
+      "aiModel": "local-fallback",
+      "status": "已完成"
+    },
+    {
+      "sessionId": "S-2506",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-11T11:10:26.830Z",
+      "submitTime": "2026-06-11T11:10:33.741Z",
+      "answers": [
+        {
+          "question": "你觉得 AI 目前对你的工作影响大吗？",
+          "answer": "影响很大",
+          "skipped": false
+        },
+        {
+          "question": "你是否用过 ChatGPT、通义、Kimi、豆包等 AI 工具？",
+          "answer": "经常用",
+          "skipped": false
+        },
+        {
+          "question": "你大概多久用一次 AI？",
+          "answer": "每天",
+          "skipped": false
+        },
+        {
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "文档/报告",
+          "skipped": false
+        },
+        {
+          "question": "你不常使用 AI 的主要原因是什么？",
+          "answer": "准确性",
+          "skipped": false
+        },
+        {
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "skipped": false
+        },
+        {
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "提示词",
+          "skipped": false
+        }
+      ],
+      "derivedTags": [
+        "提示词",
+        "准确性"
+      ],
+      "profileType": "AI 场景实践者",
+      "profileText": "你已经能把 AI 与具体业务问题联系起来，关注的不只是工具本身，而是如何把它嵌入稳定流程。接下来适合学习任务拆解、知识库和结果校验，让 AI 从个人效率工具升级为协作能力。",
+      "scores": [
+        86,
+        82,
+        88,
+        84
+      ],
+      "actions": [
+        "把重复任务拆成可交给 AI 协作的步骤。",
+        "尝试建立私有知识素材与提示词组合。",
+        "为关键输出设置人工复核和事实校验点。"
+      ],
+      "scenario": "文档/报告",
+      "concern": "准确性",
+      "aiGenerated": false,
+      "aiModel": "local-fallback",
+      "status": "已完成"
+    },
+    {
+      "sessionId": "S-2176",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-11T11:09:14.997Z",
+      "submitTime": "2026-06-11T11:09:16.017Z",
+      "answers": [
+        {
+          "question": "你觉得 AI 目前对你的工作影响大吗？",
+          "answer": "影响很大",
+          "skipped": false
+        },
+        {
+          "question": "你是否用过 ChatGPT、通义、Kimi、豆包等 AI 工具？",
+          "answer": "经常用 Kimi 和豆包",
+          "skipped": false
+        },
+        {
+          "question": "你大概多久用一次 AI？",
+          "answer": "每天",
+          "skipped": false
+        },
+        {
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "文档/报告和会议纪要",
+          "skipped": false
+        },
+        {
+          "question": "你不常使用 AI 的主要原因是什么？",
+          "answer": "担心准确性",
+          "skipped": false
+        },
+        {
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "skipped": false
+        },
+        {
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "想学习提示词和结果校验",
+          "skipped": false
+        }
+      ],
+      "derivedTags": [
+        "会议纪要",
+        "提示词",
+        "准确性",
+        "结果校验"
+      ],
+      "profileType": "AI 场景实践者",
+      "profileText": "你已经能把 AI 与具体业务问题联系起来，关注的不只是工具本身，而是如何把它嵌入稳定流程。接下来适合学习任务拆解、知识库和结果校验，让 AI 从个人效率工具升级为协作能力。",
+      "scores": [
+        86,
+        82,
+        88,
+        84
+      ],
+      "actions": [
+        "把重复任务拆成可交给 AI 协作的步骤。",
+        "尝试建立私有知识素材与提示词组合。",
+        "为关键输出设置人工复核和事实校验点。"
+      ],
+      "scenario": "会议纪要",
+      "concern": "准确性",
+      "aiGenerated": false,
+      "aiModel": "local-fallback",
+      "status": "已完成"
+    },
+    {
+      "sessionId": "S-6073",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-11T10:34:28.195Z",
+      "submitTime": "2026-06-11T10:34:29.222Z",
+      "answers": [
+        {
+          "question": "你觉得 AI 目前对你的工作影响大吗？",
+          "answer": "影响很大",
+          "skipped": false
+        },
+        {
+          "question": "你是否用过 ChatGPT、通义、Kimi、豆包等 AI 工具？",
+          "answer": "经常用 Kimi 和豆包",
+          "skipped": false
+        },
+        {
+          "question": "你大概多久用一次 AI？",
+          "answer": "每天",
+          "skipped": false
+        },
+        {
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "文档/报告和会议纪要",
+          "skipped": false
+        },
+        {
+          "question": "你不常使用 AI 的主要原因是什么？",
+          "answer": "担心准确性",
+          "skipped": false
+        },
+        {
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "skipped": false
+        },
+        {
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "想学习提示词和结果校验",
+          "skipped": false
+        }
+      ],
+      "derivedTags": [
+        "会议纪要",
+        "提示词",
+        "准确性",
+        "结果校验"
+      ],
+      "profileType": "AI 场景实践者",
+      "profileText": "你已经能把 AI 与具体业务问题联系起来，关注的不只是工具本身，而是如何把它嵌入稳定流程。接下来适合学习任务拆解、知识库和结果校验，让 AI 从个人效率工具升级为协作能力。",
+      "scores": [
+        86,
+        82,
+        88,
+        84
+      ],
+      "actions": [
+        "把重复任务拆成可交给 AI 协作的步骤。",
+        "尝试建立私有知识素材与提示词组合。",
+        "为关键输出设置人工复核和事实校验点。"
+      ],
+      "scenario": "会议纪要",
+      "concern": "准确性",
+      "aiGenerated": false,
+      "aiModel": "local-fallback",
+      "status": "已完成"
+    },
+    {
+      "sessionId": "S-5179",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-11T10:31:08.097Z",
+      "submitTime": "2026-06-11T10:31:17.680Z",
+      "answers": [
+        {
+          "question": "你觉得 AI 目前对你的工作影响大吗？",
+          "answer": "影响很大",
+          "skipped": false
+        },
+        {
+          "question": "你是否用过 ChatGPT、通义、Kimi、豆包等 AI 工具？",
+          "answer": "经常用",
+          "skipped": false
+        },
+        {
+          "question": "你大概多久用一次 AI？",
+          "answer": "每天",
+          "skipped": false
+        },
+        {
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "文档/报告",
+          "skipped": false
+        },
+        {
+          "question": "你不常使用 AI 的主要原因是什么？",
+          "answer": "准确性",
+          "skipped": false
+        },
+        {
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "skipped": false
+        },
+        {
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "提示词",
+          "skipped": false
+        }
+      ],
+      "derivedTags": [
+        "提示词",
+        "准确性"
+      ],
+      "profileType": "AI 场景实践者",
+      "profileText": "你已经能把 AI 与具体业务问题联系起来，关注的不只是工具本身，而是如何把它嵌入稳定流程。接下来适合学习任务拆解、知识库和结果校验，让 AI 从个人效率工具升级为协作能力。",
+      "scores": [
+        86,
+        82,
+        88,
+        84
+      ],
+      "actions": [
+        "把重复任务拆成可交给 AI 协作的步骤。",
+        "尝试建立私有知识素材与提示词组合。",
+        "为关键输出设置人工复核和事实校验点。"
+      ],
+      "scenario": "文档/报告",
+      "concern": "准确性",
+      "aiGenerated": false,
+      "aiModel": "local-fallback",
+      "status": "已完成"
+    },
+    {
+      "sessionId": "S-2410",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-11T09:00:07.498Z",
+      "submitTime": "2026-06-11T09:00:49.180Z",
+      "answers": [
+        {
+          "question": "你觉得 AI 目前对你的工作影响大吗？",
+          "answer": "大",
+          "skipped": false
+        },
+        {
+          "question": "你是否用过 ChatGPT、通义、Kimi、豆包等 AI 工具？",
+          "answer": "没有",
+          "skipped": false
+        },
+        {
+          "question": "你大概多久用一次 AI？",
+          "answer": "不怎么用",
+          "skipped": false
+        },
+        {
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "会议纪要",
+          "skipped": false
+        },
+        {
+          "question": "你不常使用 AI 的主要原因是什么？",
+          "answer": "不喜欢",
+          "skipped": false
+        },
+        {
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "担心",
+          "skipped": false
+        },
+        {
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "场景案例",
+          "skipped": false
+        }
+      ],
+      "derivedTags": [
+        "会议纪要"
+      ],
+      "profileType": "AI 效率提升者",
+      "profileText": "你已经意识到 AI 可以帮助提升工作效率，并可能在资料整理、内容生成、信息检索等场景中有所尝试。你目前最需要的是把零散使用沉淀为固定场景、提示词模板和可靠的输出校验方法。",
+      "scores": [
+        76,
+        68,
+        72,
+        78
+      ],
+      "actions": [
+        "把 AI 用于会议纪要、报告初稿、资料总结等高频任务。",
+        "学习如何写出清晰提示词，并沉淀可复用模板。",
+        "建立输出校验习惯，区分可直接使用和需要复核的结果。"
+      ],
+      "scenario": "会议纪要",
+      "concern": "缺少案例",
+      "aiGenerated": false,
+      "aiModel": "local-fallback",
+      "status": "已完成"
+    },
+    {
+      "sessionId": "S-1042",
+      "profileType": "AI 尝鲜者",
+      "scenario": "会议纪要",
+      "concern": "不会提问",
+      "status": "已完成",
+      "answers": [
+        "试过豆包",
+        "偶尔用",
+        "会议纪要",
+        "不会写提示词"
+      ]
+    },
+    {
+      "sessionId": "S-1041",
+      "profileType": "AI 效率提升者",
+      "scenario": "文档/报告",
+      "concern": "准确性",
+      "status": "已完成",
+      "answers": [
+        "用过 Kimi",
+        "每周使用",
+        "报告初稿",
+        "担心准确性"
+      ]
+    },
+    {
+      "sessionId": "S-1040",
+      "profileType": "AI 旁观者",
+      "scenario": "培训入门",
+      "concern": "数据安全",
+      "status": "进行中",
+      "answers": [
+        "很少用",
+        "想先学基础"
+      ]
+    },
+    {
+      "sessionId": "S-1039",
+      "profileType": "AI 场景实践者",
+      "scenario": "数据分析",
+      "concern": "工具限制",
+      "status": "已完成",
+      "answers": [
+        "每天用",
+        "数据分析",
+        "流程自动化"
+      ]
+    }
+  ],
+  "sessionDrafts": {
+    "S-7599": {
+      "sessionId": "S-7599",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-16T01:37:22.229Z",
+      "answers": [
+        {
+          "questionIndex": 0,
+          "question": "你觉得 AI 目前对你的工作影响大吗？",
+          "answer": "影响很大",
+          "skipped": false,
+          "answeredAt": "2026-06-16T01:37:24.146Z"
+        },
+        {
+          "questionIndex": 1,
+          "question": "你是否用过 ChatGPT、通义、Kimi、豆包等 AI 工具？",
+          "answer": "经常用",
+          "skipped": false,
+          "answeredAt": "2026-06-16T01:37:25.907Z"
+        },
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "每天",
+          "skipped": false,
+          "answeredAt": "2026-06-16T01:37:27.333Z"
+        },
+        {
+          "questionIndex": 3,
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "文档/报告",
+          "skipped": false,
+          "answeredAt": "2026-06-16T01:37:27.859Z"
+        },
+        {
+          "questionIndex": 4,
+          "question": "你不常使用 AI 的主要原因是什么？",
+          "answer": "准确性",
+          "skipped": false,
+          "answeredAt": "2026-06-16T01:37:28.268Z"
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "skipped": false,
+          "answeredAt": "2026-06-16T01:37:28.654Z"
+        },
+        {
+          "questionIndex": 6,
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "提示词",
+          "skipped": false,
+          "answeredAt": "2026-06-16T01:37:29.041Z"
+        }
+      ],
+      "answerInsights": [
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "每天",
+          "summary": "每天",
+          "usageFrequency": "每天使用",
+          "willingness": "未提及",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 0.68,
+          "aiGenerated": false,
+          "model": "local-fallback"
+        },
+        {
+          "questionIndex": 3,
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "文档/报告",
+          "summary": "文档/报告",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 0.68,
+          "aiGenerated": false,
+          "model": "local-fallback"
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "summary": "期待",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 0.68,
+          "aiGenerated": false,
+          "model": "local-fallback"
+        },
+        {
+          "questionIndex": 6,
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "提示词",
+          "summary": "提示词",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 0.68,
+          "aiGenerated": false,
+          "model": "local-fallback"
+        }
+      ],
+      "status": "已完成",
+      "updatedAt": "2026-06-16T01:37:29.041Z",
+      "submitTime": "2026-06-16T01:37:30.315Z"
+    },
+    "S-9156": {
+      "sessionId": "S-9156",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-16T05:16:52.775Z",
+      "answers": [
+        {
+          "questionIndex": 0,
+          "question": "你觉得 AI 目前对你的工作影响大吗？",
+          "answer": "影响很大",
+          "skipped": false,
+          "answeredAt": "2026-06-16T05:16:54.156Z"
+        },
+        {
+          "questionIndex": 1,
+          "question": "你是否用过 ChatGPT、通义、Kimi、豆包等 AI 工具？",
+          "answer": "经常用",
+          "skipped": false,
+          "answeredAt": "2026-06-16T05:16:55.680Z"
+        },
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "每天",
+          "skipped": false,
+          "answeredAt": "2026-06-16T05:16:56.253Z"
+        },
+        {
+          "questionIndex": 3,
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "文档/报告",
+          "skipped": false,
+          "answeredAt": "2026-06-16T05:16:57.644Z"
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "skipped": false,
+          "answeredAt": "2026-06-16T05:17:00.345Z"
+        }
+      ],
+      "answerInsights": [
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "每天",
+          "summary": "用户每天使用AI",
+          "usageFrequency": "每天使用",
+          "willingness": "未提及",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 1,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 3,
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "文档/报告",
+          "summary": "用户希望 AI 帮助处理文档/报告类工作问题。",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "文档生成",
+            "报告撰写",
+            "内容整理",
+            "格式优化"
+          ],
+          "concernTags": [],
+          "confidence": 0.95,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "summary": "用户对 AI 进入企业工作流持积极态度，明确表示期待。",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 1,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        }
+      ],
+      "status": "已完成",
+      "updatedAt": "2026-06-16T05:17:02.229Z",
+      "submitTime": "2026-06-16T05:17:08.195Z"
+    },
+    "S-9371": {
+      "sessionId": "S-9371",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-16T05:17:35.061Z",
+      "answers": [
+        {
+          "questionIndex": 0,
+          "question": "你觉得 AI 目前对你的工作影响大吗？",
+          "answer": "影响很大",
+          "skipped": false,
+          "answeredAt": "2026-06-16T05:17:36.406Z"
+        },
+        {
+          "questionIndex": 1,
+          "question": "你是否用过 ChatGPT、通义、Kimi、豆包等 AI 工具？",
+          "answer": "经常用",
+          "skipped": false,
+          "answeredAt": "2026-06-16T05:17:37.064Z"
+        },
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "每天",
+          "skipped": false,
+          "answeredAt": "2026-06-16T05:17:40.456Z"
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "skipped": false,
+          "answeredAt": "2026-06-16T05:17:43.854Z"
+        },
+        {
+          "questionIndex": 6,
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "提示词",
+          "skipped": false,
+          "answeredAt": "2026-06-16T05:17:45.734Z"
+        }
+      ],
+      "answerInsights": [
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "每天",
+          "summary": "用户每天使用AI。",
+          "usageFrequency": "每天使用",
+          "willingness": "未提及",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 1,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "summary": "用户对AI进入企业工作流持积极态度，明确表达期待。",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 1,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 6,
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "提示词",
+          "summary": "用户最想学习提示词相关AI能力。",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [],
+          "wishTags": [
+            "提示词工程",
+            "指令优化",
+            "上下文构建",
+            "多轮对话设计"
+          ],
+          "concernTags": [],
+          "confidence": 0.95,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        }
+      ],
+      "status": "已完成",
+      "updatedAt": "2026-06-16T05:17:47.494Z",
+      "submitTime": "2026-06-16T05:17:51.857Z"
+    },
+    "S-4161": {
+      "sessionId": "S-4161",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-16T05:19:32.161Z",
+      "answers": [
+        {
+          "questionIndex": 0,
+          "question": "你觉得 AI 目前对你的工作影响大吗？",
+          "answer": "不太大",
+          "skipped": false,
+          "answeredAt": "2026-06-16T05:19:36.837Z"
+        },
+        {
+          "questionIndex": 1,
+          "question": "你是否用过 ChatGPT、通义、Kimi、豆包等 AI 工具？",
+          "answer": "没有",
+          "skipped": false,
+          "answeredAt": "2026-06-16T05:19:40.574Z"
+        },
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "一会会",
+          "skipped": false,
+          "answeredAt": "2026-06-16T05:19:46.170Z"
+        },
+        {
+          "questionIndex": 3,
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "会议纪要",
+          "skipped": false,
+          "answeredAt": "2026-06-16T05:19:54.901Z"
+        },
+        {
+          "questionIndex": 4,
+          "question": "你不常使用 AI 的主要原因是什么？",
+          "answer": "不喜欢问",
+          "skipped": false,
+          "answeredAt": "2026-06-16T05:20:27.197Z"
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "skipped": false,
+          "answeredAt": "2026-06-16T05:20:30.611Z"
+        },
+        {
+          "questionIndex": 6,
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "提示词",
+          "skipped": false,
+          "answeredAt": "2026-06-16T05:20:35.961Z"
+        }
+      ],
+      "answerInsights": [
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "一会会",
+          "summary": "用户使用频率模糊，'一会会'可能指高频但非固定周期。",
+          "usageFrequency": "每天使用",
+          "willingness": "未提及",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 0.7,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 3,
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "会议纪要",
+          "summary": "用户希望 AI 帮助生成会议纪要。",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议记录"
+          ],
+          "wishTags": [
+            "会议纪要"
+          ],
+          "concernTags": [],
+          "confidence": 0.95,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "期待",
+          "summary": "用户对AI进入企业工作流持积极态度，明确表示期待。",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 0.95,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 6,
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "提示词",
+          "summary": "用户最想学习提示词相关 AI 能力。",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [],
+          "wishTags": [
+            "提示词工程",
+            "AI交互技巧"
+          ],
+          "concernTags": [],
+          "confidence": 0.95,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        }
+      ],
+      "status": "已完成",
+      "updatedAt": "2026-06-16T05:20:37.739Z",
+      "submitTime": "2026-06-16T05:20:43.449Z"
+    },
+    "S-1557": {
+      "sessionId": "S-1557",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-16T05:59:39.660Z",
+      "answers": [
+        {
+          "questionIndex": 0,
+          "question": "你觉得 AI 目前对你的工作影响大吗？",
+          "answer": "一点点",
+          "skipped": false,
+          "answeredAt": "2026-06-16T05:59:43.233Z"
+        },
+        {
+          "questionIndex": 1,
+          "question": "你是否用过 ChatGPT、通义、Kimi、豆包等 AI 工具？",
+          "answer": "没有",
+          "skipped": false,
+          "answeredAt": "2026-06-16T05:59:46.779Z"
+        },
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "几个小时",
+          "skipped": false,
+          "answeredAt": "2026-06-16T05:59:53.012Z"
+        },
+        {
+          "questionIndex": 3,
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "写报告、",
+          "skipped": false,
+          "answeredAt": "2026-06-16T06:00:01.063Z"
+        },
+        {
+          "questionIndex": 4,
+          "question": "你不常使用 AI 的主要原因是什么？",
+          "answer": "不太习惯",
+          "skipped": false,
+          "answeredAt": "2026-06-16T06:00:09.884Z"
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "有一点期待，也有一点观望",
+          "skipped": false,
+          "answeredAt": "2026-06-16T06:00:32.295Z"
+        },
+        {
+          "questionIndex": 6,
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "生成报告",
+          "skipped": false,
+          "answeredAt": "2026-06-16T06:00:43.233Z"
+        }
+      ],
+      "answerInsights": [
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "几个小时",
+          "summary": "用户表示每几个小时使用一次AI。",
+          "usageFrequency": "每天使用",
+          "willingness": "未提及",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 0.95,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 3,
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "写报告、",
+          "summary": "用户希望 AI 帮助撰写报告。",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "报告撰写"
+          ],
+          "concernTags": [],
+          "confidence": 0.95,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "有一点期待，也有一点观望",
+          "summary": "用户对AI进入企业工作流持混合态度，既期待又观望。",
+          "usageFrequency": "未提及",
+          "willingness": "观望",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 0.7,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 6,
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "生成报告",
+          "summary": "用户最想学习生成报告类 AI 能力。",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "报告生成"
+          ],
+          "concernTags": [],
+          "confidence": 0.95,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        }
+      ],
+      "status": "已完成",
+      "updatedAt": "2026-06-16T06:00:45.250Z",
+      "submitTime": "2026-06-16T06:00:49.680Z"
+    },
+    "S-1236": {
+      "sessionId": "S-1236",
+      "eventId": "yanfeng-demo-2026",
+      "enterTime": "2026-06-16T06:04:01.647Z",
+      "answers": [
+        {
+          "questionIndex": 0,
+          "question": "你觉得 AI 目前对你的工作影响大吗？",
+          "answer": "很大很大",
+          "skipped": false,
+          "answeredAt": "2026-06-16T06:04:06.590Z"
+        },
+        {
+          "questionIndex": 1,
+          "question": "你是否用过 ChatGPT、通义、Kimi、豆包等 AI 工具？",
+          "answer": "用过Kimi",
+          "skipped": false,
+          "answeredAt": "2026-06-16T06:04:15.216Z"
+        },
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "每隔一个小时就在用",
+          "skipped": false,
+          "answeredAt": "2026-06-16T06:04:30.701Z"
+        },
+        {
+          "questionIndex": 3,
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "方案的撰写",
+          "skipped": false,
+          "answeredAt": "2026-06-16T06:04:40.302Z"
+        },
+        {
+          "questionIndex": 4,
+          "question": "你不常使用 AI 的主要原因是什么？",
+          "answer": "我天天用啊",
+          "skipped": false,
+          "answeredAt": "2026-06-16T06:04:52.237Z"
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "有一点点担忧，主要还是期待",
+          "skipped": false,
+          "answeredAt": "2026-06-16T06:05:03.411Z"
+        },
+        {
+          "questionIndex": 6,
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "图片生成",
+          "skipped": false,
+          "answeredAt": "2026-06-16T06:05:12.812Z"
+        }
+      ],
+      "answerInsights": [
+        {
+          "questionIndex": 2,
+          "question": "你大概多久用一次 AI？",
+          "answer": "每隔一个小时就在用",
+          "summary": "用户高频使用AI，几乎持续使用。",
+          "usageFrequency": "每天使用",
+          "willingness": "未提及",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [],
+          "confidence": 0.95,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 3,
+          "question": "你最希望 AI 帮你解决哪类工作问题？",
+          "answer": "方案的撰写",
+          "summary": "用户希望 AI 协助撰写方案。",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "方案撰写"
+          ],
+          "concernTags": [],
+          "confidence": 0.95,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 5,
+          "question": "你对 AI 进入企业工作流是期待、观望还是担心？",
+          "answer": "有一点点担忧，主要还是期待",
+          "summary": "用户对AI进入企业工作流持期待为主、略有担忧的态度。",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "提示词"
+          ],
+          "concernTags": [
+            "担忧"
+          ],
+          "confidence": 0.8,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        },
+        {
+          "questionIndex": 6,
+          "question": "你最想学习哪类 AI 能力？",
+          "answer": "图片生成",
+          "summary": "用户最想学习图片生成类 AI 能力。",
+          "usageFrequency": "未提及",
+          "willingness": "期待",
+          "capabilityTags": [
+            "会议纪要"
+          ],
+          "wishTags": [
+            "图片生成"
+          ],
+          "concernTags": [],
+          "confidence": 0.95,
+          "aiGenerated": true,
+          "model": "qwen-plus"
+        }
+      ],
+      "status": "已完成",
+      "updatedAt": "2026-06-16T06:05:14.604Z",
+      "submitTime": "2026-06-16T06:05:19.215Z"
+    }
+  },
+  "dashboardSnapshot": {
+    "counts": {
+      "visits": 255,
+      "started": 233,
+      "done": 201,
+      "completionRate": 86
+    },
+    "timer": {
+      "activityState": "进行中",
+      "durationMinutes": 10,
+      "secondsLeft": 299
+    },
+    "maturityDistribution": [
+      [
+        "AI 旁观者",
+        22
+      ],
+      [
+        "AI 尝鲜者",
+        4
+      ],
+      [
+        "AI 效率提升者",
+        15
+      ],
+      [
+        "AI 场景实践者",
+        56
+      ],
+      [
+        "AI 推动者",
+        4
+      ]
+    ],
+    "usageDistribution": [
+      [
+        "从未使用",
+        0
+      ],
+      [
+        "偶尔使用",
+        15
+      ],
+      [
+        "每周使用",
+        15
+      ],
+      [
+        "每天使用",
+        69
+      ]
+    ],
+    "willingnessDistribution": [
+      [
+        "期待",
+        72
+      ],
+      [
+        "观望",
+        8
+      ],
+      [
+        "担心",
+        20
+      ]
+    ],
+    "capabilityWordCloud": [
+      [
+        "效率提升",
+        10
+      ],
+      [
+        "会议纪要",
+        7
+      ],
+      [
+        "数据分析",
+        3
+      ],
+      [
+        "知识检索",
+        3
+      ],
+      [
+        "研发/营销",
+        2
+      ],
+      [
+        "会议记录",
+        1
+      ],
+      [
+        "文档/报告",
+        1
+      ]
+    ],
+    "wishWordCloud": [
+      [
+        "提示词模板",
+        10
+      ],
+      [
+        "结果校验",
+        10
+      ],
+      [
+        "提示词",
+        6
+      ],
+      [
+        "流程自动化",
+        3
+      ],
+      [
+        "报告撰写",
+        2
+      ],
+      [
+        "提示词工程",
+        2
+      ],
+      [
+        "方案撰写",
+        1
+      ],
+      [
+        "图片生成",
+        1
+      ],
+      [
+        "报告生成",
+        1
+      ],
+      [
+        "会议纪要",
+        1
+      ],
+      [
+        "AI交互技巧",
+        1
+      ],
+      [
+        "指令优化",
+        1
+      ]
+    ],
+    "groupInsight": "当前全场255位参会者中，86%已完成核心互动，活跃度与完成率双高；人群以‘AI场景实践者’为主力（56%），超七成抱持‘期待’心态，日常高频使用AI（每天使用占69%）；大家最认可AI在‘效率提升’上的价值，高频提及‘会议纪要’‘数据分析’等场景，同时强烈渴望获得‘提示词模板’和‘结果校验’等实操支持——这是一群有经验、有热情、有明确进阶诉求的务实践行者。",
+    "generatedAt": "2026-06-16T06:05:36.821Z"
+  },
+  "startedSessionIds": [
+    "S-2410",
+    "S-5179",
+    "S-6073",
+    "S-2176",
+    "S-2506",
+    "S-2787",
+    "S-8411",
+    "S-4749",
+    "S-7599",
+    "S-9156",
+    "S-9371",
+    "S-4161",
+    "S-1557",
+    "S-1236"
+  ],
+  "submittedSessionIds": [
+    "S-2410",
+    "S-5179",
+    "S-6073",
+    "S-2176",
+    "S-2506",
+    "S-2787",
+    "S-8411",
+    "S-4749",
+    "S-7599",
+    "S-9156",
+    "S-9371",
+    "S-2486",
+    "S-5600",
+    "S-8500",
+    "S-7407",
+    "S-3809",
+    "S-9241",
+    "S-6055",
+    "S-5905",
+    "S-3408",
+    "S-8758",
+    "S-4161",
+    "S-1557",
+    "S-1236"
+  ],
+  "timerUpdatedAt": "2026-06-16T06:10:55.784Z"
+}
