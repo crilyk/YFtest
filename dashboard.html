@@ -886,6 +886,14 @@
       transition: width .4s ease;
     }
 
+    .bar-row.is-empty .bar-track {
+      background: rgba(150, 168, 191, .12);
+    }
+
+    .bar-row.is-empty .bar {
+      display: none;
+    }
+
     .donut-wrap {
       display: grid;
       grid-template-columns: minmax(188px, 220px) 1fr;
@@ -929,6 +937,10 @@
       border-radius: 2px;
       margin-right: 8px;
       background: #2dd4bf;
+    }
+
+    .legend .is-empty i {
+      background: rgba(148, 163, 184, .36) !important;
     }
 
     .word-cloud {
@@ -977,6 +989,204 @@
 
     .form-grid { display: grid; gap: 14px; }
     label { display: grid; gap: 7px; font-size: 13px; font-weight: 700; }
+
+    .config-field {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 10px;
+    }
+
+    .config-field > label,
+    .config-field > .config-editor { min-width: 0; }
+    .config-field .btn {
+      min-width: 72px;
+      height: 34px;
+      align-self: end;
+    }
+
+    .btn.save-action {
+      min-height: 34px;
+      padding: 0 12px;
+      border-color: #b9d8d3;
+      color: #0f766e;
+      background: #eef8f6;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: none;
+    }
+
+    .btn.save-action:hover {
+      border-color: #86c7be;
+      background: #e2f3f0;
+    }
+
+    .config-field.textarea-field {
+      align-items: start;
+    }
+
+    .config-field.textarea-field .btn {
+      margin-top: 22px;
+    }
+
+    .question-config-field {
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-column: 1 / -1;
+    }
+
+    .question-config-field > .btn {
+      align-self: start;
+      margin-top: 34px;
+      position: sticky;
+      top: 14px;
+    }
+
+    .question-config-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .question-config-head strong {
+      display: block;
+      color: var(--ink);
+      font-size: 15px;
+    }
+
+    .question-config-head span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 500;
+      margin-top: 3px;
+    }
+
+    .question-config-actions,
+    .question-card-actions,
+    .question-rule-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .question-config-actions {
+      min-width: 142px;
+    }
+
+    .btn.question-action {
+      min-height: 28px;
+      padding: 0 9px;
+      font-size: 12px;
+      border-color: #d6e2ea;
+      color: #486174;
+      background: #f8fbfd;
+    }
+
+    .btn.question-action:hover {
+      border-color: #b9ccd8;
+      background: #eef5f8;
+    }
+
+    .btn.question-action.danger {
+      color: #a14747;
+      border-color: #ead2d2;
+      background: #fff8f8;
+    }
+
+    .question-flow-editor {
+      display: grid;
+      gap: 10px;
+      max-height: 620px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .question-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .question-card-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .question-card-title {
+      display: grid;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .question-card-title strong {
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .question-card-title span,
+    .question-route {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .question-mini-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 10px;
+    }
+
+    .question-card textarea,
+    .question-card input,
+    .question-card select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 10px;
+      color: var(--ink);
+      background: #fff;
+      font: inherit;
+      font-size: 13px;
+    }
+
+    .question-card textarea {
+      resize: vertical;
+      min-height: 62px;
+      line-height: 1.45;
+    }
+
+    .question-rule-list {
+      display: grid;
+      gap: 6px;
+    }
+
+    .question-rule-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 180px auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .question-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .question-toggle input {
+      width: auto;
+    }
 
     .switch {
       display: inline-grid;
@@ -1175,6 +1385,24 @@
       }
       .qr-card { grid-template-columns: 1fr; }
       .score-grid, .stat-grid, .dash-top, .check-grid, .welcome-info { grid-template-columns: 1fr; }
+      .config-field { grid-template-columns: 1fr; }
+      .config-field .btn,
+      .config-field.textarea-field .btn {
+        width: 100%;
+        margin-top: 0;
+      }
+      .question-mini-grid,
+      .question-rule-row {
+        grid-template-columns: 1fr;
+      }
+      .question-config-field > .btn {
+        position: static;
+      }
+      .question-config-head,
+      .question-card-head,
+      .question-rule-row {
+        grid-template-columns: 1fr;
+      }
       .donut-wrap { grid-template-columns: 1fr; }
       .bar-row { grid-template-columns: 86px 1fr 42px; }
       .admin-layout { padding: 14px; }
@@ -1201,7 +1429,6 @@
       </div>
       <nav class="tabs" aria-label="演示视图">
         <button class="tab active" data-view="audience">观众端 H5</button>
-        <button class="tab" data-view="dashboard">讲师大屏</button>
         <button class="tab" data-view="admin">后台配置</button>
       </nav>
     </header>
@@ -1338,9 +1565,9 @@
                   </div>
                   <div class="dash-metric-grid">
                     <div class="dash-card dash-timer"><div class="dash-muted small">倒计时</div><div class="metric" id="timer">08:42</div></div>
-                    <div class="dash-card dash-metric-card"><div class="dash-muted small">扫码人数</div><div class="metric" id="metricVisits">238</div></div>
-                    <div class="dash-card dash-metric-card"><div class="dash-muted small">开始调研人数</div><div class="metric" id="metricStarted">216</div></div>
-                    <div class="dash-card dash-metric-card"><div class="dash-muted small">完成人数</div><div class="metric" id="metricDone">184</div></div>
+                    <div class="dash-card dash-metric-card"><div class="dash-muted small">扫码人数</div><div class="metric" id="metricVisits">0</div></div>
+                    <div class="dash-card dash-metric-card"><div class="dash-muted small">开始调研人数</div><div class="metric" id="metricStarted">0</div></div>
+                    <div class="dash-card dash-metric-card"><div class="dash-muted small">完成人数</div><div class="metric" id="metricDone">0</div></div>
                   </div>
                 </div>
                 <div class="dash-card dash-qr-stage">
@@ -1365,7 +1592,7 @@
                       <span class="dash-muted small">Maturity</span>
                     </div>
                     <div class="donut-wrap" style="margin-top:18px;">
-                      <div class="donut" id="donut" data-total="100%"></div>
+                      <div class="donut" id="donut" data-total="0%"></div>
                       <div class="legend" id="profileLegend"></div>
                     </div>
                   </div>
@@ -1406,7 +1633,7 @@
                       <h3 style="margin:0;">AI 生成全场洞察</h3>
                       <span class="dash-muted small">Group Insight</span>
                     </div>
-                    <p id="groupInsight">当前现场人群以“尝鲜者”和“效率提升者”为主，大家已经感知到 AI 能在文档、会议和资料整理中带来效率价值，但对准确性、数据安全和如何提问仍有顾虑。</p>
+                    <p id="groupInsight">暂无完成提交，等待观众扫码并完成问卷后生成全场洞察。</p>
                   </div>
                 </div>
               </div>
@@ -1426,15 +1653,24 @@
               <span class="pill">本地演示数据</span>
             </div>
             <div class="form-grid" style="margin-top:16px;">
-              <label>活动名称
-                <input class="input" id="adminEventName" />
-              </label>
-              <label>活动固定链接
-                <input class="input" id="adminEventUrl" />
-              </label>
-              <label>观众端后端 API 地址
-                <input class="input" id="adminPublicApiBase" placeholder="例如：https://your-domain.com/api" />
-              </label>
+              <div class="config-field">
+                <label>活动名称
+                  <input class="input" id="adminEventName" />
+                </label>
+                <button class="btn save-action" type="button" data-save-field="eventName">保存</button>
+              </div>
+              <div class="config-field">
+                <label>活动固定链接
+                  <input class="input" id="adminEventUrl" />
+                </label>
+                <button class="btn save-action" type="button" data-save-field="eventUrl">保存</button>
+              </div>
+              <div class="config-field">
+                <label>观众端后端 API 地址
+                  <input class="input" id="adminPublicApiBase" placeholder="例如：https://your-domain.com/api" />
+                </label>
+                <button class="btn save-action" type="button" data-save-field="publicApiBase">保存</button>
+              </div>
               <label>活动状态
                 <span class="switch" id="stateSwitch">
                   <button data-state="未开始">未开始</button>
@@ -1442,32 +1678,60 @@
                   <button data-state="已结束">已结束</button>
                 </span>
               </label>
-              <div class="grid" style="grid-template-columns:1fr 1fr;">
+              <div class="config-field">
                 <label>调研时长（分钟）
                   <input class="input" id="adminDuration" type="number" min="1" max="30" />
                 </label>
+                <button class="btn save-action" type="button" data-save-field="durationMinutes">保存</button>
               </div>
-              <label>调研问题大纲（一行一个）
-                <textarea class="textarea" id="questionConfig"></textarea>
-              </label>
-              <label>画像生成 Prompt 摘要
-                <textarea class="textarea" id="promptConfig"></textarea>
-              </label>
-              <label>单题总结 Prompt
-                <textarea class="textarea" id="answerPromptConfig"></textarea>
-              </label>
-              <label>全场洞察 Prompt
-                <textarea class="textarea" id="insightPromptConfig"></textarea>
-              </label>
-              <div class="row">
-                <button class="btn blue" id="saveInsightPromptOnly" type="button">单独保存全场洞察 Prompt</button>
-                <span class="pill" id="insightPromptSaveStatus">等待保存</span>
+              <div class="config-field textarea-field question-config-field">
+                <div class="config-editor">
+                  <div class="question-config-head">
+                    <div>
+                      <strong>问卷题库与分支逻辑</strong>
+                      <span>每位观众最多回答 8 题；分支按回答中的关键词从上到下命中第一条规则。</span>
+                    </div>
+                    <div class="question-config-actions">
+                      <button class="btn question-action" type="button" id="addQuestionBtn">新增问题</button>
+                      <span class="pill">结构化配置</span>
+                    </div>
+                  </div>
+                  <div class="question-flow-editor" id="questionFlowEditor"></div>
+                  <textarea class="textarea" id="questionConfig" hidden></textarea>
+                </div>
+                <button class="btn save-action" type="button" data-save-field="questions">保存</button>
               </div>
-              <label>Dashboard 展示字段
-                <div class="check-grid" id="dashboardFields"></div>
-              </label>
+              <div class="config-field textarea-field">
+                <label>画像生成 Prompt
+                  <textarea class="textarea" id="promptConfig"></textarea>
+                </label>
+                <button class="btn save-action" type="button" data-save-field="profilePrompt">保存</button>
+              </div>
+              <div class="config-field textarea-field">
+                <label>单题总结 Prompt（仅 Dashboard 四类字段）
+                  <textarea class="textarea" id="answerPromptConfig"></textarea>
+                </label>
+                <button class="btn save-action" type="button" data-save-field="answerPrompt">保存</button>
+              </div>
+              <div class="config-field textarea-field">
+                <label>AI 智能路由 Prompt
+                  <textarea class="textarea" id="routePromptConfig"></textarea>
+                </label>
+                <button class="btn save-action" type="button" data-save-field="routePrompt">保存</button>
+              </div>
+              <div class="config-field textarea-field">
+                <label>全场洞察 Prompt
+                  <textarea class="textarea" id="insightPromptConfig"></textarea>
+                </label>
+                <button class="btn save-action" type="button" data-save-field="insightPrompt">保存</button>
+              </div>
+              <div class="config-field textarea-field">
+                <label>Dashboard 展示字段
+                  <div class="check-grid" id="dashboardFields"></div>
+                </label>
+                <button class="btn save-action" type="button" data-save-field="dashboardFields">保存</button>
+              </div>
               <div class="row">
-                <button class="btn primary" id="saveConfig">保存配置</button>
                 <button class="btn" id="resetAudience">重置当前观众</button>
                 <button class="btn" id="exportCsv">导出 CSV</button>
                 <button class="btn warn" id="clearData">清空测试数据</button>
@@ -1479,10 +1743,10 @@
             <div class="card card-pad">
               <h3 style="margin:0 0 12px;">实时监控</h3>
               <div class="score-grid">
-                <div class="score"><div class="muted small">扫码访问</div><strong id="adminVisits">238</strong></div>
-                <div class="score"><div class="muted small">开始调研</div><strong id="adminStarted">216</strong></div>
-                <div class="score"><div class="muted small">完成提交</div><strong id="adminDone">184</strong></div>
-                <div class="score"><div class="muted small">完成率</div><strong id="adminRate">85%</strong></div>
+                <div class="score"><div class="muted small">扫码访问</div><strong id="adminVisits">0</strong></div>
+                <div class="score"><div class="muted small">开始调研</div><strong id="adminStarted">0</strong></div>
+                <div class="score"><div class="muted small">完成提交</div><strong id="adminDone">0</strong></div>
+                <div class="score"><div class="muted small">完成率</div><strong id="adminRate">0%</strong></div>
               </div>
             </div>
             <div class="card card-pad">
@@ -1527,7 +1791,9 @@
   <div class="toast" id="toast">已保存</div>
 
   <script>
-    const STORE_KEY = "yanfeng-ai-survey-demo-v2";
+    const STORE_KEY = "yanfeng-ai-survey-demo-v3";
+    const AUDIENCE_H5_STORE_KEY = "yanfeng-audience-h5-v2";
+    const AUDIENCE_RESET_SIGNAL_KEY = "yanfeng-audience-reset-at";
     const PUBLIC_AUDIENCE_URL = "https://crilyk.github.io/YFtest/audience-h5.html";
     const PAGE_NAME = (location.pathname.split("/").pop() || "index.html").toLowerCase();
     const STANDALONE_VIEW = PAGE_NAME === "dashboard.html" ? "dashboard" : PAGE_NAME === "admin.html" ? "admin" : "";
@@ -1560,13 +1826,6 @@
       ["insight", "全场洞察"]
     ];
 
-    const seedSubmissions = [
-      { sessionId: "S-1042", profileType: "AI 尝鲜者", scenario: "会议纪要", concern: "不会提问", status: "已完成", answers: ["试过豆包", "偶尔用", "会议纪要", "不会写提示词"] },
-      { sessionId: "S-1041", profileType: "AI 效率提升者", scenario: "文档/报告", concern: "准确性", status: "已完成", answers: ["用过 Kimi", "每周使用", "报告初稿", "担心准确性"] },
-      { sessionId: "S-1040", profileType: "AI 旁观者", scenario: "培训入门", concern: "数据安全", status: "进行中", answers: ["很少用", "想先学基础"] },
-      { sessionId: "S-1039", profileType: "AI 场景实践者", scenario: "数据分析", concern: "工具限制", status: "已完成", answers: ["每天用", "数据分析", "流程自动化"] }
-    ];
-
     const defaults = {
       eventName: "AI 互动调研与实时画像系统",
       eventUrl: PUBLIC_AUDIENCE_URL,
@@ -1575,27 +1834,227 @@
       durationMinutes: 10,
       targetCapacity: 300,
       secondsLeft: 522,
-      visits: 238,
-      started: 216,
-      done: 184,
+      visits: 0,
+      started: 0,
+      done: 0,
       questions: [
-        { text: "你觉得 AI 目前对你的工作影响大吗？", quick: ["影响很大", "有一些影响", "暂时不明显"] },
-        { text: "你是否用过 ChatGPT、通义、Kimi、豆包等 AI 工具？", quick: ["经常用", "偶尔试过", "基本没用过"] },
-        { text: "你大概多久用一次 AI？", quick: ["每天", "每周", "偶尔", "几乎不用"] },
-        { text: "你最希望 AI 帮你解决哪类工作问题？", quick: ["文档/报告", "会议纪要", "数据分析", "知识检索"] },
-        { text: "你不常使用 AI 的主要原因是什么？", quick: ["准确性", "数据安全", "不会提问", "缺少案例"] },
-        { text: "你对 AI 进入企业工作流是期待、观望还是担心？", quick: ["期待", "观望", "担心"] },
-        { text: "你最想学习哪类 AI 能力？", quick: ["提示词", "场景案例", "结果校验", "流程嵌入"] }
+    {
+      id: "q1_usage_base",
+      title: "第 1 题：使用基础判断",
+      route: "通用入口",
+      text: "你平时会使用 AI 工具吗？如果用过，请说说大概多久使用一次；如果没用过，直接回答“没用过”即可。",
+      helper: "",
+      quick: ["没用过", "只试过几次", "偶尔使用", "经常使用", "每天使用"],
+      aiRouteEnabled: true,
+      nextRules: [
+        { keywords: ["没用过", "从未使用", "从来没用", "没有用过", "没试过", "听说过但没试过", "不了解", "不会用", "否"], next: "q2_newbie_distance" },
+        { keywords: ["不经常", "很少", "偶尔", "有时", "有时候", "试过", "几次", "每周", "需要时", "不熟"], next: "q2_intro_frequency" },
+        { keywords: ["每天", "天天", "经常", "频繁", "常用", "高频", "工作中常用", "已形成习惯", "离不开"], next: "q2_advanced_frequency" },
+        { keywords: ["用过", "使用过", "是"], next: "q2_intro_frequency" }
       ],
+      defaultNext: "q2_intro_frequency"
+    },
+    {
+      id: "q2_newbie_distance",
+      title: "第 2 题：认知距离",
+      route: "新手路线",
+      text: "你觉得 AI 离你的日常工作近吗？",
+      helper: "可以简单说说你觉得它有用、暂时用不上、还不了解，或有点担心。",
+      quick: ["感觉有用", "暂时用不上", "还不了解", "有点担心"],
+      defaultNext: "q3_impact"
+    },
+    {
+      id: "q2_intro_frequency",
+      title: "第 2 题：使用触发场景",
+      route: "入门路线",
+      text: "你通常会在什么情况下想到使用 AI？可以说一个最近使用的场景；如果还没有固定场景，也可以直接说。",
+      helper: "",
+      quick: ["写文档或邮件时", "查资料或做总结时", "遇到不懂的问题时", "工作忙、需要提效时", "还没有固定场景"],
+      defaultNext: "q3_impact"
+    },
+    {
+      id: "q2_advanced_frequency",
+      title: "第 2 题：使用方式成熟度",
+      route: "进阶路线",
+      text: "你现在通常怎样把 AI 用进工作？可以说是临时问答、固定提示词、固定工作场景，还是已经接入工作流程。",
+      helper: "",
+      quick: ["临时问答", "固定提示词模板", "固定工作场景", "结合知识资料", "接入工作流程"],
+      defaultNext: "q3_advanced_work"
+    },
+    {
+      id: "q3_impact",
+      title: "第 3 题：AI 能力认知",
+      route: "新手/入门路线",
+      text: "结合你的了解或体验，你觉得 AI 现在能帮人完成哪些工作？可以直接说你想到的事情。",
+      helper: "",
+      quick: ["写文档和邮件", "查资料和做总结", "整理会议纪要", "分析数据", "还不太清楚"],
+      defaultNext: "q4_scene"
+    },
+    {
+      id: "q3_advanced_work",
+      title: "第 3 题：高频工作场景",
+      route: "进阶路线",
+      text: "你目前最常用 AI 做哪些工作？",
+      helper: "可以说具体任务，例如写材料、做总结、查资料、分析数据、生成方案等。",
+      quick: ["写文档", "做总结", "查资料", "分析数据", "生成方案"],
+      defaultNext: "q4_advanced_best"
+    },
+    {
+      id: "q4_scene",
+      title: "第 4 题：工作场景挖掘",
+      route: "新手/入门路线",
+      text: "你最希望 AI 帮你解决哪类工作问题？",
+      helper: "例如写文档、做总结、查资料、整理数据、生成方案、做会议纪要、处理邮件、做报表、辅助决策等。",
+      quick: ["文档/方案/邮件", "数据/报表/分析", "会议/纪要/待办", "查资料/知识库", "还不确定"],
+      aiRouteEnabled: true,
+      nextRules: [
+        { keywords: ["文档", "方案", "邮件", "汇报", "材料"], next: "q5_doc" },
+        { keywords: ["数据", "报表", "分析", "图表"], next: "q5_data" },
+        { keywords: ["会议", "纪要", "待办", "会后"], next: "q5_meeting" },
+        { keywords: ["查资料", "知识库", "制度", "流程", "检索"], next: "q5_knowledge" },
+        { keywords: ["不知道", "不确定", "没场景", "重复", "耗时"], next: "q5_repetitive" }
+      ],
+      defaultNext: "q5_repetitive"
+    },
+    {
+      id: "q4_advanced_best",
+      title: "第 4 题：高价值场景",
+      route: "进阶路线",
+      text: "哪一个 AI 使用场景对你帮助最大？",
+      helper: "可以描述一个具体场景，以及它帮你节省了什么时间或改善了什么质量。",
+      quick: ["文档写作", "会议总结", "数据分析", "知识检索", "流程提效"],
+      defaultNext: "q5_advanced_flow"
+    },
+    {
+      id: "q5_doc",
+      title: "第 5 题：文档类追问",
+      route: "动态追问",
+      text: "在文档工作中，你更希望 AI 帮你做哪一步？",
+      helper: "例如起草初稿、润色表达、提炼重点、检查逻辑、生成汇报材料等。",
+      quick: ["起草初稿", "润色表达", "提炼重点", "检查逻辑", "生成汇报材料"],
+      defaultNext: "q6_barrier"
+    },
+    {
+      id: "q5_data",
+      title: "第 5 题：数据类追问",
+      route: "动态追问",
+      text: "在数据或报表工作中，你更希望 AI 帮你做什么？",
+      helper: "例如整理数据、发现异常、生成图表、解释数据、输出分析结论等。",
+      quick: ["整理数据", "发现异常", "生成图表", "解释数据", "输出结论"],
+      defaultNext: "q6_barrier"
+    },
+    {
+      id: "q5_meeting",
+      title: "第 5 题：会议类追问",
+      route: "动态追问",
+      text: "在会议相关工作中，你更希望 AI 帮你做什么？",
+      helper: "例如会前准备、会议纪要、待办提取、结论总结、会后跟进等。",
+      quick: ["会前准备", "会议纪要", "待办提取", "结论总结", "会后跟进"],
+      defaultNext: "q6_barrier"
+    },
+    {
+      id: "q5_knowledge",
+      title: "第 5 题：知识检索追问",
+      route: "动态追问",
+      text: "你希望 AI 帮你查找或整理哪类信息？",
+      helper: "例如制度流程、项目资料、产品知识、客户信息、历史文档等。",
+      quick: ["制度流程", "项目资料", "产品知识", "客户信息", "历史文档"],
+      defaultNext: "q6_barrier"
+    },
+    {
+      id: "q5_repetitive",
+      title: "第 5 题：重复工作追问",
+      route: "动态追问",
+      text: "你平时有哪些工作比较重复、耗时，或者容易忘记？",
+      helper: "可以随便举一两个例子。",
+      quick: ["整理资料", "写材料", "开会记录", "做报表", "跟进待办"],
+      defaultNext: "q6_barrier"
+    },
+    {
+      id: "q5_advanced_flow",
+      title: "第 5 题：流程接入机会",
+      route: "进阶路线",
+      text: "你希望公司在哪些工作流程中接入 AI？",
+      helper: "可以说具体流程、系统或协作环节。",
+      quick: ["知识库问答", "报表分析", "会议流程", "文档审批", "客户支持"],
+      defaultNext: "q6_advanced_focus"
+    },
+    {
+      id: "q6_barrier",
+      title: "第 6 题：阻碍因素判断",
+      route: "新手/入门路线",
+      text: "你目前不常使用 AI，或者使用时不顺畅的主要原因是什么？",
+      helper: "可以写一个或多个原因，例如不知道场景、不会提问、担心准确性、担心数据安全、缺少统一工具等。",
+      quick: ["不知道场景", "不会提问", "担心准确性", "担心数据安全", "缺少统一工具"],
+      defaultNext: "q7_attitude"
+    },
+    {
+      id: "q6_advanced_focus",
+      title: "第 6 题：进阶关注点",
+      route: "进阶路线",
+      text: "你使用 AI 时最在意什么？",
+      helper: "例如准确性、效率、权限、安全、可追溯、能否接入流程等。",
+      quick: ["准确性", "效率", "权限安全", "可追溯", "流程接入"],
+      defaultNext: "q7_attitude"
+    },
+    {
+      id: "q7_attitude",
+      title: "第 7 题：态度与接受度",
+      route: "通用收束",
+      text: "如果 AI 逐步进入企业工作流程，你的态度更接近哪一种？",
+      helper: "可以选择期待、观望或担心，也可以用自己的话简单说说原因。",
+      quick: ["期待", "观望", "担心"],
+      defaultNext: "q8_training"
+    },
+    {
+      id: "q8_training",
+      title: "第 8 题：培训需求",
+      route: "通用收束",
+      text: "你最想学习哪类 AI 能力？",
+      helper: "可以直接写你想学的内容，例如 AI 基础、提示词、写文档、会议纪要、数据分析、知识检索、岗位案例、数据安全或自动化工作流。",
+      quick: ["AI 基础入门", "如何向 AI 提问", "写文档/邮件/方案", "会议纪要和总结", "数据安全"],
+      defaultNext: "__end__"
+    }
+  ],
       prompt: "根据用户回答，输出画像类型、四项评分、100-150 字解读和 3 条行动建议。模型失败时使用模板兜底。",
       promptTemplates: {
         answerExtract: {
-          version: "answer-extract-v1",
-          content: "请基于单个问题和回答，提取用于大屏聚合的结构化标签。只返回 JSON，字段为 summary, usageFrequency, willingness, capabilityTags, wishTags, concernTags, confidence。"
+          version: "answer-extract-v2",
+          content: [
+            "你是企业大会现场的 Dashboard 单题结构化助手。",
+            "请求中会提供 dashboardField，只提取该字段，其他统计字段必须返回未提及或空数组。",
+            "只返回 JSON，不要 Markdown，不要解释。",
+            "字段必须为：summary, usageFrequency, willingness, capabilityTags, wishTags, confidence。",
+            "usageFrequency 从 从未使用、偶尔使用、每周使用、每天使用、未提及 中选择。",
+            "willingness 只能从 期待、观望、担心、未提及 中选择：愿意尝试、主动采用归为期待；暂不确定、先看看、暂不感兴趣归为观望；担忧风险、存在顾虑归为担心。",
+            "capabilityTags 表示用户认为 AI 已经能做到什么；wishTags 表示用户希望 AI 做到什么。",
+            "summary 必须只依据用户回答本身，不得把问题文本中的示例、选项或工具名当作用户已经提到的内容。",
+            "如果用户回答中出现具体 AI 工具名，summary 和 tags 中必须原样保留用户写法，不要自行替换、纠错或补充。",
+            "例如用户回答“用过 Gemini”或“用过 Gimini”，不得写成“用过 Kimi”，也不得补充 ChatGPT、通义、豆包等用户没有提到的工具。",
+            "如果用户只回答“用过”“试过”“每天”等泛化内容，但没有写具体工具名，不要在 summary 中添加任何具体工具名。",
+            "每个 tags 数组最多 4 个短词。confidence 为 0-1 数字。"
+          ].join("\n")
+        },
+        routeDecision: {
+          version: "route-decision-v1",
+          content: [
+            "你是问卷智能路由助手。",
+            "请根据用户的自然语言回答，从 allowedRoutes 中选择语义最匹配的下一题。",
+            "关键词只是辅助提示，不要求用户逐字命中。不得选择 allowedRoutes 之外的题目。",
+            "如果信息不足或无法判断，选择 defaultNext。",
+            "只返回 JSON，不要 Markdown，不要解释。字段必须为：nextQuestionId, confidence, reason。",
+            "confidence 为 0-1 数字；reason 不超过 40 个中文字符。"
+          ].join("\n")
         },
         profileGenerate: {
           version: "profile-generate-v1",
-          content: "根据用户回答和单题结构化总结，输出画像类型、四项评分、100-150 字解读和 3 条行动建议。模型失败时使用模板兜底。"
+          content: [
+            "根据用户回答和单题结构化总结，输出画像类型、四项评分、100-150 字解读和 3 条行动建议。模型失败时使用模板兜底。",
+            "画像文本必须严格依据用户真实回答，不得把题目中的示例工具名当作用户使用过的工具。",
+            "如果用户提到具体 AI 工具名，必须原样保留用户写法，不要自行替换、纠错或补充。",
+            "例如用户回答“用过 Gemini”或“用过 Gimini”，画像中不得写成“用过 Kimi”，也不得写“如 Kimi”。",
+            "如果用户没有提到具体工具名，不要在画像文本中出现 ChatGPT、通义、Kimi、豆包、Gemini 等具体工具名。"
+          ].join("\n")
         },
         groupInsight: {
           version: "group-insight-v1",
@@ -1603,18 +2062,88 @@
         }
       },
       dashboardFields: ["counts", "profile", "usage", "scenario", "concern", "keyword", "insight"],
-      submissions: seedSubmissions,
+      submissions: [],
       currentSession: null,
       lastSubmissionId: null
     };
 
     const $ = (id) => document.getElementById(id);
+    const EMPTY_GROUP_INSIGHT = "暂无完成提交，等待观众扫码并完成问卷后生成全场洞察。";
+    const EMPTY_PROFILE_DIST = [["AI 旁观者", 0], ["AI 尝鲜者", 0], ["AI 效率提升者", 0], ["AI 场景实践者", 0], ["AI 推动者", 0]];
+    const EMPTY_USAGE_DIST = [["从未使用", 0], ["偶尔使用", 0], ["每周使用", 0], ["每天使用", 0]];
+    const EMPTY_INTENT_DIST = [["期待", 0], ["观望", 0], ["担心", 0]];
     const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
     const cloneData = (value) => JSON.parse(JSON.stringify(value));
+    const MAX_SURVEY_QUESTIONS = 8;
+
+    function escapeHtml(value) {
+      return String(value == null ? "" : value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function normalizeQuestion(item = {}, index = 0) {
+      const source = typeof item === "string" ? { text: item } : (item || {});
+      const fallback = defaults.questions[index] || {};
+      const id = String(source.id || fallback.id || `q${index + 1}`).trim();
+      const nextRules = Array.isArray(source.nextRules) ? source.nextRules.map(rule => ({
+        keywords: Array.isArray(rule.keywords) ? rule.keywords.map(item => String(item).trim()).filter(Boolean) : [],
+        next: String(rule.next || "").trim()
+      })).filter(rule => rule.next) : (Array.isArray(fallback.nextRules) ? cloneData(fallback.nextRules) : []);
+      const routeFlag = Object.prototype.hasOwnProperty.call(source, "aiRouteEnabled")
+        ? !!source.aiRouteEnabled
+        : (Object.prototype.hasOwnProperty.call(source, "aiExtractEnabled") ? !!source.aiExtractEnabled : !!fallback.aiRouteEnabled);
+      return {
+        id,
+        title: String(source.title || fallback.title || `第 ${index + 1} 题`).trim(),
+        route: String(source.route || fallback.route || "通用").trim(),
+        text: String(source.text || fallback.text || "").trim(),
+        helper: Object.prototype.hasOwnProperty.call(source, "helper") ? String(source.helper || "").trim() : "",
+        quick: Array.isArray(source.quick) ? source.quick.map(item => String(item).trim()).filter(Boolean) : (Array.isArray(fallback.quick) ? fallback.quick : []),
+        aiRouteEnabled: nextRules.length ? routeFlag : false,
+        nextRules,
+        defaultNext: Object.prototype.hasOwnProperty.call(source, "defaultNext")
+          ? String(source.defaultNext || "").trim()
+          : String(fallback.defaultNext || "").trim()
+      };
+    }
+
+    function normalizeQuestions(input) {
+      const list = Array.isArray(input) && input.length ? input : defaults.questions;
+      return list.map((item, index) => normalizeQuestion(item, index)).filter(item => item.text);
+    }
+
+    function questionIndexById(id, questions = state.questions) {
+      const target = String(id || "");
+      return normalizeQuestions(questions).findIndex(item => item.id === target);
+    }
+
+    function questionLabel(question, index) {
+      return `${index + 1}. ${question.title || question.text}`;
+    }
+
+    function questionMessage(question) {
+      return String(question && question.text ? question.text : "");
+    }
+
+    function questionSignature(questions) {
+      return JSON.stringify(normalizeQuestions(questions).map(q => ({
+        id: q.id,
+        title: q.title,
+        route: q.route,
+        text: q.text,
+        quick: q.quick,
+        aiRouteEnabled: q.aiRouteEnabled,
+        nextRules: q.nextRules,
+        defaultNext: q.defaultNext
+      })));
+    }
 
     function normalizePromptTemplates(input = {}, legacyPrompt = "") {
       const normalized = cloneData(defaults.promptTemplates);
-      ["answerExtract", "profileGenerate", "groupInsight"].forEach(key => {
+      ["answerExtract", "routeDecision", "profileGenerate", "groupInsight"].forEach(key => {
         normalized[key] = {
           ...normalized[key],
           ...(input && input[key] ? input[key] : {})
@@ -1627,12 +2156,19 @@
     }
 
     let state = loadState();
+    state.questions = normalizeQuestions(state.questions);
+    state.promptTemplates = normalizePromptTemplates(state.promptTemplates, state.prompt);
+    state.prompt = state.promptTemplates && state.promptTemplates.profileGenerate && state.promptTemplates.profileGenerate.content
+      ? state.promptTemplates.profileGenerate.content
+      : state.prompt;
     if (state.eventName && state.eventName.indexOf("延锋大会") >= 0) state.eventName = defaults.eventName;
     if (state.activityState === "进行中" && (!Number.isFinite(state.secondsLeft) || state.secondsLeft <= 0)) {
       state.secondsLeft = clamp(Number(state.durationMinutes) || defaults.durationMinutes, 1, 30) * 60;
     }
     let recognition = null;
     let submittedThisSession = false;
+    let answerSubmitting = false;
+    let awaitingProfileGeneration = false;
     let resultAnchor = null;
     let backendReady = false;
     let backendSyncing = false;
@@ -1648,9 +2184,9 @@
         return {
           ...cloneData(defaults),
           ...saved,
-          questions: Array.isArray(saved.questions) && saved.questions.length ? saved.questions : defaults.questions,
+          questions: normalizeQuestions(saved.questions),
           promptTemplates: normalizePromptTemplates(saved.promptTemplates, saved.prompt),
-          submissions: Array.isArray(saved.submissions) ? saved.submissions : seedSubmissions
+          submissions: Array.isArray(saved.submissions) ? saved.submissions : []
         };
       } catch (error) {
         return cloneData(defaults);
@@ -1680,22 +2216,433 @@
       };
     }
 
+    function questionTargetOptions(selected = "") {
+      const questions = normalizeQuestions(state.questions);
+      const current = String(selected || "");
+      const options = [
+        `<option value="" ${current === "" ? "selected" : ""}>顺序下一题</option>`,
+        `<option value="__end__" ${current === "__end__" ? "selected" : ""}>结束问卷</option>`
+      ];
+      questions.forEach((question, index) => {
+        options.push(`<option value="${escapeHtml(question.id)}" ${question.id === current ? "selected" : ""}>${escapeHtml(questionLabel(question, index))}</option>`);
+      });
+      return options.join("");
+    }
+
+    function normalizeQuestionId(value, fallback = "") {
+      const id = String(value || "")
+        .trim()
+        .replace(/\s+/g, "_")
+        .replace(/[^\w-]/g, "");
+      return id || fallback || `q_custom_${Date.now()}`;
+    }
+
+    function splitRuleKeywords(value) {
+      return String(value || "")
+        .split(/[|｜,，、]/)
+        .map(item => item.trim())
+        .filter(Boolean);
+    }
+
+    function uniqueQuestionId(preferred, questions = state.questions) {
+      const used = new Set(normalizeQuestions(questions).map(question => question.id));
+      const base = normalizeQuestionId(preferred, `q_custom_${Date.now()}`);
+      let candidate = base;
+      let index = 2;
+      while (used.has(candidate)) {
+        candidate = `${base}_${index}`;
+        index += 1;
+      }
+      return candidate;
+    }
+
+    function cleanupQuestionLinks(questions) {
+      const ids = new Set(questions.map(question => question.id));
+      return questions.map(question => {
+        const defaultNext = question.defaultNext === "__end__" || ids.has(question.defaultNext) ? question.defaultNext : "";
+        const nextRules = (question.nextRules || []).filter(rule => !rule.next || rule.next === "__end__" || ids.has(rule.next));
+        return { ...question, defaultNext, nextRules };
+      });
+    }
+
+    function makeCustomQuestion() {
+      const nextIndex = normalizeQuestions(state.questions).length + 1;
+      return normalizeQuestion({
+        id: uniqueQuestionId(`q_custom_${nextIndex}`),
+        title: `新增问题 ${nextIndex}`,
+        route: "自定义",
+        text: "请输入新问题",
+        helper: "",
+        quick: [],
+        aiRouteEnabled: false,
+        nextRules: [],
+        defaultNext: "__end__"
+      }, nextIndex - 1);
+    }
+
+    function markQuestionEditorDirty() {
+      adminFormDirty = true;
+      const questions = questionPayloadFromEditor({ keepDraftRules: true });
+      $("questionConfig").value = questions.map(question => question.text).join("\n");
+    }
+
+    function refreshQuestionEditorFromDom(mutator) {
+      const questions = questionPayloadFromEditor({ keepDraftRules: true });
+      mutator(questions);
+      state.questions = cleanupQuestionLinks(questions);
+      adminFormDirty = true;
+      renderQuestionEditor();
+    }
+
+    function renderQuestionEditor() {
+      const target = $("questionFlowEditor");
+      if (!target) return;
+      const questions = normalizeQuestions(state.questions);
+      target.innerHTML = questions.map((question, index) => `
+        <div class="question-card" data-question-index="${index}">
+          <div class="question-card-head">
+            <div class="question-card-title">
+              <strong>${escapeHtml(question.title)}</strong>
+              <span>ID：${escapeHtml(question.id)} · ${escapeHtml(question.route)}</span>
+            </div>
+            <div class="question-card-actions">
+              ${(question.nextRules || []).length ? `
+                <label class="question-toggle" title="由 AI 理解自然语言并选择下一题；失败时回退关键词规则">
+                  <input type="checkbox" class="q-ai-route" ${question.aiRouteEnabled ? "checked" : ""}>
+                  AI 智能路由
+                </label>
+              ` : ""}
+              <button class="btn question-action danger" type="button" data-question-action="delete" data-question-index="${index}">删除</button>
+            </div>
+          </div>
+          <div class="question-mini-grid">
+            <label class="small muted">题目标题
+              <input class="q-title" value="${escapeHtml(question.title)}" placeholder="例如：第 1 题：使用基础判断">
+            </label>
+            <label class="small muted">路线标签
+              <input class="q-route" value="${escapeHtml(question.route)}" placeholder="例如：通用入口 / 新手路线 / 进阶路线">
+            </label>
+          </div>
+          <label class="small muted">题目 ID（分支跳转会引用，建议保存后不要频繁改）
+            <input class="q-id" value="${escapeHtml(question.id)}" placeholder="例如：q1_usage_base">
+          </label>
+          <label class="small muted">问题正文
+            <textarea class="q-text">${escapeHtml(question.text)}</textarea>
+          </label>
+          <div class="question-mini-grid">
+            <label class="small muted">快捷选项（一行一个）
+              <textarea class="q-quick">${escapeHtml((question.quick || []).join("\n"))}</textarea>
+            </label>
+            <label class="small muted">默认下一题
+              <select class="q-default">${questionTargetOptions(question.defaultNext)}</select>
+            </label>
+          </div>
+          <div>
+            <div class="question-rule-actions" style="margin-bottom:6px;">
+              <div class="small muted" style="margin-right:auto;">分支规则（AI 智能路由关闭或失败时，按关键词从上到下匹配）</div>
+              <button class="btn question-action" type="button" data-question-action="add-rule" data-question-index="${index}">添加规则</button>
+            </div>
+            <div class="question-rule-list">
+              ${(question.nextRules || []).length ? question.nextRules.map((rule, ruleIndex) => `
+                <div class="question-rule-row" data-rule-index="${ruleIndex}">
+                  <input class="q-rule-keywords" value="${escapeHtml((rule.keywords || []).join("|"))}" placeholder="关键词，如 文档|方案|邮件">
+                  <select class="q-rule-next">${questionTargetOptions(rule.next)}</select>
+                  <button class="btn question-action danger" type="button" data-question-action="delete-rule" data-question-index="${index}" data-rule-index="${ruleIndex}">删除</button>
+                </div>
+              `).join("") : '<span class="small muted">无分支规则，按默认下一题继续。</span>'}
+            </div>
+          </div>
+        </div>
+      `).join("");
+      target.querySelectorAll("textarea,input,select").forEach(el => {
+        el.addEventListener("input", markQuestionEditorDirty);
+        el.addEventListener("change", markQuestionEditorDirty);
+      });
+      target.querySelectorAll("[data-question-action]").forEach(btn => {
+        btn.addEventListener("click", event => {
+          event.preventDefault();
+          const questionIndex = Number(btn.dataset.questionIndex);
+          const ruleIndex = Number(btn.dataset.ruleIndex);
+          if (btn.dataset.questionAction === "delete") {
+            refreshQuestionEditorFromDom(questions => {
+              questions.splice(questionIndex, 1);
+            });
+          }
+          if (btn.dataset.questionAction === "add-rule") {
+            refreshQuestionEditorFromDom(questions => {
+              if (!questions[questionIndex]) return;
+              questions[questionIndex].nextRules = questions[questionIndex].nextRules || [];
+              questions[questionIndex].nextRules.push({ keywords: [], next: "__end__" });
+            });
+          }
+          if (btn.dataset.questionAction === "delete-rule") {
+            refreshQuestionEditorFromDom(questions => {
+              if (!questions[questionIndex]) return;
+              questions[questionIndex].nextRules = questions[questionIndex].nextRules || [];
+              questions[questionIndex].nextRules.splice(ruleIndex, 1);
+            });
+          }
+        });
+      });
+      $("questionConfig").value = questions.map(question => question.text).join("\n");
+    }
+
+    function questionPayloadFromEditor(options = {}) {
+      const keepDraftRules = !!options.keepDraftRules;
+      const cards = $("questionFlowEditor") ? [...$("questionFlowEditor").querySelectorAll(".question-card")] : [];
+      const base = normalizeQuestions(state.questions);
+      if (!cards.length) return base;
+      const used = new Set();
+      const questions = cards.map(card => {
+        const index = Number(card.dataset.questionIndex) || 0;
+        const previous = base[index] || normalizeQuestion({}, index);
+        const preferredId = normalizeQuestionId(card.querySelector(".q-id").value, previous.id || `q${index + 1}`);
+        let id = preferredId;
+        let suffix = 2;
+        while (used.has(id)) {
+          id = `${preferredId}_${suffix}`;
+          suffix += 1;
+        }
+        used.add(id);
+        const nextRules = [...card.querySelectorAll(".question-rule-row")].map(row => ({
+          keywords: splitRuleKeywords(row.querySelector(".q-rule-keywords").value),
+          next: row.querySelector(".q-rule-next").value
+        })).filter(rule => keepDraftRules ? (rule.next || rule.keywords.length) : (rule.next && rule.keywords.length));
+        const routeControl = card.querySelector(".q-ai-route");
+        return {
+          ...previous,
+          id,
+          title: card.querySelector(".q-title").value.trim() || previous.title || `第 ${index + 1} 题`,
+          route: card.querySelector(".q-route").value.trim() || previous.route || "通用",
+          text: card.querySelector(".q-text").value.trim(),
+          helper: "",
+          quick: card.querySelector(".q-quick").value.split("\n").map(item => item.trim()).filter(Boolean),
+          aiRouteEnabled: nextRules.length > 0 && !!(routeControl && routeControl.checked),
+          defaultNext: card.querySelector(".q-default").value,
+          nextRules
+        };
+      }).filter(question => question.text);
+      return cleanupQuestionLinks(questions);
+    }
+
+    function buildAdminConfigPayload() {
+      const questions = questionPayloadFromEditor();
+      const questionText = questions.map(q => q.text).join("\n").trim();
+      const promptDraft = $("promptConfig").value.trim() || defaults.prompt;
+      const answerPrompt = $("answerPromptConfig").value.trim() || defaults.promptTemplates.answerExtract.content;
+      const routePrompt = $("routePromptConfig").value.trim() || defaults.promptTemplates.routeDecision.content;
+      const insightPrompt = $("insightPromptConfig").value.trim() || defaults.promptTemplates.groupInsight.content;
+      const promptTemplates = {
+        ...cloneData(defaults.promptTemplates),
+        ...(state.promptTemplates || {}),
+        answerExtract: {
+          ...defaults.promptTemplates.answerExtract,
+          ...(state.promptTemplates && state.promptTemplates.answerExtract ? state.promptTemplates.answerExtract : {}),
+          content: answerPrompt
+        },
+        routeDecision: {
+          ...defaults.promptTemplates.routeDecision,
+          ...(state.promptTemplates && state.promptTemplates.routeDecision ? state.promptTemplates.routeDecision : {}),
+          content: routePrompt
+        },
+        profileGenerate: {
+          ...defaults.promptTemplates.profileGenerate,
+          ...(state.promptTemplates && state.promptTemplates.profileGenerate ? state.promptTemplates.profileGenerate : {}),
+          content: promptDraft
+        },
+        groupInsight: {
+          ...defaults.promptTemplates.groupInsight,
+          ...(state.promptTemplates && state.promptTemplates.groupInsight ? state.promptTemplates.groupInsight : {}),
+          content: insightPrompt
+        }
+      };
+      const payload = {
+        eventName: $("adminEventName").value.trim() || defaults.eventName,
+        eventUrl: $("adminEventUrl").value.trim() || PUBLIC_AUDIENCE_URL,
+        publicApiBase: normalizeApiBase($("adminPublicApiBase").value),
+        activityState: state.activityState,
+        durationMinutes: clamp(Number($("adminDuration").value) || 10, 1, 30),
+        targetCapacity: state.targetCapacity || defaults.targetCapacity,
+        secondsLeft: state.secondsLeft,
+        visits: state.visits,
+        started: state.started,
+        done: state.done,
+        questions,
+        prompt: promptDraft,
+        promptTemplates,
+        dashboardFields: [...$("dashboardFields").querySelectorAll("input:checked")].map(input => input.value),
+        dashboardSnapshot: null
+      };
+      if (payload.activityState !== "已结束" && (!Number.isFinite(payload.secondsLeft) || payload.secondsLeft <= 0)) {
+        payload.secondsLeft = payload.durationMinutes * 60;
+      }
+      return {
+        payload,
+        expected: {
+          questionText,
+          questionSignature: questionSignature(questions),
+          prompt: promptDraft,
+          answerPrompt,
+          routePrompt,
+          insightPrompt
+        }
+      };
+    }
+
+    function verifyAdminConfigSaved(remote, expected) {
+      const remoteQuestionText = (remote.questions || []).map(q => q.text || q).join("\n").trim();
+      const remoteTemplates = normalizePromptTemplates(remote.promptTemplates || {}, remote.prompt || "");
+      if (remoteQuestionText !== expected.questionText.trim()) throw new Error("问题大纲没有写入后端");
+      if (expected.questionSignature && questionSignature(remote.questions || []) !== expected.questionSignature) throw new Error("问题结构没有写入后端");
+      if ((remoteTemplates.profileGenerate.content || "").trim() !== expected.prompt.trim()) throw new Error("个人画像 Prompt 没有写入后端");
+      if ((remoteTemplates.answerExtract.content || "").trim() !== expected.answerPrompt.trim()) throw new Error("单题总结 Prompt 没有写入后端");
+      if ((remoteTemplates.routeDecision.content || "").trim() !== expected.routePrompt.trim()) throw new Error("AI 智能路由 Prompt 没有写入后端");
+      if ((remoteTemplates.groupInsight.content || "").trim() !== expected.insightPrompt.trim()) throw new Error("全场洞察 Prompt 没有写入后端");
+      return true;
+    }
+
+    function baseAdminPayloadFromState() {
+      return {
+        eventName: state.eventName,
+        eventUrl: state.eventUrl,
+        publicApiBase: state.publicApiBase,
+        activityState: state.activityState,
+        durationMinutes: state.durationMinutes,
+        targetCapacity: state.targetCapacity,
+        secondsLeft: state.secondsLeft,
+        visits: state.visits,
+        started: state.started,
+        done: state.done,
+        questions: cloneData(state.questions || defaults.questions),
+        prompt: state.prompt,
+        promptTemplates: normalizePromptTemplates(state.promptTemplates, state.prompt),
+        dashboardFields: cloneData(state.dashboardFields || defaults.dashboardFields),
+        dashboardSnapshot: null
+      };
+    }
+
+    function questionPayloadFromInput() {
+      return questionPayloadFromEditor();
+    }
+
+    function buildSingleFieldPayload(field) {
+      const payload = baseAdminPayloadFromState();
+      payload.promptTemplates = normalizePromptTemplates(payload.promptTemplates, payload.prompt);
+      let expected = "";
+      if (field === "eventName") {
+        expected = $("adminEventName").value.trim() || defaults.eventName;
+        payload.eventName = expected;
+      } else if (field === "eventUrl") {
+        expected = $("adminEventUrl").value.trim() || PUBLIC_AUDIENCE_URL;
+        payload.eventUrl = expected;
+      } else if (field === "publicApiBase") {
+        expected = normalizeApiBase($("adminPublicApiBase").value);
+        payload.publicApiBase = expected;
+      } else if (field === "durationMinutes") {
+        expected = clamp(Number($("adminDuration").value) || 10, 1, 30);
+        payload.durationMinutes = expected;
+        if (payload.activityState !== "已结束") payload.secondsLeft = expected * 60;
+      } else if (field === "questions") {
+        payload.questions = questionPayloadFromInput();
+        expected = questionSignature(payload.questions);
+      } else if (field === "profilePrompt") {
+        expected = $("promptConfig").value.trim() || defaults.prompt;
+        payload.prompt = expected;
+        payload.promptTemplates.profileGenerate.content = expected;
+      } else if (field === "answerPrompt") {
+        expected = $("answerPromptConfig").value.trim() || defaults.promptTemplates.answerExtract.content;
+        payload.promptTemplates.answerExtract.content = expected;
+      } else if (field === "routePrompt") {
+        expected = $("routePromptConfig").value.trim() || defaults.promptTemplates.routeDecision.content;
+        payload.promptTemplates.routeDecision.content = expected;
+      } else if (field === "insightPrompt") {
+        expected = $("insightPromptConfig").value.trim() || defaults.promptTemplates.groupInsight.content;
+        payload.promptTemplates.groupInsight.content = expected;
+      } else if (field === "dashboardFields") {
+        payload.dashboardFields = [...$("dashboardFields").querySelectorAll("input:checked")].map(input => input.value);
+        expected = payload.dashboardFields.join("|");
+      } else {
+        throw new Error("未知配置项");
+      }
+      return { payload, expected };
+    }
+
+    function verifySingleFieldSaved(remote, field, expected) {
+      const templates = normalizePromptTemplates(remote.promptTemplates || {}, remote.prompt || "");
+      if (field === "eventName" && String(remote.eventName || "") !== expected) throw new Error("活动名称没有写入后端");
+      if (field === "eventUrl" && String(remote.eventUrl || "") !== expected) throw new Error("活动固定链接没有写入后端");
+      if (field === "publicApiBase" && String(remote.publicApiBase || "") !== expected) throw new Error("观众端 API 地址没有写入后端");
+      if (field === "durationMinutes" && Number(remote.durationMinutes) !== Number(expected)) throw new Error("调研时长没有写入后端");
+      if (field === "questions") {
+        if (questionSignature(remote.questions || []) !== expected) throw new Error("问题结构没有写入后端");
+      }
+      if (field === "profilePrompt" && (templates.profileGenerate.content || "").trim() !== expected.trim()) throw new Error("画像 Prompt 没有写入后端");
+      if (field === "answerPrompt" && (templates.answerExtract.content || "").trim() !== expected.trim()) throw new Error("单题总结 Prompt 没有写入后端");
+      if (field === "routePrompt" && (templates.routeDecision.content || "").trim() !== expected.trim()) throw new Error("AI 智能路由 Prompt 没有写入后端");
+      if (field === "insightPrompt" && (templates.groupInsight.content || "").trim() !== expected.trim()) throw new Error("全场洞察 Prompt 没有写入后端");
+      if (field === "dashboardFields" && (remote.dashboardFields || []).join("|") !== expected) throw new Error("Dashboard 展示字段没有写入后端");
+      return true;
+    }
+
+    async function saveAdminField(field, btn) {
+      backendPullPausedUntil = Date.now() + 30000;
+      const oldText = btn ? btn.textContent : "";
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = "保存中...";
+      }
+      try {
+        if (!API_BASE) throw new Error("后端 API 地址未配置");
+        const { payload, expected } = buildSingleFieldPayload(field);
+        const remote = await apiRequest("/admin/config", { method: "PUT", body: payload });
+        verifySingleFieldSaved(remote, field, expected);
+        const confirmed = await apiRequest("/state");
+        verifySingleFieldSaved(confirmed, field, expected);
+        backendReady = true;
+        adminFormDirty = false;
+        if (btn && typeof btn.blur === "function") btn.blur();
+        applyBackendState(confirmed);
+        saveState();
+        if (field === "questions") renderQuestionEditor();
+        syncAll();
+        showToast("保存成功");
+      } catch (error) {
+        backendReady = false;
+        adminFormDirty = true;
+        showToast(`保存失败：${error.message || "后端没有写入配置"}`);
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = oldText || "保存";
+        }
+      }
+    }
+
     function applyBackendState(remote) {
       if (!remote || typeof remote !== "object") return;
       const currentSession = state.currentSession;
       const lastSubmissionId = state.lastSubmissionId;
+      const shouldClearDashboardSummary =
+        Object.prototype.hasOwnProperty.call(remote, "dashboardSummary")
+          ? false
+          : remote.dashboardSnapshot === null || (Array.isArray(remote.submissions) && remote.submissions.length === 0);
       state = {
         ...cloneData(defaults),
         ...state,
         ...remote,
-        questions: Array.isArray(remote.questions) && remote.questions.length ? remote.questions : state.questions,
+        questions: normalizeQuestions(remote.questions || state.questions),
         promptTemplates: normalizePromptTemplates(remote.promptTemplates || state.promptTemplates, remote.prompt || state.prompt),
         submissions: Array.isArray(remote.submissions) ? remote.submissions : state.submissions,
-        dashboardSummary: remote.dashboardSummary || state.dashboardSummary,
+        dashboardSummary: Object.prototype.hasOwnProperty.call(remote, "dashboardSummary")
+          ? remote.dashboardSummary
+          : (shouldClearDashboardSummary ? null : state.dashboardSummary),
         dashboardFields: Array.isArray(remote.dashboardFields) ? remote.dashboardFields : state.dashboardFields,
         currentSession,
         lastSubmissionId
       };
+      state.prompt = state.promptTemplates && state.promptTemplates.profileGenerate && state.promptTemplates.profileGenerate.content
+        ? state.promptTemplates.profileGenerate.content
+        : state.prompt;
       saveState();
     }
 
@@ -1760,6 +2707,8 @@
     async function pullDashboardSummary(silent = true) {
       if (!API_BASE) return false;
       try {
+        const remote = await apiRequest("/state");
+        applyBackendState(remote);
         state.dashboardSummary = await apiRequest("/dashboard/summary");
         backendReady = true;
         syncAll();
@@ -1771,14 +2720,38 @@
     }
 
     async function regenerateGroupInsight() {
+      const btn = $("refreshDash");
+      const oldText = btn ? btn.textContent : "";
+      backendPullPausedUntil = Date.now() + 15000;
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = "刷新中...";
+      }
       try {
-        state.dashboardSummary = await apiRequest("/dashboard/insight/regenerate", { method: "POST", body: {} });
+        state.dashboardSummary = null;
+        const beforeState = await apiRequest("/state");
+        applyBackendState(beforeState);
+        const refreshed = await apiRequest("/dashboard/insight/regenerate", { method: "POST", body: {} });
+        if (refreshed && refreshed.state) {
+          applyBackendState(refreshed.state);
+          state.dashboardSummary = refreshed.summary || refreshed;
+        } else {
+          const afterState = await apiRequest("/state");
+          applyBackendState(afterState);
+          state.dashboardSummary = refreshed;
+        }
         backendReady = true;
         syncAll();
-        showToast("大屏洞察已刷新");
+        showToast("全场洞察已刷新");
       } catch (error) {
+        await pullDashboardSummary(true);
         updateGroupInsight();
         showToast("后端洞察生成失败，已使用本机洞察");
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = oldText || "刷新洞察";
+        }
       }
     }
 
@@ -1802,6 +2775,7 @@
         prompt: state.prompt,
         promptTemplates: state.promptTemplates,
         answerExtract: state.promptTemplates && state.promptTemplates.answerExtract ? state.promptTemplates.answerExtract.content : "",
+        routeDecision: state.promptTemplates && state.promptTemplates.routeDecision ? state.promptTemplates.routeDecision.content : "",
         profileGenerate: state.promptTemplates && state.promptTemplates.profileGenerate ? state.promptTemplates.profileGenerate.content : state.prompt,
         groupInsight: state.promptTemplates && state.promptTemplates.groupInsight ? state.promptTemplates.groupInsight.content : ""
       };
@@ -1818,58 +2792,6 @@
         backendReady = false;
         showToast("Prompt 保存失败，请检查后端连接");
         return false;
-      }
-    }
-
-    async function saveInsightPromptOnly() {
-      const btn = $("saveInsightPromptOnly");
-      const status = $("insightPromptSaveStatus");
-      const value = $("insightPromptConfig") ? $("insightPromptConfig").value.trim() : "";
-      if (!value) {
-        showToast("全场洞察 Prompt 不能为空");
-        return;
-      }
-      backendPullPausedUntil = Date.now() + 10000;
-      if (btn) btn.disabled = true;
-      if (status) status.textContent = "保存中...";
-      const promptTemplateDraft = normalizePromptTemplates(state.promptTemplates, state.prompt);
-      promptTemplateDraft.groupInsight = {
-        ...promptTemplateDraft.groupInsight,
-        content: value
-      };
-      const payload = {
-        prompt: state.prompt,
-        promptTemplates: promptTemplateDraft,
-        answerExtract: promptTemplateDraft.answerExtract.content,
-        profileGenerate: promptTemplateDraft.profileGenerate.content,
-        groupInsight: value
-      };
-      try {
-        const remote = await apiRequest("/admin/prompts", { method: "PUT", body: payload });
-        const saved = remote && remote.promptTemplates && remote.promptTemplates.groupInsight
-          ? remote.promptTemplates.groupInsight.content
-          : "";
-        if (saved !== value) throw new Error("后端保存返回值与输入不一致");
-        const confirmed = await apiRequest("/state");
-        const confirmedValue = confirmed && confirmed.promptTemplates && confirmed.promptTemplates.groupInsight
-          ? confirmed.promptTemplates.groupInsight.content
-          : "";
-        if (confirmedValue !== value) throw new Error("后端读取确认失败");
-        state.promptTemplates = normalizePromptTemplates(confirmed.promptTemplates, confirmed.prompt || state.prompt);
-        state.prompt = confirmed.prompt || state.prompt;
-        state.dashboardSnapshot = null;
-        adminFormDirty = false;
-        saveState();
-        if ($("insightPromptConfig")) $("insightPromptConfig").value = value;
-        if (status) {
-          status.textContent = `已保存 ${new Date().toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit", second: "2-digit" })}`;
-        }
-        showToast("全场洞察 Prompt 已保存并确认");
-      } catch (error) {
-        if (status) status.textContent = "保存失败";
-        showToast(`全场洞察 Prompt 保存失败：${error.message || "请检查后端"}`);
-      } finally {
-        if (btn) btn.disabled = false;
       }
     }
 
@@ -2231,10 +3153,22 @@
       }
     }
 
+    function setAnswerControlsDisabled(disabled) {
+      ["answerInput", "sendBtn", "skipBtn", "voiceBtn"].forEach(id => {
+        const el = $(id);
+        if (el) el.disabled = !!disabled;
+      });
+      $("quickOptions").querySelectorAll("button").forEach(btn => {
+        btn.disabled = !!disabled;
+      });
+    }
+
     function updateProgress() {
-      const total = state.questions.length;
-      const current = state.currentSession ? state.currentSession.currentQuestion : 0;
-      const left = Math.max(total - current, 0);
+      const total = MAX_SURVEY_QUESTIONS;
+      const answered = state.currentSession && Array.isArray(state.currentSession.answers) ? state.currentSession.answers.length : 0;
+      const current = Math.min(answered, total);
+      const activeQuestion = state.currentSession ? getActiveQuestion() : null;
+      const left = activeQuestion ? Math.max(total - current, 0) : 0;
       $("progressText").textContent = left > 0 ? `还剩 ${left} 个问题` : "调研完成";
       $("progressBar").style.width = `${Math.min((current / Math.max(total, 1)) * 100, 100)}%`;
     }
@@ -2262,44 +3196,94 @@
     }
 
     function renderQuickOptions() {
-      const current = state.currentSession ? state.currentSession.currentQuestion : 0;
-      const options = state.questions[current] ? state.questions[current].quick || [] : [];
+      const question = getActiveQuestion();
+      if (submittedThisSession || awaitingProfileGeneration || !question) {
+        $("quickOptions").innerHTML = "";
+        return;
+      }
+      const options = question.quick || [];
       $("quickOptions").innerHTML = options.map(option => `<button class="chip" type="button" data-answer="${option}">${option}</button>`).join("");
       $("quickOptions").querySelectorAll("[data-answer]").forEach(btn => {
         btn.addEventListener("click", () => {
+          if (answerSubmitting || submittedThisSession || awaitingProfileGeneration) return;
           $("answerInput").value = btn.dataset.answer;
           sendAnswer(false);
         });
       });
     }
 
+    function getActiveQuestion() {
+      if (!state.currentSession) return null;
+      const questions = normalizeQuestions(state.questions);
+      const index = Number(state.currentSession.currentQuestion) || 0;
+      if (index < 0 || index >= questions.length) return null;
+      if ((state.currentSession.answers || []).length >= MAX_SURVEY_QUESTIONS) return null;
+      return questions[index] || null;
+    }
+
+    function normalizeRuleText(value) {
+      return String(value || "").toLowerCase().replace(/\s+/g, "");
+    }
+
+    function answerMatchesRule(answer, rule) {
+      const source = normalizeRuleText(answer);
+      return (rule.keywords || []).some(keyword => {
+        const target = normalizeRuleText(keyword);
+        return target && source.includes(target);
+      });
+    }
+
+    function resolveNextQuestionIndex(question, answer, currentIndex, routeDecision = null) {
+      const questions = normalizeQuestions(state.questions);
+      if (!question || (state.currentSession.answers || []).length >= MAX_SURVEY_QUESTIONS) return questions.length;
+      const aiNextId = routeDecision && routeDecision.nextQuestionId ? String(routeDecision.nextQuestionId) : "";
+      const allowedRouteIds = new Set([...(question.nextRules || []).map(rule => rule.next), question.defaultNext].filter(Boolean));
+      if (aiNextId && allowedRouteIds.has(aiNextId)) {
+        if (aiNextId === "__end__") return questions.length;
+        const aiIndex = questionIndexById(aiNextId, questions);
+        if (aiIndex >= 0) return aiIndex;
+      }
+      const matchedRule = (question.nextRules || []).find(rule => answerMatchesRule(answer, rule));
+      const nextId = matchedRule ? matchedRule.next : question.defaultNext;
+      if (nextId === "__end__") return questions.length;
+      const explicitIndex = questionIndexById(nextId, questions);
+      if (explicitIndex >= 0) return explicitIndex;
+      return currentIndex + 1;
+    }
+
     function askNext() {
       updateProgress();
       renderQuickOptions();
       const current = state.currentSession.currentQuestion;
-      if (current >= state.questions.length) {
+      const question = getActiveQuestion();
+      if (!question) {
+        if (awaitingProfileGeneration || submittedThisSession) return;
+        awaitingProfileGeneration = true;
+        state.currentSession.status = "等待生成画像";
+        $("composer").hidden = true;
+        setAnswerControlsDisabled(true);
+        removeGeneratedButtons();
         setTimeout(() => {
-          if (submittedThisSession) return;
+          if (submittedThisSession || !awaitingProfileGeneration || resultAnchor) return;
           resultAnchor = addMessage("ai", "感谢你的回答。我已经整理好关键线索，现在可以生成你的 AI 画像。");
-        }, 260);
+        }, 240);
         setTimeout(() => {
-          if (submittedThisSession) return;
+          if (submittedThisSession || !awaitingProfileGeneration || document.querySelector(".generate-profile-btn")) return;
           const btn = document.createElement("button");
           btn.className = "btn primary full generate-profile-btn";
           btn.textContent = "生成我的 AI 画像";
-          btn.disabled = submittedThisSession;
           btn.addEventListener("click", event => generateProfile(event));
           $("messages").appendChild(btn);
           $("messages").scrollTop = $("messages").scrollHeight;
-        }, 620);
+        }, 560);
+        saveState();
         return;
       }
       setTimeout(() => {
-        if (submittedThisSession) return;
-        addMessage("ai", state.questions[current].text);
-      }, 260);
+        if (submittedThisSession || awaitingProfileGeneration) return;
+        addMessage("ai", questionMessage(question));
+      }, 240);
     }
-
     function startChat() {
       const ownSubmission = getOwnSubmission();
       if (ownSubmission) {
@@ -2320,10 +3304,13 @@
         status: "进行中"
       };
       submittedThisSession = false;
+      answerSubmitting = false;
+      awaitingProfileGeneration = false;
       $("welcomeScreen").hidden = true;
       $("profileScreen").hidden = true;
       $("chatScreen").hidden = false;
       $("composer").hidden = false;
+      setAnswerControlsDisabled(false);
       resetMessages();
       $("sessionId").textContent = state.currentSession.sessionId;
       state.visits += 1;
@@ -2336,27 +3323,38 @@
     }
 
     async function sendAnswer(skip = false) {
-      if (!state.currentSession) return;
+      if (!state.currentSession || submittedThisSession || answerSubmitting || awaitingProfileGeneration) return;
       const input = $("answerInput");
+      const activeQuestion = getActiveQuestion();
+      if (!activeQuestion) {
+        askNext();
+        return;
+      }
       const text = skip ? "跳过这个问题" : input.value.trim();
       if (!text) {
         showToast("先写一句回答，或点击跳过");
         return;
       }
+      answerSubmitting = true;
+      setAnswerControlsDisabled(true);
       const questionIndex = state.currentSession.currentQuestion;
-      const question = state.questions[questionIndex] ? state.questions[questionIndex].text || "" : "";
+      const questionObj = activeQuestion;
+      const question = questionObj.text || "";
       addMessage("user", text);
       const answerRecord = {
         questionIndex,
+        questionId: questionObj.id,
+        questionTitle: questionObj.title,
         question,
         answer: text,
         skipped: skip
       };
       state.currentSession.answers.push(answerRecord);
       input.value = "";
-      if (!skip && text.length <= 5 && state.currentSession.currentQuestion < state.questions.length - 1) {
+      let routeDecision = null;
+      if (!skip && text.length <= 5) {
         setTimeout(() => {
-          if (submittedThisSession) return;
+          if (submittedThisSession || awaitingProfileGeneration) return;
           addMessage("ai", "收到。我会先记录这条简短回答，后面会结合其它问题一起生成画像。");
         }, 160);
       }
@@ -2366,6 +3364,8 @@
           body: {
             sessionId: state.currentSession.sessionId,
             questionIndex,
+            questionId: questionObj.id,
+            questionTitle: questionObj.title,
             question,
             answer: text,
             skipped: skip
@@ -2376,10 +3376,17 @@
           state.currentSession.answerInsights = state.currentSession.answerInsights.filter(item => Number(item.questionIndex) !== Number(questionIndex));
           state.currentSession.answerInsights.push({ questionIndex, question, answer: text, ...result.answerInsight });
         }
-      } catch (error) {}
-      state.currentSession.currentQuestion += 1;
-      askNext();
-      saveState();
+        if (result && result.routeDecision) routeDecision = result.routeDecision;
+      } catch (error) {
+      } finally {
+        if (state.currentSession && Number(state.currentSession.currentQuestion) === Number(questionIndex)) {
+          state.currentSession.currentQuestion = resolveNextQuestionIndex(questionObj, text, questionIndex, routeDecision);
+        }
+        answerSubmitting = false;
+        askNext();
+        if (!submittedThisSession && !awaitingProfileGeneration) setAnswerControlsDisabled(false);
+        saveState();
+      }
     }
 
     function textOfAnswers() {
@@ -2399,7 +3406,7 @@
       if (includesAny(text, ["推动", "培训", "分享", "团队", "推广"])) return "AI 推动者";
       if (includesAny(text, ["每天", "经常", "流程", "自动", "知识库", "研发", "数据分析"])) return "AI 场景实践者";
       if (includesAny(text, ["用过", "报告", "会议", "总结", "文档", "效率", "每周"])) return "AI 效率提升者";
-      if (includesAny(text, ["偶尔", "试过", "豆包", "Kimi", "通义", "ChatGPT"])) return "AI 尝鲜者";
+      if (includesAny(text, ["偶尔", "试过", "豆包", "Kimi", "通义", "ChatGPT", "Gemini", "Gimini"])) return "AI 尝鲜者";
       return "AI 旁观者";
     }
 
@@ -2696,6 +3703,10 @@
       }
       const trigger = event && event.currentTarget ? event.currentTarget : document.querySelector(".generate-profile-btn");
       submittedThisSession = true;
+      awaitingProfileGeneration = false;
+      answerSubmitting = false;
+      $("composer").hidden = true;
+      setAnswerControlsDisabled(true);
       removeGeneratedButtons(trigger);
       if (trigger) {
         trigger.disabled = true;
@@ -2768,7 +3779,7 @@
     }
 
     function extractKeywords(text) {
-      const dict = ["会议纪要", "提示词", "数据安全", "报告初稿", "准确性", "知识库", "效率提升", "流程嵌入", "不会提问", "数据分析", "培训入门", "结果校验"];
+      const dict = ["ChatGPT", "通义", "Kimi", "豆包", "Gemini", "Gimini", "会议纪要", "提示词", "数据安全", "报告初稿", "准确性", "知识库", "效率提升", "流程嵌入", "不会提问", "数据分析", "培训入门", "结果校验"];
       const found = dict.filter(word => text.includes(word.replace("/", "")) || text.includes(word));
       return found.length ? found : ["会议纪要", "提示词", "准确性"];
     }
@@ -2824,6 +3835,7 @@
     }
 
     function wordEntries(completed, mode) {
+      if (!completed.length) return [];
       const lexicon = mode === "capability" ? [
         ["会议纪要", ["会议", "纪要", "总结"]],
         ["报告生成", ["报告", "文档", "初稿", "PPT"]],
@@ -2861,32 +3873,54 @@
     function renderBars(id, data) {
       const target = $(id);
       if (!target) return;
-      const max = Math.max(...data.map(item => item[1]), 1);
-      target.innerHTML = data.map(item => `
-        <div class="bar-row">
+      const rows = Array.isArray(data) ? data : [];
+      const max = Math.max(...rows.map(item => Number(item[1]) || 0), 1);
+      target.innerHTML = rows.map(item => {
+        const value = Number(item[1]) || 0;
+        const width = value > 0 ? Math.max(value / max * 100, 3) : 0;
+        return `
+        <div class="bar-row ${value > 0 ? "" : "is-empty"}">
           <span>${item[0]}</span>
-          <span class="bar-track"><span class="bar" style="width:${Math.max(item[1] / max * 100, 8)}%"></span></span>
-          <span class="dash-muted">${item[1]}%</span>
-        </div>
-      `).join("");
+          <span class="bar-track"><span class="bar" style="width:${width}%"></span></span>
+          <span class="dash-muted">${value}%</span>
+        </div>`;
+      }).join("");
     }
 
     function renderDonut(data) {
       const colors = ["#2dd4bf", "#60a5fa", "#fbbf24", "#f97316", "#a78bfa"];
+      const rows = Array.isArray(data) ? data : [];
+      const total = rows.reduce((sum, item) => sum + (Number(item[1]) || 0), 0);
+      if (total <= 0) {
+        $("donut").style.background = "conic-gradient(rgba(148, 163, 184, .18) 0 100%)";
+        $("donut").dataset.total = "0%";
+        $("profileLegend").innerHTML = rows.map(item => `<div class="is-empty"><i></i>${item[0]} 0%</div>`).join("");
+        return;
+      }
       let start = 0;
-      const stops = data.map((item, index) => {
-        const end = start + item[1];
+      const stops = rows.map((item, index) => {
+        const value = Number(item[1]) || 0;
+        if (value <= 0) return "";
+        const end = start + value;
         const stop = `${colors[index % colors.length]} ${start}% ${end}%`;
         start = end;
         return stop;
-      }).join(", ");
+      }).filter(Boolean).join(", ");
       $("donut").style.background = `conic-gradient(${stops || "#334155 0 100%"})`;
-      $("profileLegend").innerHTML = data.map((item, index) => `<div><i style="background:${colors[index % colors.length]}"></i>${item[0]} ${item[1]}%</div>`).join("");
+      $("donut").dataset.total = "100%";
+      $("profileLegend").innerHTML = rows.map((item, index) => {
+        const value = Number(item[1]) || 0;
+        return `<div class="${value > 0 ? "" : "is-empty"}"><i style="background:${colors[index % colors.length]}"></i>${item[0]} ${value}%</div>`;
+      }).join("");
     }
 
     function renderWordCloudInto(id, entries) {
       const target = $(id);
       if (!target) return;
+      if (!Array.isArray(entries) || !entries.length) {
+        target.innerHTML = `<span class="dash-muted">暂无数据</span>`;
+        return;
+      }
       target.innerHTML = entries.sort((a, b) => b[1] - a[1]).slice(0, 8).map(([word, count], index) => {
         const size = index < 3 ? "big" : index < 7 ? "mid" : "";
         return `<span class="word ${size}">${word}</span>`;
@@ -2914,21 +3948,41 @@
       $("lastRefresh").textContent = new Date().toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
     }
 
+    function updateLastRefresh(summary = null) {
+      const target = $("lastRefresh");
+      if (!target) return;
+      const value = summary && summary.generatedAt ? new Date(summary.generatedAt) : new Date();
+      if (Number.isNaN(value.getTime())) {
+        target.textContent = "刚刚刷新";
+        return;
+      }
+      target.textContent = value.toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+    }
+
     function syncAll() {
       normalizeTimerState();
       const completed = state.submissions.filter(item => item.status === "已完成");
       const summary = state.dashboardSummary || null;
-      const profileDist = summary && Array.isArray(summary.maturityDistribution) ? summary.maturityDistribution : distributionPercent(countBy(completed, "profileType", "AI 尝鲜者"), ["AI 旁观者", "AI 尝鲜者", "AI 效率提升者", "AI 场景实践者", "AI 推动者"]);
+      const hasCompletedData = summary && summary.counts
+        ? Number(summary.counts.done) > 0
+        : completed.length > 0;
+      const profileDist = !hasCompletedData
+        ? cloneData(EMPTY_PROFILE_DIST)
+        : (summary && Array.isArray(summary.maturityDistribution) ? summary.maturityDistribution : distributionPercent(countBy(completed, "profileType", "AI 尝鲜者"), ["AI 旁观者", "AI 尝鲜者", "AI 效率提升者", "AI 场景实践者", "AI 推动者"]));
       const scenarioDist = distributionPercent(countBy(completed, "scenario", "文档/报告"), ["文档/报告", "会议纪要", "数据分析", "知识检索", "研发/营销"]);
       const concernDist = distributionPercent(countBy(completed, "concern", "准确性"), ["准确性", "数据安全", "不会提问", "工具限制", "缺少案例"]);
       const localUsageDist = [
-        ["从未使用", Math.max(8, profileDist[0][1])],
-        ["偶尔使用", Math.max(22, profileDist[1][1])],
-        ["每周使用", Math.max(18, profileDist[2][1])],
-        ["每天使用", Math.max(10, profileDist[3][1] + profileDist[4][1])]
+        ["从未使用", hasCompletedData ? Math.max(8, profileDist[0][1]) : 0],
+        ["偶尔使用", hasCompletedData ? Math.max(22, profileDist[1][1]) : 0],
+        ["每周使用", hasCompletedData ? Math.max(18, profileDist[2][1]) : 0],
+        ["每天使用", hasCompletedData ? Math.max(10, profileDist[3][1] + profileDist[4][1]) : 0]
       ];
-      const usageDist = summary && Array.isArray(summary.usageDistribution) ? summary.usageDistribution : localUsageDist;
-      const intentDist = summary && Array.isArray(summary.willingnessDistribution) ? summary.willingnessDistribution : intentDistribution(completed);
+      const usageDist = !hasCompletedData
+        ? cloneData(EMPTY_USAGE_DIST)
+        : (summary && Array.isArray(summary.usageDistribution) ? summary.usageDistribution : localUsageDist);
+      const intentDist = !hasCompletedData
+        ? cloneData(EMPTY_INTENT_DIST)
+        : (summary && Array.isArray(summary.willingnessDistribution) ? summary.willingnessDistribution : intentDistribution(completed));
 
       ["navTitle", "mobileEventName", "dashTitle"].forEach(id => $(id).textContent = state.eventName);
       if ($("activityState")) $("activityState").textContent = state.activityState;
@@ -2946,20 +4000,24 @@
       setAdminValue("adminEventUrl", state.eventUrl);
       setAdminValue("adminPublicApiBase", state.publicApiBase || effectivePublicApiBase());
       setAdminValue("adminDuration", state.durationMinutes);
-      setAdminValue("adminCapacity", state.targetCapacity);
-      setAdminValue("questionConfig", state.questions.map(q => q.text).join("\n"));
-      setAdminValue("promptConfig", state.prompt);
+      setAdminValue("questionConfig", normalizeQuestions(state.questions).map(q => q.text).join("\n"));
+      setAdminValue("promptConfig", state.promptTemplates && state.promptTemplates.profileGenerate ? state.promptTemplates.profileGenerate.content : state.prompt);
       setAdminValue("answerPromptConfig", state.promptTemplates && state.promptTemplates.answerExtract ? state.promptTemplates.answerExtract.content : defaults.promptTemplates.answerExtract.content);
+      setAdminValue("routePromptConfig", state.promptTemplates && state.promptTemplates.routeDecision ? state.promptTemplates.routeDecision.content : defaults.promptTemplates.routeDecision.content);
       setAdminValue("insightPromptConfig", state.promptTemplates && state.promptTemplates.groupInsight ? state.promptTemplates.groupInsight.content : defaults.promptTemplates.groupInsight.content);
 
       renderBars("usageBars", usageDist);
       renderBars("intentBars", intentDist);
       renderDonut(profileDist);
-      renderWordCloud(completed, summary);
-      if (summary && summary.groupInsight && $("groupInsight")) $("groupInsight").textContent = summary.groupInsight;
+      renderWordCloud(hasCompletedData ? completed : [], hasCompletedData ? summary : { capabilityWordCloud: [], wishWordCloud: [] });
+      if ($("groupInsight")) $("groupInsight").textContent = hasCompletedData && summary && summary.groupInsight ? summary.groupInsight : EMPTY_GROUP_INSIGHT;
+      updateLastRefresh(summary);
       drawQrLike(audienceUrl());
       renderRecentRows();
-      if (!shouldPreserveAdminForm()) renderFieldChecks();
+      if (!shouldPreserveAdminForm()) {
+        renderQuestionEditor();
+        renderFieldChecks();
+      }
       updateAudienceEntry();
       if (!shouldPreserveAdminForm()) {
         renderStateSwitch();
@@ -3004,59 +4062,6 @@
       }
     }
 
-    async function saveConfig() {
-      backendPullPausedUntil = Date.now() + 10000;
-      state.eventName = $("adminEventName").value.trim() || defaults.eventName;
-      state.eventUrl = $("adminEventUrl").value.trim() || PUBLIC_AUDIENCE_URL;
-      state.publicApiBase = normalizeApiBase($("adminPublicApiBase").value);
-      state.durationMinutes = clamp(Number($("adminDuration").value) || 10, 1, 30);
-      state.targetCapacity = clamp(Number($("adminCapacity").value) || 300, 10, 1000);
-      if (state.activityState !== "已结束" && (!Number.isFinite(state.secondsLeft) || state.secondsLeft <= 0)) {
-        state.secondsLeft = state.durationMinutes * 60;
-      }
-      const promptDraft = $("promptConfig").value.trim() || defaults.prompt;
-      const promptTemplateDraft = {
-        ...cloneData(defaults.promptTemplates),
-        ...(state.promptTemplates || {}),
-        answerExtract: {
-          ...defaults.promptTemplates.answerExtract,
-          ...(state.promptTemplates && state.promptTemplates.answerExtract ? state.promptTemplates.answerExtract : {}),
-          content: $("answerPromptConfig").value.trim() || defaults.promptTemplates.answerExtract.content
-        },
-        profileGenerate: {
-          ...defaults.promptTemplates.profileGenerate,
-          ...(state.promptTemplates && state.promptTemplates.profileGenerate ? state.promptTemplates.profileGenerate : {}),
-          content: promptDraft
-        },
-        groupInsight: {
-          ...defaults.promptTemplates.groupInsight,
-          ...(state.promptTemplates && state.promptTemplates.groupInsight ? state.promptTemplates.groupInsight : {}),
-          content: $("insightPromptConfig").value.trim() || defaults.promptTemplates.groupInsight.content
-        }
-      };
-      const promptPayload = {
-        prompt: promptDraft,
-        promptTemplates: promptTemplateDraft,
-        answerExtract: promptTemplateDraft.answerExtract.content,
-        profileGenerate: promptTemplateDraft.profileGenerate.content,
-        groupInsight: promptTemplateDraft.groupInsight.content
-      };
-      state.prompt = promptDraft;
-      state.promptTemplates = promptTemplateDraft;
-      state.questions = $("questionConfig").value.split("\n").map(line => line.trim()).filter(Boolean).map((text, index) => ({
-        text,
-        quick: defaults.questions[index] ? defaults.questions[index].quick || ["很期待", "还在观望", "有些担心"] : ["很期待", "还在观望", "有些担心"]
-      }));
-      state.dashboardFields = [...$("dashboardFields").querySelectorAll("input:checked")].map(input => input.value);
-      state.dashboardSnapshot = null;
-      adminFormDirty = false;
-      syncAll();
-      const promptFirstOk = await pushPromptTemplates(promptPayload);
-      const configOk = await pushBackendState();
-      const promptOk = await pushPromptTemplates(promptPayload);
-      if (configOk && promptOk) showToast("配置和 Prompt 已保存到后端");
-    }
-
     function exportCsv() {
       const rows = [[
         "session_id", "event_id", "enter_time", "submit_time", "profile_type", "scenario", "concern", "status", "answers", "derived_tags", "profile_text"
@@ -3093,6 +4098,8 @@
       state.done = 0;
       state.secondsLeft = state.durationMinutes * 60;
       state.submissions = [];
+      state.dashboardSummary = null;
+      state.dashboardSnapshot = null;
       state.currentSession = null;
       state.lastSubmissionId = null;
       submittedThisSession = false;
@@ -3102,7 +4109,9 @@
         .then(remote => {
           backendReady = true;
           applyBackendState(remote);
-          syncAll();
+          return pullDashboardSummary(true).then(() => syncAll());
+        })
+        .then(() => {
           showToast("测试数据已清空并同步后端");
         })
         .catch(() => {
@@ -3111,22 +4120,42 @@
         });
     }
 
-    function resetCurrentAudience() {
+    function resetCurrentAudience(event = null) {
+      const trigger = event && event.currentTarget ? event.currentTarget : $("resetAudience");
+      const oldText = trigger ? trigger.textContent : "";
       state.currentSession = null;
       state.lastSubmissionId = null;
       submittedThisSession = false;
+      answerSubmitting = false;
+      awaitingProfileGeneration = false;
+      resultAnchor = null;
       $("chatScreen").hidden = true;
       $("profileScreen").hidden = true;
       $("welcomeScreen").hidden = false;
+      $("composer").hidden = false;
+      $("answerInput").value = "";
+      setAnswerControlsDisabled(false);
       if ($("inlineResultCard")) $("inlineResultCard").classList.remove("is-visible");
       const inlineCards = $("messages").querySelectorAll(".inline-result-card");
       for (let i = 0; i < inlineCards.length; i += 1) {
         if (inlineCards[i].parentNode) inlineCards[i].parentNode.removeChild(inlineCards[i]);
       }
+      removeGeneratedButtons();
+      resetMessages();
+      localStorage.removeItem(AUDIENCE_H5_STORE_KEY);
+      localStorage.setItem(AUDIENCE_RESET_SIGNAL_KEY, String(Date.now()));
       syncAll();
       saveState();
-      switchView(STANDALONE_VIEW || "audience");
+      if (!STANDALONE_VIEW) switchView("audience");
       showToast("当前观众状态已重置，可重新演示提交流程");
+      if (trigger) {
+        trigger.textContent = "已复原";
+        trigger.disabled = true;
+        setTimeout(() => {
+          trigger.textContent = oldText || "重置当前观众";
+          trigger.disabled = false;
+        }, 1100);
+      }
     }
 
     function addMockSubmissions(count = 10) {
@@ -3156,6 +4185,8 @@
       state.started += count;
       state.done += count;
       state.submissions = state.submissions.slice(0, 80);
+      state.dashboardSummary = null;
+      state.dashboardSnapshot = null;
       syncAll();
       saveState();
       apiRequest("/admin/mock", { method: "POST", body: { count } })
@@ -3172,6 +4203,7 @@
     }
 
     function startVoice() {
+      if (answerSubmitting || submittedThisSession || awaitingProfileGeneration) return;
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
         showToast("当前浏览器未开放语音转文字，可使用手机键盘语音输入");
@@ -3290,9 +4322,18 @@
     $("fullscreenBtn").addEventListener("click", () => {
       if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
     });
-    $("saveConfig").addEventListener("click", saveConfig);
-    if ($("saveInsightPromptOnly")) $("saveInsightPromptOnly").addEventListener("click", saveInsightPromptOnly);
-    ["adminEventName", "adminEventUrl", "adminPublicApiBase", "adminDuration", "adminCapacity", "questionConfig", "promptConfig", "answerPromptConfig", "insightPromptConfig"].forEach(id => {
+    document.querySelectorAll("[data-save-field]").forEach(btn => {
+      btn.addEventListener("click", () => saveAdminField(btn.dataset.saveField, btn));
+    });
+    if ($("addQuestionBtn")) {
+      $("addQuestionBtn").addEventListener("click", event => {
+        event.preventDefault();
+        refreshQuestionEditorFromDom(questions => {
+          questions.push(makeCustomQuestion());
+        });
+      });
+    }
+    ["adminEventName", "adminEventUrl", "adminPublicApiBase", "adminDuration", "questionConfig", "promptConfig", "answerPromptConfig", "routePromptConfig", "insightPromptConfig"].forEach(id => {
       const el = $(id);
       if (el) {
         el.addEventListener("input", () => { adminFormDirty = true; });

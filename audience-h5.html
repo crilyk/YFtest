@@ -480,6 +480,7 @@
 
   <script>
     const STORE_KEY = "yanfeng-audience-h5-v2";
+    const AUDIENCE_RESET_SIGNAL_KEY = "yanfeng-audience-reset-at";
     const API_BASE = (() => {
       const params = new URLSearchParams(location.search);
       const explicit = params.get("api") || window.YANFENG_API_BASE || localStorage.getItem("yanfeng-api-base") || "";
@@ -498,28 +499,277 @@
       activityState: "进行中",
       prompt: "根据用户回答，输出画像类型、四项评分、100-150 字解读和 3 条行动建议。模型失败时使用模板兜底。",
       promptTemplates: {
-        answerExtract: { version: "answer-extract-v1", content: "请基于单个问题和回答，提取用于大屏聚合的结构化标签。" },
-        profileGenerate: { version: "profile-generate-v1", content: "根据用户回答和单题结构化总结，输出画像类型、四项评分、100-150 字解读和 3 条行动建议。" },
+        answerExtract: {
+          version: "answer-extract-v2",
+          content: [
+            "你是企业大会现场的 Dashboard 单题结构化助手。",
+            "请求中会提供 dashboardField，只提取该字段，其他统计字段必须返回未提及或空数组。",
+            "只返回 JSON，不要 Markdown，不要解释。",
+            "字段必须为：summary, usageFrequency, willingness, capabilityTags, wishTags, confidence。",
+            "usageFrequency 从 从未使用、偶尔使用、每周使用、每天使用、未提及 中选择。",
+            "willingness 只能从 期待、观望、担心、未提及 中选择：愿意尝试、主动采用归为期待；暂不确定、先看看、暂不感兴趣归为观望；担忧风险、存在顾虑归为担心。",
+            "capabilityTags 表示用户认为 AI 已经能做到什么；wishTags 表示用户希望 AI 做到什么。",
+            "summary 必须只依据用户回答本身，不得把问题文本中的示例、选项或工具名当作用户已经提到的内容。",
+            "如果用户回答中出现具体 AI 工具名，summary 和 tags 中必须原样保留用户写法，不要自行替换、纠错或补充。",
+            "例如用户回答“用过 Gemini”或“用过 Gimini”，不得写成“用过 Kimi”，也不得补充 ChatGPT、通义、豆包等用户没有提到的工具。",
+            "如果用户只回答“用过”“试过”“每天”等泛化内容，但没有写具体工具名，不要在 summary 中添加任何具体工具名。",
+            "每个 tags 数组最多 4 个短词。confidence 为 0-1 数字。"
+          ].join("\n")
+        },
+        routeDecision: {
+          version: "route-decision-v1",
+          content: [
+            "你是问卷智能路由助手。",
+            "请根据用户的自然语言回答，从 allowedRoutes 中选择语义最匹配的下一题。",
+            "关键词只是辅助提示，不要求用户逐字命中。不得选择 allowedRoutes 之外的题目。",
+            "如果信息不足或无法判断，选择 defaultNext。",
+            "只返回 JSON，不要 Markdown，不要解释。字段必须为：nextQuestionId, confidence, reason。"
+          ].join("\n")
+        },
+        profileGenerate: {
+          version: "profile-generate-v1",
+          content: [
+            "根据用户回答和单题结构化总结，输出画像类型、四项评分、100-150 字解读和 3 条行动建议。",
+            "画像文本必须严格依据用户真实回答，不得把题目中的示例工具名当作用户使用过的工具。",
+            "如果用户提到具体 AI 工具名，必须原样保留用户写法，不要自行替换、纠错或补充。",
+            "例如用户回答“用过 Gemini”或“用过 Gimini”，画像中不得写成“用过 Kimi”，也不得写“如 Kimi”。",
+            "如果用户没有提到具体工具名，不要在画像文本中出现 ChatGPT、通义、Kimi、豆包、Gemini 等具体工具名。"
+          ].join("\n")
+        },
         groupInsight: { version: "group-insight-v1", content: "请基于现场聚合数据生成一段适合大屏展示的全场洞察。" }
       },
       questions: [
-        { text: "你觉得 AI 目前对你的工作影响大吗？", quick: ["影响很大", "有一些影响", "暂时不明显"] },
-        { text: "你是否用过 ChatGPT、通义、Kimi、豆包等 AI 工具？", quick: ["经常用", "偶尔试过", "基本没用过"] },
-        { text: "你大概多久用一次 AI？", quick: ["每天", "每周", "偶尔", "几乎不用"] },
-        { text: "你最希望 AI 帮你解决哪类工作问题？", quick: ["文档/报告", "会议纪要", "数据分析", "知识检索"] },
-        { text: "你不常使用 AI 的主要原因是什么？", quick: ["准确性", "数据安全", "不会提问", "缺少案例"] },
-        { text: "你对 AI 进入企业工作流是期待、观望还是担心？", quick: ["期待", "观望", "担心"] },
-        { text: "你最想学习哪类 AI 能力？", quick: ["提示词", "场景案例", "结果校验", "流程嵌入"] }
+    {
+      id: "q1_usage_base",
+      title: "第 1 题：使用基础判断",
+      route: "通用入口",
+      text: "你平时会使用 AI 工具吗？如果用过，请说说大概多久使用一次；如果没用过，直接回答“没用过”即可。",
+      helper: "",
+      quick: ["没用过", "只试过几次", "偶尔使用", "经常使用", "每天使用"],
+      aiRouteEnabled: true,
+      nextRules: [
+        { keywords: ["没用过", "从未使用", "从来没用", "没有用过", "没试过", "听说过但没试过", "不了解", "不会用", "否"], next: "q2_newbie_distance" },
+        { keywords: ["不经常", "很少", "偶尔", "有时", "有时候", "试过", "几次", "每周", "需要时", "不熟"], next: "q2_intro_frequency" },
+        { keywords: ["每天", "天天", "经常", "频繁", "常用", "高频", "工作中常用", "已形成习惯", "离不开"], next: "q2_advanced_frequency" },
+        { keywords: ["用过", "使用过", "是"], next: "q2_intro_frequency" }
       ],
+      defaultNext: "q2_intro_frequency"
+    },
+    {
+      id: "q2_newbie_distance",
+      title: "第 2 题：认知距离",
+      route: "新手路线",
+      text: "你觉得 AI 离你的日常工作近吗？",
+      helper: "可以简单说说你觉得它有用、暂时用不上、还不了解，或有点担心。",
+      quick: ["感觉有用", "暂时用不上", "还不了解", "有点担心"],
+      defaultNext: "q3_impact"
+    },
+    {
+      id: "q2_intro_frequency",
+      title: "第 2 题：使用触发场景",
+      route: "入门路线",
+      text: "你通常会在什么情况下想到使用 AI？可以说一个最近使用的场景；如果还没有固定场景，也可以直接说。",
+      helper: "",
+      quick: ["写文档或邮件时", "查资料或做总结时", "遇到不懂的问题时", "工作忙、需要提效时", "还没有固定场景"],
+      defaultNext: "q3_impact"
+    },
+    {
+      id: "q2_advanced_frequency",
+      title: "第 2 题：使用方式成熟度",
+      route: "进阶路线",
+      text: "你现在通常怎样把 AI 用进工作？可以说是临时问答、固定提示词、固定工作场景，还是已经接入工作流程。",
+      helper: "",
+      quick: ["临时问答", "固定提示词模板", "固定工作场景", "结合知识资料", "接入工作流程"],
+      defaultNext: "q3_advanced_work"
+    },
+    {
+      id: "q3_impact",
+      title: "第 3 题：AI 能力认知",
+      route: "新手/入门路线",
+      text: "结合你的了解或体验，你觉得 AI 现在能帮人完成哪些工作？可以直接说你想到的事情。",
+      helper: "",
+      quick: ["写文档和邮件", "查资料和做总结", "整理会议纪要", "分析数据", "还不太清楚"],
+      defaultNext: "q4_scene"
+    },
+    {
+      id: "q3_advanced_work",
+      title: "第 3 题：高频工作场景",
+      route: "进阶路线",
+      text: "你目前最常用 AI 做哪些工作？",
+      helper: "可以说具体任务，例如写材料、做总结、查资料、分析数据、生成方案等。",
+      quick: ["写文档", "做总结", "查资料", "分析数据", "生成方案"],
+      defaultNext: "q4_advanced_best"
+    },
+    {
+      id: "q4_scene",
+      title: "第 4 题：工作场景挖掘",
+      route: "新手/入门路线",
+      text: "你最希望 AI 帮你解决哪类工作问题？",
+      helper: "例如写文档、做总结、查资料、整理数据、生成方案、做会议纪要、处理邮件、做报表、辅助决策等。",
+      quick: ["文档/方案/邮件", "数据/报表/分析", "会议/纪要/待办", "查资料/知识库", "还不确定"],
+      aiRouteEnabled: true,
+      nextRules: [
+        { keywords: ["文档", "方案", "邮件", "汇报", "材料"], next: "q5_doc" },
+        { keywords: ["数据", "报表", "分析", "图表"], next: "q5_data" },
+        { keywords: ["会议", "纪要", "待办", "会后"], next: "q5_meeting" },
+        { keywords: ["查资料", "知识库", "制度", "流程", "检索"], next: "q5_knowledge" },
+        { keywords: ["不知道", "不确定", "没场景", "重复", "耗时"], next: "q5_repetitive" }
+      ],
+      defaultNext: "q5_repetitive"
+    },
+    {
+      id: "q4_advanced_best",
+      title: "第 4 题：高价值场景",
+      route: "进阶路线",
+      text: "哪一个 AI 使用场景对你帮助最大？",
+      helper: "可以描述一个具体场景，以及它帮你节省了什么时间或改善了什么质量。",
+      quick: ["文档写作", "会议总结", "数据分析", "知识检索", "流程提效"],
+      defaultNext: "q5_advanced_flow"
+    },
+    {
+      id: "q5_doc",
+      title: "第 5 题：文档类追问",
+      route: "动态追问",
+      text: "在文档工作中，你更希望 AI 帮你做哪一步？",
+      helper: "例如起草初稿、润色表达、提炼重点、检查逻辑、生成汇报材料等。",
+      quick: ["起草初稿", "润色表达", "提炼重点", "检查逻辑", "生成汇报材料"],
+      defaultNext: "q6_barrier"
+    },
+    {
+      id: "q5_data",
+      title: "第 5 题：数据类追问",
+      route: "动态追问",
+      text: "在数据或报表工作中，你更希望 AI 帮你做什么？",
+      helper: "例如整理数据、发现异常、生成图表、解释数据、输出分析结论等。",
+      quick: ["整理数据", "发现异常", "生成图表", "解释数据", "输出结论"],
+      defaultNext: "q6_barrier"
+    },
+    {
+      id: "q5_meeting",
+      title: "第 5 题：会议类追问",
+      route: "动态追问",
+      text: "在会议相关工作中，你更希望 AI 帮你做什么？",
+      helper: "例如会前准备、会议纪要、待办提取、结论总结、会后跟进等。",
+      quick: ["会前准备", "会议纪要", "待办提取", "结论总结", "会后跟进"],
+      defaultNext: "q6_barrier"
+    },
+    {
+      id: "q5_knowledge",
+      title: "第 5 题：知识检索追问",
+      route: "动态追问",
+      text: "你希望 AI 帮你查找或整理哪类信息？",
+      helper: "例如制度流程、项目资料、产品知识、客户信息、历史文档等。",
+      quick: ["制度流程", "项目资料", "产品知识", "客户信息", "历史文档"],
+      defaultNext: "q6_barrier"
+    },
+    {
+      id: "q5_repetitive",
+      title: "第 5 题：重复工作追问",
+      route: "动态追问",
+      text: "你平时有哪些工作比较重复、耗时，或者容易忘记？",
+      helper: "可以随便举一两个例子。",
+      quick: ["整理资料", "写材料", "开会记录", "做报表", "跟进待办"],
+      defaultNext: "q6_barrier"
+    },
+    {
+      id: "q5_advanced_flow",
+      title: "第 5 题：流程接入机会",
+      route: "进阶路线",
+      text: "你希望公司在哪些工作流程中接入 AI？",
+      helper: "可以说具体流程、系统或协作环节。",
+      quick: ["知识库问答", "报表分析", "会议流程", "文档审批", "客户支持"],
+      defaultNext: "q6_advanced_focus"
+    },
+    {
+      id: "q6_barrier",
+      title: "第 6 题：阻碍因素判断",
+      route: "新手/入门路线",
+      text: "你目前不常使用 AI，或者使用时不顺畅的主要原因是什么？",
+      helper: "可以写一个或多个原因，例如不知道场景、不会提问、担心准确性、担心数据安全、缺少统一工具等。",
+      quick: ["不知道场景", "不会提问", "担心准确性", "担心数据安全", "缺少统一工具"],
+      defaultNext: "q7_attitude"
+    },
+    {
+      id: "q6_advanced_focus",
+      title: "第 6 题：进阶关注点",
+      route: "进阶路线",
+      text: "你使用 AI 时最在意什么？",
+      helper: "例如准确性、效率、权限、安全、可追溯、能否接入流程等。",
+      quick: ["准确性", "效率", "权限安全", "可追溯", "流程接入"],
+      defaultNext: "q7_attitude"
+    },
+    {
+      id: "q7_attitude",
+      title: "第 7 题：态度与接受度",
+      route: "通用收束",
+      text: "如果 AI 逐步进入企业工作流程，你的态度更接近哪一种？",
+      helper: "可以选择期待、观望或担心，也可以用自己的话简单说说原因。",
+      quick: ["期待", "观望", "担心"],
+      defaultNext: "q8_training"
+    },
+    {
+      id: "q8_training",
+      title: "第 8 题：培训需求",
+      route: "通用收束",
+      text: "你最想学习哪类 AI 能力？",
+      helper: "可以直接写你想学的内容，例如 AI 基础、提示词、写文档、会议纪要、数据分析、知识检索、岗位案例、数据安全或自动化工作流。",
+      quick: ["AI 基础入门", "如何向 AI 提问", "写文档/邮件/方案", "会议纪要和总结", "数据安全"],
+      defaultNext: "__end__"
+    }
+  ],
       currentSession: null,
       lastSubmission: null
     };
 
     const $ = id => document.getElementById(id);
     const clone = value => JSON.parse(JSON.stringify(value));
+    const MAX_SURVEY_QUESTIONS = 8;
+
+    function normalizeQuestion(item = {}, index = 0) {
+      const source = typeof item === "string" ? { text: item } : (item || {});
+      const fallback = defaults.questions[index] || {};
+      const nextRules = Array.isArray(source.nextRules) ? source.nextRules.map(rule => ({
+        keywords: Array.isArray(rule.keywords) ? rule.keywords.map(item => String(item).trim()).filter(Boolean) : [],
+        next: String(rule.next || "").trim()
+      })).filter(rule => rule.next) : (Array.isArray(fallback.nextRules) ? clone(fallback.nextRules) : []);
+      const routeFlag = Object.prototype.hasOwnProperty.call(source, "aiRouteEnabled")
+        ? !!source.aiRouteEnabled
+        : (Object.prototype.hasOwnProperty.call(source, "aiExtractEnabled") ? !!source.aiExtractEnabled : !!fallback.aiRouteEnabled);
+      return {
+        id: String(source.id || fallback.id || `q${index + 1}`).trim(),
+        title: String(source.title || fallback.title || `第 ${index + 1} 题`).trim(),
+        route: String(source.route || fallback.route || "通用").trim(),
+        text: String(source.text || fallback.text || "").trim(),
+        helper: Object.prototype.hasOwnProperty.call(source, "helper") ? String(source.helper || "").trim() : "",
+        quick: Array.isArray(source.quick) ? source.quick.map(item => String(item).trim()).filter(Boolean) : (Array.isArray(fallback.quick) ? fallback.quick : []),
+        aiRouteEnabled: nextRules.length ? routeFlag : false,
+        nextRules,
+        defaultNext: Object.prototype.hasOwnProperty.call(source, "defaultNext")
+          ? String(source.defaultNext || "").trim()
+          : String(fallback.defaultNext || "").trim()
+      };
+    }
+
+    function normalizeQuestions(input) {
+      const list = Array.isArray(input) && input.length ? input : defaults.questions;
+      return list.map((item, index) => normalizeQuestion(item, index)).filter(item => item.text);
+    }
+
+    function questionIndexById(id, questions = state.questions) {
+      const target = String(id || "");
+      return normalizeQuestions(questions).findIndex(item => item.id === target);
+    }
+
+    function questionMessage(question) {
+      return String(question && question.text ? question.text : "");
+    }
+
     let state = loadState();
+    state.questions = normalizeQuestions(state.questions);
     if (state.eventName && state.eventName.indexOf("延锋大会") >= 0) state.eventName = defaults.eventName;
     let submittedThisSession = false;
+    let answerSubmitting = false;
+    let awaitingProfileGeneration = false;
     let resultAnchor = null;
     let recognition = null;
 
@@ -534,7 +784,7 @@
             ...clone(defaults.promptTemplates),
             ...(saved.promptTemplates || {})
           },
-          questions: Array.isArray(saved.questions) && saved.questions.length ? saved.questions : defaults.questions
+          questions: normalizeQuestions(saved.questions)
         };
       } catch (error) {
         return clone(defaults);
@@ -564,7 +814,10 @@
           state.activityState = remote.activityState || state.activityState;
           state.prompt = remote.prompt || state.prompt;
           state.promptTemplates = remote.promptTemplates || state.promptTemplates || defaults.promptTemplates;
-          state.questions = Array.isArray(remote.questions) && remote.questions.length ? remote.questions : state.questions;
+          if (state.promptTemplates && state.promptTemplates.profileGenerate && state.promptTemplates.profileGenerate.content) {
+            state.prompt = state.promptTemplates.profileGenerate.content;
+          }
+          state.questions = normalizeQuestions(remote.questions || state.questions);
           saveState();
           renderEntry();
         }
@@ -627,51 +880,121 @@
       $("messages").innerHTML = "";
     }
 
-    function resetDemo() {
+    function setAnswerControlsDisabled(disabled) {
+      ["answerInput", "sendBtn", "skipBtn", "voiceBtn"].forEach(id => {
+        const el = $(id);
+        if (el) el.disabled = !!disabled;
+      });
+      $("quickOptions").querySelectorAll("button").forEach(btn => {
+        btn.disabled = !!disabled;
+      });
+    }
+
+    function resetDemo(options = false) {
+      const silent = options === true || (options && options.silent === true);
       state.currentSession = null;
       state.lastSubmission = null;
       submittedThisSession = false;
+      answerSubmitting = false;
+      awaitingProfileGeneration = false;
       resultAnchor = null;
       $("chatScreen").hidden = true;
       $("welcomeScreen").hidden = false;
       $("composer").hidden = false;
+      $("answerInput").value = "";
+      setAnswerControlsDisabled(false);
       resetMessages();
       renderEntry();
       saveState();
-      showToast("已复原，可重新演示答题流程");
+      if (!silent) showToast("已复原，可重新演示答题流程");
     }
 
     function updateProgress() {
-      const total = state.questions.length;
-      const current = state.currentSession ? state.currentSession.currentQuestion : 0;
-      const left = Math.max(total - current, 0);
+      const total = MAX_SURVEY_QUESTIONS;
+      const answered = state.currentSession && Array.isArray(state.currentSession.answers) ? state.currentSession.answers.length : 0;
+      const current = Math.min(answered, total);
+      const activeQuestion = state.currentSession ? getActiveQuestion() : null;
+      const left = activeQuestion ? Math.max(total - current, 0) : 0;
       $("progressText").textContent = left > 0 ? `还剩 ${left} 个问题` : "调研完成";
       $("progressBar").style.width = `${Math.min((current / Math.max(total, 1)) * 100, 100)}%`;
     }
 
     function renderQuickOptions() {
-      const current = state.currentSession ? state.currentSession.currentQuestion : 0;
-      const options = state.questions[current] ? state.questions[current].quick || [] : [];
+      const question = getActiveQuestion();
+      if (submittedThisSession || awaitingProfileGeneration || !question) {
+        $("quickOptions").innerHTML = "";
+        return;
+      }
+      const options = question.quick || [];
       $("quickOptions").innerHTML = options.map(option => `<button class="chip" type="button" data-answer="${option}">${option}</button>`).join("");
       $("quickOptions").querySelectorAll("[data-answer]").forEach(btn => {
         btn.addEventListener("click", () => {
+          if (answerSubmitting || submittedThisSession || awaitingProfileGeneration) return;
           $("answerInput").value = btn.dataset.answer;
           sendAnswer(false);
         });
       });
     }
 
+    function getActiveQuestion() {
+      if (!state.currentSession) return null;
+      const questions = normalizeQuestions(state.questions);
+      const index = Number(state.currentSession.currentQuestion) || 0;
+      if (index < 0 || index >= questions.length) return null;
+      if ((state.currentSession.answers || []).length >= MAX_SURVEY_QUESTIONS) return null;
+      return questions[index] || null;
+    }
+
+    function normalizeRuleText(value) {
+      return String(value || "").toLowerCase().replace(/\s+/g, "");
+    }
+
+    function answerMatchesRule(answer, rule) {
+      const source = normalizeRuleText(answer);
+      return (rule.keywords || []).some(keyword => {
+        const target = normalizeRuleText(keyword);
+        return target && source.includes(target);
+      });
+    }
+
+    function resolveNextQuestionIndex(question, answer, currentIndex, routeDecision = null) {
+      const questions = normalizeQuestions(state.questions);
+      if (!question || (state.currentSession.answers || []).length >= MAX_SURVEY_QUESTIONS) return questions.length;
+      const aiNextId = routeDecision && routeDecision.nextQuestionId ? String(routeDecision.nextQuestionId) : "";
+      const allowedRouteIds = new Set([...(question.nextRules || []).map(rule => rule.next), question.defaultNext].filter(Boolean));
+      if (aiNextId && allowedRouteIds.has(aiNextId)) {
+        if (aiNextId === "__end__") return questions.length;
+        const aiIndex = questionIndexById(aiNextId, questions);
+        if (aiIndex >= 0) return aiIndex;
+      }
+      const matchedRule = (question.nextRules || []).find(rule => answerMatchesRule(answer, rule));
+      const nextId = matchedRule ? matchedRule.next : question.defaultNext;
+      if (nextId === "__end__") return questions.length;
+      const explicitIndex = questionIndexById(nextId, questions);
+      if (explicitIndex >= 0) return explicitIndex;
+      return currentIndex + 1;
+    }
+
     function askNext() {
       updateProgress();
       renderQuickOptions();
       const current = state.currentSession.currentQuestion;
-      if (current >= state.questions.length) {
+      const question = getActiveQuestion();
+      if (!question) {
+        if (awaitingProfileGeneration || submittedThisSession) return;
+        awaitingProfileGeneration = true;
+        state.currentSession.status = "等待生成画像";
+        $("composer").hidden = true;
+        setAnswerControlsDisabled(true);
+        document.querySelectorAll(".generate-profile-btn").forEach(btn => {
+          if (btn.parentNode) btn.parentNode.removeChild(btn);
+        });
         setTimeout(() => {
-          if (submittedThisSession) return;
+          if (submittedThisSession || !awaitingProfileGeneration || resultAnchor) return;
           resultAnchor = addMessage("ai", "感谢你的回答。我已经整理好关键线索，现在可以生成你的 AI 画像。");
         }, 240);
         setTimeout(() => {
-          if (submittedThisSession) return;
+          if (submittedThisSession || !awaitingProfileGeneration || document.querySelector(".generate-profile-btn")) return;
           const btn = document.createElement("button");
           btn.className = "btn primary full generate-profile-btn";
           btn.textContent = "生成我的 AI 画像";
@@ -679,14 +1002,14 @@
           $("messages").appendChild(btn);
           $("messages").scrollTop = $("messages").scrollHeight;
         }, 560);
+        saveState();
         return;
       }
       setTimeout(() => {
-        if (submittedThisSession) return;
-        addMessage("ai", state.questions[current].text);
+        if (submittedThisSession || awaitingProfileGeneration) return;
+        addMessage("ai", questionMessage(question));
       }, 240);
     }
-
     function startChat() {
       if (ownSubmission()) {
         renderProfileResult(ownSubmission(), false);
@@ -705,9 +1028,12 @@
         status: "进行中"
       };
       submittedThisSession = false;
+      answerSubmitting = false;
+      awaitingProfileGeneration = false;
       $("welcomeScreen").hidden = true;
       $("chatScreen").hidden = false;
       $("composer").hidden = false;
+      setAnswerControlsDisabled(false);
       resetMessages();
       $("sessionId").textContent = state.currentSession.sessionId;
       addMessage("ai", "你好，我是本场 AI 调研助手。接下来我会用几个简短问题了解你的 AI 使用现状，答案不会采集实名信息。");
@@ -717,26 +1043,37 @@
     }
 
     async function sendAnswer(skip = false) {
-      if (!state.currentSession || submittedThisSession) return;
+      if (!state.currentSession || submittedThisSession || answerSubmitting || awaitingProfileGeneration) return;
       const input = $("answerInput");
+      const activeQuestion = getActiveQuestion();
+      if (!activeQuestion) {
+        askNext();
+        return;
+      }
       const text = skip ? "跳过这个问题" : input.value.trim();
       if (!text) {
         showToast("先写一句回答，或点击跳过");
         return;
       }
+      answerSubmitting = true;
+      setAnswerControlsDisabled(true);
       const questionIndex = state.currentSession.currentQuestion;
-      const question = state.questions[questionIndex] ? state.questions[questionIndex].text || "" : "";
+      const questionObj = activeQuestion;
+      const question = questionObj.text || "";
       addMessage("user", text);
       state.currentSession.answers.push({
         questionIndex,
+        questionId: questionObj.id,
+        questionTitle: questionObj.title,
         question,
         answer: text,
         skipped: skip
       });
       input.value = "";
-      if (!skip && text.length <= 5 && state.currentSession.currentQuestion < state.questions.length - 1) {
+      let routeDecision = null;
+      if (!skip && text.length <= 5) {
         setTimeout(() => {
-          if (submittedThisSession) return;
+          if (submittedThisSession || awaitingProfileGeneration) return;
           addMessage("ai", "收到。我会记录这条回答，后面会结合其它问题一起生成画像。");
         }, 160);
       }
@@ -746,6 +1083,8 @@
           body: {
             sessionId: state.currentSession.sessionId,
             questionIndex,
+            questionId: questionObj.id,
+            questionTitle: questionObj.title,
             question,
             answer: text,
             skipped: skip
@@ -756,13 +1095,21 @@
           state.currentSession.answerInsights = state.currentSession.answerInsights.filter(item => Number(item.questionIndex) !== Number(questionIndex));
           state.currentSession.answerInsights.push({ questionIndex, question, answer: text, ...result.answerInsight });
         }
-      } catch (error) {}
-      state.currentSession.currentQuestion += 1;
-      askNext();
-      saveState();
+        if (result && result.routeDecision) routeDecision = result.routeDecision;
+      } catch (error) {
+      } finally {
+        if (state.currentSession && Number(state.currentSession.currentQuestion) === Number(questionIndex)) {
+          state.currentSession.currentQuestion = resolveNextQuestionIndex(questionObj, text, questionIndex, routeDecision);
+        }
+        answerSubmitting = false;
+        askNext();
+        if (!submittedThisSession && !awaitingProfileGeneration) setAnswerControlsDisabled(false);
+        saveState();
+      }
     }
 
     function startVoice() {
+      if (answerSubmitting || submittedThisSession || awaitingProfileGeneration) return;
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
         showToast("当前浏览器未开放语音转文字，可使用手机键盘语音输入");
@@ -797,7 +1144,7 @@
       if (includesAny(text, ["推动", "培训", "分享", "团队", "推广"])) return "AI 推动者";
       if (includesAny(text, ["每天", "经常", "流程", "自动", "知识库", "研发", "数据分析"])) return "AI 场景实践者";
       if (includesAny(text, ["用过", "报告", "会议", "总结", "文档", "效率", "每周"])) return "AI 效率提升者";
-      if (includesAny(text, ["偶尔", "试过", "豆包", "Kimi", "通义", "ChatGPT"])) return "AI 尝鲜者";
+      if (includesAny(text, ["偶尔", "试过", "豆包", "Kimi", "通义", "ChatGPT", "Gemini", "Gimini"])) return "AI 尝鲜者";
       return "AI 旁观者";
     }
 
@@ -870,7 +1217,7 @@
     }
 
     function extractKeywords(text) {
-      const dict = ["会议纪要", "提示词", "数据安全", "报告初稿", "准确性", "知识库", "效率提升", "流程嵌入", "不会提问", "数据分析", "培训入门", "结果校验"];
+      const dict = ["ChatGPT", "通义", "Kimi", "豆包", "Gemini", "Gimini", "会议纪要", "提示词", "数据安全", "报告初稿", "准确性", "知识库", "效率提升", "流程嵌入", "不会提问", "数据分析", "培训入门", "结果校验"];
       const found = dict.filter(word => text.includes(word.replace("/", "")) || text.includes(word));
       return found.length ? found : ["会议纪要", "提示词", "准确性"];
     }
@@ -888,6 +1235,10 @@
       }
       const trigger = event && event.currentTarget ? event.currentTarget : document.querySelector(".generate-profile-btn");
       submittedThisSession = true;
+      awaitingProfileGeneration = false;
+      answerSubmitting = false;
+      $("composer").hidden = true;
+      setAnswerControlsDisabled(true);
       removeGeneratedButton(trigger);
       if (trigger) {
         trigger.disabled = true;
@@ -1021,6 +1372,9 @@
     $("sendBtn").addEventListener("click", () => sendAnswer(false));
     $("skipBtn").addEventListener("click", () => sendAnswer(true));
     $("voiceBtn").addEventListener("click", startVoice);
+    window.addEventListener("storage", event => {
+      if (event.key === AUDIENCE_RESET_SIGNAL_KEY) resetDemo(true);
+    });
     $("answerInput").addEventListener("keydown", event => {
       if (event.key === "Enter" && !event.shiftKey) {
         event.preventDefault();
