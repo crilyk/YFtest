@@ -305,6 +305,58 @@
       flex-wrap: wrap;
     }
 
+    .voice-status {
+      min-height: 34px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border: 1px solid #b9d8d4;
+      border-radius: 6px;
+      color: #0f625c;
+      background: #edf8f6;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .voice-status[hidden] { display: none; }
+
+    .voice-status[data-state="error"] {
+      border-color: #f0c5c0;
+      color: var(--danger);
+      background: #fff3f1;
+    }
+
+    .voice-status[data-state="success"] {
+      border-color: #bbd7c6;
+      color: #17633a;
+      background: #f0f8f3;
+    }
+
+    .voice-dot {
+      width: 8px;
+      height: 8px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .voice-status[data-state="listening"] .voice-dot {
+      animation: voicePulse 1.2s ease-out infinite;
+    }
+
+    #voiceBtn.is-listening {
+      border-color: #e3aaa3;
+      color: var(--danger);
+      background: #fff3f1;
+    }
+
+    @keyframes voicePulse {
+      0% { box-shadow: 0 0 0 0 rgba(15, 118, 110, .35); }
+      70% { box-shadow: 0 0 0 7px rgba(15, 118, 110, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(15, 118, 110, 0); }
+    }
+
     .chip {
       min-height: 32px;
       padding: 0 10px;
@@ -464,11 +516,15 @@
         <div class="messages" id="messages"></div>
         <div class="composer" id="composer">
           <textarea class="textarea" id="answerInput" rows="2" placeholder="用自然语言回答，也可以点下方快捷选项"></textarea>
+          <div class="voice-status" id="voiceStatus" data-state="idle" role="status" aria-live="polite" hidden>
+            <span class="voice-dot" aria-hidden="true"></span>
+            <span id="voiceStatusText">语音输入未开始</span>
+          </div>
           <div class="quick-options" id="quickOptions"></div>
           <div class="between">
             <div class="row">
               <button class="btn" id="skipBtn">跳过</button>
-              <button class="btn" id="voiceBtn">语音</button>
+              <button class="btn" id="voiceBtn" type="button" aria-pressed="false">语音输入</button>
             </div>
             <button class="btn primary" id="sendBtn">发送</button>
           </div>
@@ -772,6 +828,10 @@
     let awaitingProfileGeneration = false;
     let resultAnchor = null;
     let recognition = null;
+    let voiceListening = false;
+    let voiceStopping = false;
+    let voiceRunId = 0;
+    let voiceStatusTimer = null;
 
     function loadState() {
       try {
@@ -847,6 +907,50 @@
       setTimeout(() => toast.classList.remove("show"), 1800);
     }
 
+    function setVoiceStatus(status, text, hideAfter = 0) {
+      const panel = $("voiceStatus");
+      const label = $("voiceStatusText");
+      if (!panel || !label) return;
+      clearTimeout(voiceStatusTimer);
+      panel.hidden = false;
+      panel.dataset.state = status;
+      label.textContent = text;
+      if (hideAfter > 0) {
+        voiceStatusTimer = setTimeout(() => {
+          panel.hidden = true;
+          panel.dataset.state = "idle";
+        }, hideAfter);
+      }
+    }
+
+    function hideVoiceStatus() {
+      clearTimeout(voiceStatusTimer);
+      if ($("voiceStatus")) $("voiceStatus").hidden = true;
+    }
+
+    function setVoiceButtonState(mode = "idle") {
+      const btn = $("voiceBtn");
+      if (!btn) return;
+      const listening = mode === "listening";
+      btn.classList.toggle("is-listening", listening || mode === "stopping");
+      btn.setAttribute("aria-pressed", listening ? "true" : "false");
+      btn.textContent = mode === "stopping" ? "正在结束" : (listening ? "结束语音" : "语音输入");
+      btn.disabled = mode === "stopping";
+    }
+
+    function cancelVoiceRecognition(hideStatus = true) {
+      voiceRunId += 1;
+      const activeRecognition = recognition;
+      recognition = null;
+      voiceListening = false;
+      voiceStopping = false;
+      if (activeRecognition) {
+        try { activeRecognition.abort(); } catch (error) {}
+      }
+      setVoiceButtonState("idle");
+      if (hideStatus) hideVoiceStatus();
+    }
+
     function ownSubmission() {
       return state.lastSubmission && state.lastSubmission.status === "已完成" ? state.lastSubmission : null;
     }
@@ -892,6 +996,7 @@
 
     function resetDemo(options = false) {
       const silent = options === true || (options && options.silent === true);
+      cancelVoiceRecognition();
       state.currentSession = null;
       state.lastSubmission = null;
       submittedThisSession = false;
@@ -1055,6 +1160,7 @@
         showToast("先写一句回答，或点击跳过");
         return;
       }
+      if (voiceListening || voiceStopping) cancelVoiceRecognition();
       answerSubmitting = true;
       setAnswerControlsDisabled(true);
       const questionIndex = state.currentSession.currentQuestion;
@@ -1108,23 +1214,120 @@
       }
     }
 
+    function voiceErrorMessage(code) {
+      if (code === "not-allowed" || code === "service-not-allowed") {
+        return window.isSecureContext
+          ? "麦克风权限被拒绝，请在浏览器设置中允许麦克风后重试"
+          : "当前页面不是 HTTPS，手机浏览器已阻止麦克风，请使用 HTTPS 地址打开";
+      }
+      if (code === "no-speech") return "没有听到清晰语音，请靠近麦克风后重试";
+      if (code === "audio-capture") return "没有检测到可用麦克风，请检查系统麦克风权限";
+      if (code === "network") return "语音识别服务连接失败，请检查网络后重试";
+      return "语音识别失败，请重试或使用手机键盘语音输入";
+    }
+
+    function stopVoiceRecognition() {
+      if (!recognition || !voiceListening || voiceStopping) return;
+      voiceStopping = true;
+      setVoiceButtonState("stopping");
+      setVoiceStatus("listening", "正在结束识别，请稍候...");
+      try {
+        recognition.stop();
+      } catch (error) {
+        cancelVoiceRecognition(false);
+        setVoiceStatus("error", "语音识别未能正常结束，请重新尝试", 5000);
+      }
+    }
+
     function startVoice() {
       if (answerSubmitting || submittedThisSession || awaitingProfileGeneration) return;
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRecognition) {
-        showToast("当前浏览器未开放语音转文字，可使用手机键盘语音输入");
+      if (voiceListening) {
+        stopVoiceRecognition();
         return;
       }
-      recognition = recognition || new SpeechRecognition();
-      recognition.lang = "zh-CN";
-      recognition.interimResults = false;
-      recognition.onresult = event => {
-        $("answerInput").value = event.results[0][0].transcript;
-        showToast("语音已转成文字，可继续编辑或发送");
+      if (!window.isSecureContext && !["localhost", "127.0.0.1"].includes(location.hostname)) {
+        const message = "当前页面不是 HTTPS，手机浏览器已阻止麦克风，请使用 HTTPS 地址打开";
+        setVoiceStatus("error", message);
+        showToast("语音输入需要 HTTPS");
+        return;
+      }
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        const message = "当前浏览器不支持网页语音识别，请使用系统浏览器或手机键盘语音输入";
+        setVoiceStatus("error", message);
+        showToast("当前浏览器不支持语音识别");
+        return;
+      }
+      const runId = ++voiceRunId;
+      const activeRecognition = new SpeechRecognition();
+      const input = $("answerInput");
+      const baseText = input.value.trim();
+      let transcript = "";
+      let recognitionError = "";
+      recognition = activeRecognition;
+      activeRecognition.lang = "zh-CN";
+      activeRecognition.continuous = false;
+      activeRecognition.interimResults = true;
+      activeRecognition.maxAlternatives = 1;
+      activeRecognition.onstart = () => {
+        if (runId !== voiceRunId) return;
+        voiceListening = true;
+        voiceStopping = false;
+        setVoiceButtonState("listening");
+        setVoiceStatus("listening", "正在聆听，请开始说话...");
       };
-      recognition.onerror = () => showToast("语音识别失败，请改用文字输入");
-      recognition.start();
-      showToast("正在聆听，请说出你的回答");
+      activeRecognition.onspeechstart = () => {
+        if (runId !== voiceRunId) return;
+        setVoiceStatus("listening", "已听到声音，正在识别...");
+      };
+      activeRecognition.onresult = event => {
+        if (runId !== voiceRunId) return;
+        transcript = "";
+        for (let index = 0; index < event.results.length; index += 1) {
+          transcript += event.results[index][0] ? event.results[index][0].transcript : "";
+        }
+        transcript = transcript.trim();
+        if (transcript) {
+          input.value = baseText ? `${baseText} ${transcript}` : transcript;
+          setVoiceStatus("listening", `正在识别：${transcript.slice(-28)}`);
+        }
+      };
+      activeRecognition.onspeechend = () => {
+        if (runId !== voiceRunId || voiceStopping) return;
+        voiceStopping = true;
+        setVoiceButtonState("stopping");
+        setVoiceStatus("listening", "语音结束，正在整理识别文字...");
+      };
+      activeRecognition.onerror = event => {
+        if (runId !== voiceRunId) return;
+        recognitionError = event.error || "unknown";
+        const message = voiceErrorMessage(recognitionError);
+        setVoiceStatus("error", message, 6000);
+        showToast(message);
+      };
+      activeRecognition.onend = () => {
+        if (runId !== voiceRunId) return;
+        recognition = null;
+        voiceListening = false;
+        voiceStopping = false;
+        setVoiceButtonState("idle");
+        if (recognitionError) return;
+        if (transcript) {
+          setVoiceStatus("success", "识别结束，文字已填入回答框", 4200);
+          showToast("语音识别完成");
+          input.focus();
+        } else {
+          setVoiceStatus("error", "识别结束，但没有听到清晰语音，请重新尝试", 5000);
+        }
+      };
+      setVoiceButtonState("listening");
+      setVoiceStatus("listening", "正在启动麦克风...");
+      try {
+        activeRecognition.start();
+      } catch (error) {
+        cancelVoiceRecognition(false);
+        setVoiceStatus("error", "麦克风启动失败，请稍后重试", 5000);
+      }
     }
 
     function textOfAnswers() {
